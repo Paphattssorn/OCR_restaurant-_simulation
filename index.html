@@ -410,8 +410,8 @@
                             <span>ขั้นที่ 3</span>
                             <span id="step-bar-dot-3" class="w-2 h-2 rounded-full bg-stone-300"></span>
                         </div>
-                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">สกัดคำ & แปล</div>
-                        <div class="text-[9px] text-stone-400 font-medium truncate">OCR + แปลไทย</div>
+                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">สกัดข้อความ</div>
+                        <div class="text-[9px] text-stone-400 font-medium truncate">สิ้นสุดขั้นตอน OCR</div>
                     </div>
                 </div>
 
@@ -561,8 +561,23 @@
                         </div>
 
                         <!-- OCR Explanation Banner -->
-                        <div class="p-2 bg-amber-50 rounded-xl border border-amber-200 text-xs text-stone-700 font-medium text-left">
-                            💡 <b>OCR สิ้นสุดที่นี่:</b> ได้ข้อความภาษาเวียดนามแล้ว (การแปลภาษาเป็นหน้าที่ของ AI แปลภาษา)
+                        <div class="p-3 bg-amber-50/90 rounded-2xl border-2 border-amber-300 text-xs text-stone-800 space-y-1.5 text-left shadow-sm">
+                            <div class="flex items-center space-x-1.5 font-bold text-amber-900 text-xs sm:text-sm">
+                                <span>🏁</span>
+                                <span>ขั้นตอนของ OCR สิ้นสุดที่นี่!</span>
+                            </div>
+                            <p class="text-[11px] sm:text-xs text-stone-700 leading-relaxed font-medium">
+                                ระบบ OCR ทำหน้าที่ <b>"ถอดรหัสภาพเป็นตัวหนังสือดิจิทัล"</b> สำเร็จแล้ว (จบหน้าที่ OCR)
+                            </p>
+                            <div class="p-2 bg-blue-50 rounded-xl border border-blue-200 text-[11px] sm:text-xs text-blue-900 leading-relaxed space-y-0.5">
+                                <div class="font-bold flex items-center space-x-1">
+                                    <span>👉</span>
+                                    <span>ถ้าอยากแปลความหมาย ต้องกดปุ่มสีน้ำเงินด้านล่าง:</span>
+                                </div>
+                                <div class="text-[10.5px] text-stone-600 pl-4">
+                                    (การแปลภาษาไม่ใช่การทำงานของ OCR แต่เป็นหน้าที่ของระบบ <b>Machine Translation / AI แปลภาษา</b>)
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Machine Translation Trigger Button -->
@@ -573,7 +588,7 @@
 
                         <!-- Educational NLP Concept Box (Revealed upon translation) -->
                         <div id="nlp-concept-box" class="hidden p-2.5 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 leading-relaxed text-left">
-                            <b>💡 OCR vs แปลภาษา:</b> OCR มีหน้าที่ "อ่านตัวอักษรจากภาพ" ส่วน "แปลความหมาย" เป็นหน้าที่ของระบบแปลภาษา (NLP)
+                            <b>💡 สรุปความแตกต่าง:</b> OCR = "อ่านตัวอักษรจากภาพ" | Machine Translation = "แปลความหมายของคำ"
                         </div>
                     </div>
 
@@ -692,6 +707,56 @@
                 gain.gain.linearRampToValueAtTime(0.01, t + 0.8);
                 osc.start(t);
                 osc.stop(t + 0.8);
+            } else if (type === 'seat') {
+                // Pleasant welcoming cafe chime (C5 -> E5 -> G5 -> C6)
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((f, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'sine';
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    const st = t + idx * 0.08;
+                    o.frequency.setValueAtTime(f, st);
+                    g.gain.setValueAtTime(0.25, st);
+                    g.gain.exponentialRampToValueAtTime(0.001, st + 0.45);
+                    o.start(st);
+                    o.stop(st + 0.45);
+                });
+            } else if (type === 'kitchen_bell') {
+                // Realistic restaurant service desk bell (C7 strike + harmonic)
+                const o1 = audioCtx.createOscillator();
+                const o2 = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o1.type = 'sine';
+                o2.type = 'triangle';
+                o1.frequency.setValueAtTime(2093.00, t);
+                o2.frequency.setValueAtTime(3135.96, t);
+                o1.connect(g);
+                o2.connect(g);
+                g.connect(audioCtx.destination);
+                g.gain.setValueAtTime(0.35, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+                o1.start(t);
+                o2.start(t);
+                o1.stop(t + 1.2);
+                o2.stop(t + 1.2);
+            } else if (type === 'serve') {
+                // Cheerful serving chime (G5 -> C6 -> E6)
+                const notes = [783.99, 1046.50, 1318.51];
+                notes.forEach((f, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'sine';
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    const st = t + idx * 0.1;
+                    o.frequency.setValueAtTime(f, st);
+                    g.gain.setValueAtTime(0.3, st);
+                    g.gain.exponentialRampToValueAtTime(0.001, st + 0.6);
+                    o.start(st);
+                    o.stop(st + 0.6);
+                });
             } else if (type === 'coin') {
                 osc.type = 'square';
                 osc.frequency.setValueAtTime(987.77, t);
@@ -737,6 +802,25 @@
                 gain.gain.linearRampToValueAtTime(0.01, t + 0.25);
                 osc.start(t);
                 osc.stop(t + 0.25);
+            }
+        }
+
+        function speakVoice(text, lang = 'en-US', pitch = 1.0, rate = 1.0) {
+            if (!soundOn || !('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = lang;
+                u.pitch = pitch;
+                u.rate = rate;
+                const voices = window.speechSynthesis.getVoices();
+                if (voices && voices.length > 0) {
+                    const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('David') || v.name.includes('Guy')));
+                    if (preferredVoice) u.voice = preferredVoice;
+                }
+                window.speechSynthesis.speak(u);
+            } catch(e) {
+                console.warn('SpeechSynthesis error:', e);
             }
         }
 
@@ -1077,8 +1161,6 @@
                 return;
             }
 
-            play8Bit('coin');
-
             let clientId = sessionStorage.getItem('ocr_quest_client_id');
             if (!clientId) {
                 clientId = 'client_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
@@ -1123,6 +1205,7 @@
             document.getElementById('stu-step-waiting').classList.remove('hidden');
 
             updateWaitingCard();
+            play8Bit('seat');
             startPolling(500);
         }
 
@@ -1333,7 +1416,10 @@
         }
 
         async function teacherServeOrder(studentId) {
-            play8Bit('bell');
+            play8Bit('serve');
+            setTimeout(() => {
+                speakVoice('Thank you!', 'en-US', 1.1, 1.05);
+            }, 120);
             try {
                 await fetch('/api/serve_order', {
                     method: 'POST',
@@ -1346,6 +1432,8 @@
 
         let currentRoundId = 1;
         let lastGameStatus = 'LOBBY';
+        let lastLobbyPlayerCount = -1;
+        let lastOrderCount = -1;
 
         async function pollGameState() {
             try {
@@ -1361,10 +1449,23 @@
                     if (state.status === 'LOBBY') {
                         document.getElementById('teach-lobby-view').classList.remove('hidden');
                         document.getElementById('teach-battle-view').classList.add('hidden');
+                        const pCount = (state.players || []).length;
+                        if (lastLobbyPlayerCount !== -1 && pCount > lastLobbyPlayerCount) {
+                            play8Bit('seat');
+                        }
+                        lastLobbyPlayerCount = pCount;
                         renderLobbyPlayers(state.players);
                     } else {
                         document.getElementById('teach-lobby-view').classList.add('hidden');
                         document.getElementById('teach-battle-view').classList.remove('hidden');
+                        const oCount = (state.scores || []).length;
+                        if (lastOrderCount !== -1 && oCount > lastOrderCount) {
+                            play8Bit('kitchen_bell');
+                            setTimeout(() => {
+                                speakVoice('Yes, Chef!', 'en-US', 1.0, 1.15);
+                            }, 120);
+                        }
+                        lastOrderCount = oCount;
                         renderTeacherOrderTickets(state.scores);
                     }
                 }
@@ -1405,7 +1506,10 @@
                         const myScore = state.scores.find(s => s.studentId === myPlayer.studentId);
                         if (myScore && myScore.orderStatus === 'SERVED' && !isOrderServed) {
                             isOrderServed = true;
-                            play8Bit('bell');
+                            play8Bit('serve');
+                            setTimeout(() => {
+                                speakVoice('Thank you! Enjoy your meal!', 'en-US', 1.1, 1.05);
+                            }, 120);
                             if (typeof confetti === 'function') {
                                 confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
                             }
@@ -1962,7 +2066,7 @@
                 if (nlpBox) nlpBox.classList.remove('hidden');
                 if (btnText) btnText.innerText = "✓ แสดงคำแปลแล้ว (กดเพื่อดูภาษาเวียดนาม)";
                 if (evalTitle) evalTitle.innerText = "แปลภาษาไทยเรียบร้อย (Translation)";
-                play8Bit('coin');
+                play8Bit('blip');
             } else {
                 if (nlpBox) nlpBox.classList.add('hidden');
                 if (btnText) btnText.innerText = "🌐 แปลเป็นภาษาไทย (Machine Translation)";
@@ -1998,16 +2102,15 @@
                         <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
                             isSelected ? 'bg-amber-500 text-white' : 'border border-stone-300 text-stone-400'
                         }">${isSelected ? '✓' : ''}</span>
-                        <span class="text-2xl shrink-0">${dish.icon}</span>
                         <div class="min-w-0 truncate">
                             <div class="flex items-center space-x-1.5 truncate">
-                                <span class="text-[10px] bg-stone-100 text-stone-600 px-1 rounded font-mono">🇻🇳 OCR</span>
+                                <span class="text-[10px] bg-stone-100 text-stone-600 px-1 rounded font-mono font-bold">VN</span>
                                 <span class="font-bold text-xs sm:text-sm font-mono text-stone-900 truncate">${dish.vietName}</span>
                             </div>
                             <div class="text-[11px] truncate pt-0.5">
                                 ${isTranslated 
-                                    ? `<span class="text-stone-700 font-medium">🇹🇭 ${dish.thaiName} <span class="text-stone-400 text-[10px]">(${dish.approxThb})</span></span>` 
-                                    : `<span class="text-blue-600 font-medium italic">[ รอแปลภาษา... กดปุ่มด้านบน ]</span>`
+                                    ? `<span class="text-stone-700 font-medium font-sans">TH ${dish.thaiName} <span class="text-stone-400 text-[10px]">(${dish.approxThb})</span></span>` 
+                                    : `<span class="text-blue-600 font-medium italic font-sans">[ รอแปลภาษา... กดปุ่มด้านบน ]</span>`
                                 }
                             </div>
                         </div>
@@ -2032,7 +2135,7 @@
                 subBtn.disabled = false;
                 subBtn.className = "w-full py-3 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-md active:scale-95 transition-all cursor-pointer";
                 const thaiPart = isTranslated ? ` (${dish.thaiName})` : '';
-                subBtn.innerHTML = `<span>🚀 ยืนยันสั่ง: ${dish.icon} ${dish.vietName}${thaiPart}</span>`;
+                subBtn.innerHTML = `<span>🚀 ยืนยันสั่ง: ${dish.vietName}${thaiPart}</span>`;
             }
         }
 
@@ -2058,7 +2161,6 @@
 
                 let badgeHtml = '';
                 const displayText = isTranslated ? dish.thaiName : dish.vietName;
-                const prefixIcon = isTranslated ? dish.icon : '🔤';
 
                 if (isDark) {
                     badge.className = `cursor-pointer flex items-center justify-between px-1.5 py-0.5 rounded border transition-all text-[9px] sm:text-[11px] font-bold ${
@@ -2067,10 +2169,7 @@
                             : 'bg-rose-950/75 border-rose-500/70 text-rose-300 hover:bg-rose-900/80 z-10'
                     }`;
                     badgeHtml = `
-                        <span class="truncate flex items-center space-x-1">
-                            <span class="text-[10px]">❓</span>
-                            <span class="truncate font-mono">[? ? ?] ${displayText.substring(0, 7)}...</span>
-                        </span>
+                        <span class="truncate font-mono">[? ? ?] ${displayText.substring(0, 7)}...</span>
                         <span class="text-[8px] sm:text-[10px] text-rose-300 font-mono pl-1">38%</span>
                     `;
                 } else if (isGlare) {
@@ -2082,10 +2181,7 @@
                                 : 'bg-stone-800/80 border-amber-500/60 text-amber-200 hover:bg-amber-900/80 z-10'
                         }`;
                         badgeHtml = `
-                            <span class="truncate flex items-center space-x-1">
-                                <span class="text-[10px]">⚡</span>
-                                <span class="truncate font-mono">[แสงจ้า] ${displayText.substring(0, 6)}...</span>
-                            </span>
+                            <span class="truncate font-mono">[แสงจ้า] ${displayText.substring(0, 6)}...</span>
                             <span class="text-[8px] sm:text-[10px] text-amber-300 font-mono pl-1">52%</span>
                         `;
                     } else {
@@ -2095,10 +2191,7 @@
                                 : 'bg-stone-900/85 border-cyan-400/80 text-cyan-200 hover:bg-emerald-900/90 z-10'
                         }`;
                         badgeHtml = `
-                            <span class="truncate flex items-center space-x-1">
-                                <span class="text-[10px]">${prefixIcon}</span>
-                                <span class="truncate">${displayText}</span>
-                            </span>
+                            <span class="truncate font-mono">${displayText}</span>
                             <span class="text-[8px] sm:text-[10px] text-emerald-300 font-mono font-bold pl-1 whitespace-nowrap">${dish.price}</span>
                         `;
                     }
@@ -2111,10 +2204,7 @@
                                 : 'bg-stone-900/90 hover:bg-purple-900/90 border-purple-400/80 hover:border-purple-300 text-purple-100 hover:text-white shadow-sm z-10')
                     }`;
                     badgeHtml = `
-                        <span class="truncate flex items-center space-x-1">
-                            <span class="text-[10px]">${prefixIcon}</span>
-                            <span class="truncate tracking-tight font-mono">${displayText}</span>
-                        </span>
+                        <span class="truncate tracking-tight font-mono">${displayText}</span>
                         <span class="text-[8px] sm:text-[10px] ${isSelected ? 'text-amber-200' : 'text-emerald-300'} font-mono font-bold pl-1 whitespace-nowrap">${dish.price}</span>
                     `;
                 }
@@ -2135,10 +2225,13 @@
                 return;
             }
 
-            play8Bit('coin');
+            play8Bit('kitchen_bell');
+            setTimeout(() => {
+                speakVoice('Yes, Chef!', 'en-US', 1.0, 1.15);
+            }, 120);
             isOrderServed = false;
 
-            const dishText = `${chosenDish.icon} ${chosenDish.vietName} (${chosenDish.thaiName}) - ${chosenDish.price}`;
+            const dishText = `${chosenDish.vietName} (${chosenDish.thaiName}) - ${chosenDish.price}`;
             const payload = {
                 clientId: myPlayer ? myPlayer.clientId : undefined,
                 studentId: myPlayer ? myPlayer.studentId : '311',
@@ -2167,7 +2260,7 @@
             const orderedDishEl = document.getElementById('ordered-dish-name');
             if (orderedDishEl) {
                 orderedDishEl.innerHTML = `
-                    <div class="text-base font-black text-emerald-900">${chosenDish.icon} ${chosenDish.vietName}</div>
+                    <div class="text-base font-black text-emerald-900">${chosenDish.vietName}</div>
                     <div class="text-xs text-stone-600 font-bold pt-0.5">🇹🇭 ${chosenDish.thaiName} • <span class="text-amber-800 font-mono">${chosenDish.price}</span></div>
                 `;
             }

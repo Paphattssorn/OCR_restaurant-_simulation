@@ -1249,11 +1249,20 @@
                 const res = await fetch('/api/info');
                 if (res.ok) {
                     const data = await res.json();
-                    if (data && data.joinUrl) joinUrl = data.joinUrl;
-                    if (data && data.customUrl) customUrl = data.customUrl;
+                    if (data && data.customUrl) {
+                        customUrl = data.customUrl;
+                        joinUrl = data.customUrl;
+                    } else if (data && data.joinUrl) {
+                        joinUrl = data.joinUrl;
+                    }
                 }
             } catch (e) {
                 console.warn("fetch /api/info error, using fallback origin", e);
+            }
+
+            // If teacher is accessing via Cloudflare HTTPS domain, always prioritize that public origin
+            if (window.location.protocol === 'https:' || (!window.location.hostname.includes('localhost') && !window.location.hostname.startsWith('127.') && !window.location.hostname.startsWith('10.') && !window.location.hostname.startsWith('192.168.'))) {
+                joinUrl = `${window.location.origin}/play`;
             }
 
             const joinUrlEl = document.getElementById('teach-join-url');

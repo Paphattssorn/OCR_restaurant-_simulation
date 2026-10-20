@@ -34,12 +34,25 @@ def get_local_ip():
 
     return '127.0.0.1'
 
+TUNNEL_FILE = os.path.join(DIRECTORY, 'tunnel_url.txt')
+
+def get_persisted_tunnel_url():
+    if os.path.exists(TUNNEL_FILE):
+        try:
+            with open(TUNNEL_FILE, 'r', encoding='utf-8') as f:
+                url = f.read().strip()
+                if url:
+                    return url
+        except Exception:
+            pass
+    return 'https://motor-joke-tactics-cord.trycloudflare.com/play'
+
 # Global In-Memory Game State guarded by Thread Lock
 state_lock = threading.Lock()
 game_state = {
     'status': 'LOBBY',  # 'LOBBY', 'PLAYING', 'ENDED'
     'roundId': 1,
-    'custom_url': '',   # Optional custom public tunnel URL (ngrok, localtunnel, etc.)
+    'custom_url': get_persisted_tunnel_url(),   # Optional custom public tunnel URL
     'players': [],      # list of { studentId, emoji, name, joinedAt, tableNum, clientId }
     'scores': []        # list of { studentId, emoji, name, score, accuracy, qualityTag, qualityIcon, orderDish, orderPrice, orderStatus, timestamp }
 }
@@ -136,6 +149,11 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
                     raw_url = raw_url.rstrip('/') + '/play'
             with state_lock:
                 game_state['custom_url'] = raw_url
+                try:
+                    with open(TUNNEL_FILE, 'w', encoding='utf-8') as f:
+                        f.write(raw_url)
+                except Exception:
+                    pass
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()

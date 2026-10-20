@@ -387,79 +387,76 @@
                     <!-- Step 1 Card -->
                     <div id="step-bar-1" class="p-2 sm:p-2.5 rounded-xl border transition-all bg-amber-100/90 border-amber-400 shadow-sm ring-1 ring-amber-400">
                         <div class="text-[10px] font-black text-amber-900 flex items-center justify-between">
-                            <span>ขั้นตอนที่ 1</span>
+                            <span>ขั้นที่ 1</span>
                             <span id="step-bar-dot-1" class="w-2 h-2 rounded-full bg-amber-600 animate-pulse"></span>
                         </div>
                         <div class="text-xs sm:text-sm font-black text-stone-900 leading-tight pt-0.5">เตรียมภาพ</div>
-                        <div class="text-[9px] text-stone-600 font-medium truncate">Pre-processing (ตัดเงา)</div>
+                        <div class="text-[9px] text-stone-500 font-medium truncate">ตัดเงาขาว-ดำ</div>
                     </div>
 
                     <!-- Step 2 Card -->
                     <div id="step-bar-2" class="p-2 sm:p-2.5 rounded-xl border transition-all bg-stone-50 border-stone-200 opacity-60">
                         <div class="text-[10px] font-bold text-stone-400 flex items-center justify-between">
-                            <span>ขั้นตอนที่ 2</span>
+                            <span>ขั้นที่ 2</span>
                             <span id="step-bar-dot-2" class="w-2 h-2 rounded-full bg-stone-300"></span>
                         </div>
-                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">วิเคราะห์อักษร</div>
-                        <div class="text-[9px] text-stone-400 font-medium truncate">Segmentation (ตีกรอบ)</div>
+                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">วิเคราะห์คำ</div>
+                        <div class="text-[9px] text-stone-400 font-medium truncate">ตีกรอบคำ (Box)</div>
                     </div>
 
                     <!-- Step 3 Card -->
                     <div id="step-bar-3" class="p-2 sm:p-2.5 rounded-xl border transition-all bg-stone-50 border-stone-200 opacity-60">
                         <div class="text-[10px] font-bold text-stone-400 flex items-center justify-between">
-                            <span>ขั้นตอนที่ 3</span>
+                            <span>ขั้นที่ 3</span>
                             <span id="step-bar-dot-3" class="w-2 h-2 rounded-full bg-stone-300"></span>
                         </div>
-                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">สกัดข้อความ & แปล</div>
-                        <div class="text-[9px] text-stone-400 font-medium truncate">OCR Text + Translate</div>
+                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">สกัดคำ & แปล</div>
+                        <div class="text-[9px] text-stone-400 font-medium truncate">OCR + แปลไทย</div>
                     </div>
                 </div>
 
                 <!-- SUB-STEP 0: SELECT SAMPLE OR SNAP PHOTO -->
-                <div id="flow-step-0" class="bistro-card p-4 sm:p-5 space-y-4 text-center">
-                    <div class="space-y-1 text-left">
-                        <span class="text-xs font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">1. เลือกภาพเมนู</span>
-                        <h2 class="text-base sm:text-lg font-black text-stone-900 pt-0.5">เลือกภาพเมนูอาหารเวียดนาม (ทดสอบสแกน) 📸</h2>
-                        <p class="text-xs text-stone-500 font-medium">กดเลือกภาพตัวอย่างเพื่อทดสอบว่าระบบ OCR อ่านข้อความได้แม่นยำแค่ไหน</p>
+                <div id="flow-step-0" class="bistro-card p-4 sm:p-5 space-y-3.5 text-center">
+                    <div class="space-y-0.5 text-left">
+                        <span class="text-[11px] font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">เลือกภาพเมนู</span>
+                        <h2 class="text-base sm:text-lg font-black text-stone-900 pt-0.5">เลือกภาพทดสอบ 📸</h2>
+                        <p class="text-xs text-stone-500 font-medium">กดเลือกภาพตัวอย่างเพื่อทดสอบสแกน OCR</p>
                     </div>
 
                     <!-- 3 Sample Image Selection Buttons (No hints about clear/unclear) -->
-                    <div class="grid grid-cols-3 gap-2 text-left">
+                    <div class="grid grid-cols-3 gap-2 text-center">
                         <button type="button" onclick="selectSampleImage(1)" id="btn-sample-1" class="sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm active:scale-95">
                             <span class="text-2xl block mb-1">🖼️</span>
-                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพตัวอย่างที่ 1</div>
-                            <div class="text-[10px] text-stone-400 font-medium">กดเพื่อเลือกภาพ</div>
+                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพที่ 1</div>
                         </button>
                         <button type="button" onclick="selectSampleImage(2)" id="btn-sample-2" class="sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm active:scale-95">
                             <span class="text-2xl block mb-1">🖼️</span>
-                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพตัวอย่างที่ 2</div>
-                            <div class="text-[10px] text-stone-400 font-medium">กดเพื่อเลือกภาพ</div>
+                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพที่ 2</div>
                         </button>
                         <button type="button" onclick="selectSampleImage(3)" id="btn-sample-3" class="sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm active:scale-95">
                             <span class="text-2xl block mb-1">🖼️</span>
-                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพตัวอย่างที่ 3</div>
-                            <div class="text-[10px] text-stone-400 font-medium">กดเพื่อเลือกภาพ</div>
+                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพที่ 3</div>
                         </button>
                     </div>
 
                     <!-- Photo Preview Box -->
                     <div id="snap-preview-box" class="mobile-canvas-wrap">
                         <img id="snap-img" src="" class="hidden max-w-full max-h-[260px] object-contain block mx-auto rounded-xl">
-                        <div id="snap-placeholder" class="text-center space-y-2 pointer-events-none py-8">
-                            <span class="text-4xl block animate-bounce">👆</span>
-                            <p class="text-xs text-stone-500 font-bold">กรุณากดเลือกภาพตัวอย่างที่ 1, 2 หรือ 3 ด้านบน</p>
+                        <div id="snap-placeholder" class="text-center space-y-1.5 pointer-events-none py-7">
+                            <span class="text-3xl block animate-bounce">👆</span>
+                            <p class="text-xs text-stone-500 font-bold">กดเลือกภาพที่ 1, 2 หรือ 3 ด้านบน</p>
                         </div>
                     </div>
 
                     <!-- Next Step 1 Button -->
-                    <button onclick="goToStep(1)" id="btn-next-step1" class="hidden w-full py-3.5 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-md transition-all">
-                        <span>⚡ ไปต่อ: ขั้นตอนที่ 1 เตรียมภาพ (Pre-processing) ➔</span>
+                    <button onclick="goToStep(1)" id="btn-next-step1" class="hidden w-full py-3 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-md transition-all">
+                        <span>ถัดไป: ขั้นที่ 1 ตัดเงา (Pre-processing) ➔</span>
                     </button>
 
                     <!-- Real Camera Option Fallback -->
-                    <div class="pt-1 border-t border-stone-200">
+                    <div class="pt-1 border-t border-stone-100">
                         <label class="cursor-pointer w-full py-2 bistro-btn bg-stone-50 hover:bg-stone-100 text-stone-600 font-bold text-xs flex items-center justify-center space-x-1.5 border border-stone-200">
-                            <span>📷 หรือถ่ายภาพเมนูจริงด้วยกล้องมือถือ</span>
+                            <span>📷 หรือถ่ายภาพเมนูจริง</span>
                             <input type="file" id="native-cam-input" accept="image/*" capture="environment" class="hidden" onchange="handleStudentCamera(event)">
                         </label>
                     </div>
@@ -469,10 +466,10 @@
                 <!-- SUB-STEP 1: PRE-PROCESSING (ตัดเงาขาว-ดำ) -->
                 <div id="flow-step-1" class="hidden bistro-card p-4 space-y-3">
                     <div class="space-y-0.5 text-center">
-                        <span class="text-xs font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">ขั้นตอนที่ 1: เตรียมภาพ</span>
-                        <h2 class="text-base font-black text-stone-900 pt-1">ปรับตัวหนังสือให้ชัด (Pre-processing) 🎚️</h2>
+                        <span class="text-[11px] font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">ขั้นที่ 1: เตรียมภาพ</span>
+                        <h2 class="text-base font-black text-stone-900 pt-1">ตัดเงา (Pre-processing) 🎚️</h2>
                         <p class="text-xs text-stone-500 font-medium">
-                            เลื่อนแถบ Binarization เพื่อตัดเงาให้ตัวหนังสือคมชัดที่สุด
+                            ปรับแถบตัดเงาให้ตัวหนังสือคมชัด
                         </p>
                     </div>
 
@@ -484,24 +481,24 @@
                     <!-- Slider Control & Inversion Toggle -->
                     <div class="bg-amber-50/70 p-2.5 rounded-xl border border-amber-200 space-y-2">
                         <div class="flex items-center justify-between text-xs font-bold">
-                            <span class="text-stone-800">🎚️ ระดับตัดเงา (Threshold):</span>
+                            <span class="text-stone-800">🎚️ ระดับตัดเงา:</span>
                             <span id="slider-val-txt" class="font-bold text-amber-900 text-xs">128</span>
                         </div>
                         <input type="range" id="thresh-slider" min="30" max="230" value="128" oninput="onThresholdChange(this.value)" class="w-full accent-amber-500 cursor-pointer h-2">
                         
                         <div class="pt-1 border-t border-stone-200">
                             <button onclick="toggleInvertBinarization()" id="btn-invert-mode" class="w-full bistro-card-sm bg-white hover:bg-amber-50 text-stone-800 text-xs py-1.5 font-bold text-center border border-stone-200">
-                                🔄 สีตัวหนังสือ: ดำ / พื้นขาว (มาตรฐาน OCR)
+                                🔄 สลับสีตัวหนังสือ (ขาว/ดำ)
                             </button>
                         </div>
 
                         <p id="thresh-hint" class="text-xs text-center font-medium text-stone-600">
-                            💡 เลื่อนหาจุดที่ชื่อเมนูคมชัดที่สุด
+                            💡 เลื่อนหาจุดที่ตัวหนังสือชัดที่สุด
                         </p>
                     </div>
 
-                    <button onclick="goToStep(2)" class="w-full py-3.5 bistro-btn bg-blue-600 hover:bg-blue-500 text-white font-black text-xs sm:text-sm shadow-sm">
-                        <span>⚡ ไปต่อ: ขั้นตอนที่ 2 วิเคราะห์อักษร (Segmentation) ➔</span>
+                    <button onclick="goToStep(2)" class="w-full py-3 bistro-btn bg-blue-600 hover:bg-blue-500 text-white font-black text-xs sm:text-sm shadow-sm">
+                        <span>ถัดไป: ขั้นที่ 2 ตีกรอบคำ (Segmentation) ➔</span>
                     </button>
                 </div>
 
@@ -509,10 +506,10 @@
                 <!-- SUB-STEP 2: SEGMENTATION (ตีกรอบข้อความ) -->
                 <div id="flow-step-2" class="hidden bistro-card p-4 space-y-3">
                     <div class="space-y-0.5 text-center">
-                        <span class="text-xs font-black text-blue-800 bg-blue-100 px-2.5 py-0.5 rounded-full border border-blue-300">ขั้นตอนที่ 2: วิเคราะห์อักษร</span>
-                        <h2 class="text-base font-black text-stone-900 pt-1">ตรวจจับกรอบข้อความ (Segmentation) 📦</h2>
+                        <span class="text-[11px] font-black text-blue-800 bg-blue-100 px-2.5 py-0.5 rounded-full border border-blue-300">ขั้นที่ 2: วิเคราะห์คำ</span>
+                        <h2 class="text-base font-black text-stone-900 pt-1">ตีกรอบคำ (Segmentation) 📦</h2>
                         <p class="text-xs text-stone-500 font-medium">
-                            ระบบตีกรอบ Bounding Box แยกคำและตำแหน่งแต่ละบรรทัด
+                            ระบบตีกรอบแยกตำแหน่งข้อความแต่ละบรรทัด
                         </p>
                     </div>
 
@@ -521,27 +518,27 @@
                         <canvas id="canvas-step2-live"></canvas>
                     </div>
 
-                    <div class="bg-amber-50/70 p-2.5 rounded-xl border border-amber-200 flex items-center justify-between text-xs font-bold">
-                        <span id="box-count-disp" class="text-emerald-700">📦 ตรวจพบ 8 กรอบข้อความ</span>
-                        <span id="box-conf-score" class="text-emerald-700 text-xs font-bold">ตัวหนังสือชัดเจนดี</span>
+                    <div class="bg-amber-50/70 p-2 rounded-xl border border-amber-200 flex items-center justify-between text-xs font-bold">
+                        <span id="box-count-disp" class="text-emerald-700">📦 พบ 8 กรอบข้อความ</span>
+                        <span id="box-conf-score" class="text-emerald-700 text-xs font-bold">ตัวหนังสือชัดเจน</span>
                     </div>
 
-                    <button onclick="goToStep(3)" class="w-full py-3.5 bistro-btn bg-purple-600 hover:bg-purple-500 text-white font-black text-xs sm:text-sm shadow-sm">
-                        <span>⚡ ไปต่อ: ขั้นตอนที่ 3 สกัดข้อความ & แปลภาษา ➔</span>
+                    <button onclick="goToStep(3)" class="w-full py-3 bistro-btn bg-purple-600 hover:bg-purple-500 text-white font-black text-xs sm:text-sm shadow-sm">
+                        <span>ถัดไป: ขั้นที่ 3 สกัดข้อความ & แปลภาษา ➔</span>
                     </button>
                 </div>
 
 
                 <!-- SUB-STEP 3: OCR EXTRACTION & TRANSLATION & PROOFREADING -->
-                <div id="flow-step-3" class="hidden space-y-3.5">
+                <div id="flow-step-3" class="hidden space-y-3">
                     
                     <!-- 3A: OCR Extracted Bounding Boxes -->
-                    <div class="bistro-card p-4 space-y-3">
+                    <div class="bistro-card p-4 space-y-2.5">
                         <div class="space-y-0.5 text-center">
-                            <span class="text-xs font-black text-purple-800 bg-purple-100 px-2.5 py-0.5 rounded-full border border-purple-300">ขั้นตอนที่ 3: สกัดข้อความ (Output)</span>
-                            <h2 class="text-base font-black text-stone-900 pt-1">ผลลัพธ์การสกัดตัวอักษรด้วย OCR 🔤</h2>
+                            <span class="text-[11px] font-black text-purple-800 bg-purple-100 px-2.5 py-0.5 rounded-full border border-purple-300">ขั้นที่ 3: สกัดข้อความ</span>
+                            <h2 class="text-base font-black text-stone-900 pt-0.5">ผลลัพธ์ OCR 🔤</h2>
                             <p class="text-xs text-stone-500 font-medium">
-                                ระบบถอดรหัสภาพออกมาเป็นตัวอักษรดิจิทัล (Unicode Text)
+                                ถอดรหัสภาพเป็นตัวอักษรเวียดนามดิจิทัล
                             </p>
                         </div>
 
@@ -549,86 +546,69 @@
                         <div class="flex items-center justify-between text-xs font-bold px-1 text-stone-600">
                             <span id="eval-status-pill" class="text-emerald-700 flex items-center space-x-1">
                                 <span>🇻🇳</span>
-                                <span id="eval-title">สกัดข้อความภาษาเวียดนาม</span>
+                                <span id="eval-title">ข้อความภาษาเวียดนาม (OCR)</span>
                             </span>
-                            <span id="eval-xp" class="text-xs text-emerald-700 font-bold">✓ สกัดอักษรสำเร็จ</span>
+                            <span id="eval-xp" class="text-xs text-emerald-700 font-bold">✓ ถอดรหัสสำเร็จ</span>
                         </div>
 
                         <!-- Interactive Canvas Viewport -->
                         <div class="relative w-full bg-stone-950 border border-stone-300 rounded-2xl overflow-hidden flex items-center justify-center select-none p-1 shadow-inner" id="ar-viewport">
                             <div id="ar-inner-wrap" class="relative inline-block max-w-full">
-                                <canvas id="canvas-step3-ar" class="max-w-full max-h-[300px] object-contain block mx-auto"></canvas>
+                                <canvas id="canvas-step3-ar" class="max-w-full max-h-[280px] object-contain block mx-auto"></canvas>
                                 <!-- Interactive translation badges layer -->
                                 <div id="ar-badges-layer" class="absolute inset-0 pointer-events-auto"></div>
                             </div>
                         </div>
 
                         <!-- OCR Explanation Banner -->
-                        <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-xs text-stone-700 font-medium text-left">
-                            💡 <b>ระบบ OCR สิ้นสุดที่ขั้นตอนนี้:</b> ได้ตัวอักษรภาษาเวียดนามในรูปแบบดิจิทัล (Unicode Text) เรียบร้อยแล้ว
+                        <div class="p-2 bg-amber-50 rounded-xl border border-amber-200 text-xs text-stone-700 font-medium text-left">
+                            💡 <b>OCR สิ้นสุดที่นี่:</b> ได้ข้อความภาษาเวียดนามแล้ว (การแปลภาษาเป็นหน้าที่ของ AI แปลภาษา)
                         </div>
 
                         <!-- Machine Translation Trigger Button -->
-                        <div class="pt-0.5">
-                            <button type="button" onclick="triggerMachineTranslation()" id="btn-trigger-translate" class="w-full py-3 bistro-btn bg-blue-600 hover:bg-blue-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm transition-all active:scale-95">
-                                <span class="text-base">🌐</span>
-                                <span id="translate-btn-text">กดแปลภาษาไทยอัตโนมัติ (Machine Translation)</span>
-                            </button>
-                        </div>
+                        <button type="button" onclick="triggerMachineTranslation()" id="btn-trigger-translate" class="w-full py-2.5 bistro-btn bg-blue-600 hover:bg-blue-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm transition-all active:scale-95">
+                            <span class="text-base">🌐</span>
+                            <span id="translate-btn-text">กดแปลภาษาไทย (Machine Translation)</span>
+                        </button>
 
                         <!-- Educational NLP Concept Box (Revealed upon translation) -->
-                        <div id="nlp-concept-box" class="hidden p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 leading-relaxed space-y-1 text-left">
-                            <div class="font-bold flex items-center space-x-1 text-blue-900">
-                                <span>🤖</span>
-                                <span>เกร็ดความรู้: OCR แตกต่างจากการแปลภาษาอย่างไร?</span>
-                            </div>
-                            <p class="text-[11px] text-stone-600">
-                                • <b>OCR (Optical Character Recognition)</b> ทำหน้าที่เพียง "อ่านภาพออกมาเป็นข้อความดิจิทัล"<br>
-                                • ส่วน <b>Machine Translation</b> เป็นเทคโนโลยี AI ด้านภาษา (NLP) ที่นำข้อความที่อ่านได้มาแปลความหมายต่อ
-                            </p>
+                        <div id="nlp-concept-box" class="hidden p-2.5 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 leading-relaxed text-left">
+                            <b>💡 OCR vs แปลภาษา:</b> OCR มีหน้าที่ "อ่านตัวอักษรจากภาพ" ส่วน "แปลความหมาย" เป็นหน้าที่ของระบบแปลภาษา (NLP)
                         </div>
                     </div>
 
 
-                    <!-- 3B: PROOFREADING SECTION (DIRECTLY ADAPTED FROM USER REFERENCE IMAGE 2) -->
-                    <div class="bistro-card p-4 sm:p-5 space-y-3.5 text-left">
-                        <div class="space-y-0.5">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xl">📑</span>
-                                <h3 class="text-base font-black text-stone-900">ตรวจทานข้อความดิจิทัล (Proofreading) และสั่งอาหาร</h3>
+                    <!-- 3B: PROOFREADING SECTION -->
+                    <div class="bistro-card p-4 space-y-2.5 text-left">
+                        <div class="flex items-center justify-between pb-1 border-b border-stone-100">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="text-base">📑</span>
+                                <h3 class="text-sm font-black text-stone-900">ตรวจทานและสั่งอาหาร</h3>
                             </div>
-                            <p class="text-xs text-stone-500 font-medium">
-                                ตรวจสอบความถูกต้องของรายการอาหารและราคาก่อนส่งเข้าห้องครัวอาจารย์
-                            </p>
-                        </div>
-
-                        <!-- Callout Warning Box from Image 2 -->
-                        <div class="bg-amber-50 border border-amber-300 rounded-xl p-3 text-xs text-amber-950 space-y-1">
-                            <div class="font-bold flex items-center space-x-1.5 text-amber-900">
-                                <span>⚠️</span>
-                                <span>ตรวจพบข้อจำกัดของภาพถ่าย:</span>
-                            </div>
-                            <p class="text-[11px] leading-relaxed text-stone-700" id="proofread-alert-msg">
-                                เนื่องจากภาพอาจมีเงาตกกระทบ หรือแสงสะท้อน ระบบ OCR จึงอาจอ่านข้อความหรือราคาคลาดเคลื่อน ให้นักเรียนช่วยตรวจทานข้อมูลให้ถูกต้องก่อนสั่ง!
-                            </p>
-                        </div>
-
-                        <!-- Table indicator -->
-                        <div class="flex items-center justify-between py-1 border-b border-stone-200 text-xs font-bold">
-                            <span class="text-stone-600">หมายเลขโต๊ะของคุณ:</span>
-                            <span id="proofread-table-badge" class="bg-amber-200 text-amber-950 px-3 py-0.5 rounded-full font-black text-xs">
+                            <span id="proofread-table-badge" class="bg-amber-200 text-amber-950 px-2.5 py-0.5 rounded-full font-black text-[11px]">
                                 โต๊ะ 1
                             </span>
                         </div>
 
+                        <!-- Callout Warning Box -->
+                        <div class="bg-amber-50 border border-amber-300 rounded-xl p-2.5 text-xs text-amber-950 space-y-0.5">
+                            <div class="font-bold flex items-center space-x-1 text-amber-900 text-[11px]">
+                                <span>⚠️</span>
+                                <span>ตรวจทานก่อนสั่ง:</span>
+                            </div>
+                            <p class="text-[11px] leading-snug text-stone-700" id="proofread-alert-msg">
+                                ภาพอาจมีเงาหรือแสงสะท้อน โปรดตรวจทานชื่อเมนูและราคาก่อนส่งเข้าครัว!
+                            </p>
+                        </div>
+
                         <!-- Proofreading Dish Items List -->
-                        <div id="proofread-dish-list" class="space-y-2 max-h-[340px] overflow-y-auto pr-1">
+                        <div id="proofread-dish-list" class="space-y-1.5 max-h-[300px] overflow-y-auto pr-1">
                             <!-- Injected dynamically by JS -->
                         </div>
 
                         <!-- Submit Order Button -->
-                        <button onclick="studentSubmitOrder()" id="btn-proofread-submit" disabled class="w-full py-3.5 sm:py-4 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all">
-                            <span>🚀 ยืนยันข้อมูลถูกต้อง และส่งออเดอร์เข้าห้องครัวอาจารย์</span>
+                        <button onclick="studentSubmitOrder()" id="btn-proofread-submit" disabled class="w-full py-3 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all">
+                            <span>🚀 ยืนยันและส่งออเดอร์เข้าครัว</span>
                         </button>
                     </div>
 
@@ -636,7 +616,7 @@
 
 
                 <!-- SUB-STEP 4: LIVE ORDER STATUS TRACKER -->
-                <div id="flow-step-4" class="hidden bistro-card p-5 space-y-3.5 text-center">
+                <div id="flow-step-4" class="hidden bistro-card p-5 space-y-3 text-center">
                     <div class="text-4xl" id="order-status-icon">⏳</div>
                     
                     <div class="space-y-1">
@@ -645,18 +625,18 @@
                         </div>
                         <h2 class="text-base font-black text-stone-900 pt-1" id="order-status-title">ส่งออเดอร์เข้าครัวแล้ว!</h2>
                         
-                        <div class="bg-amber-50/70 p-3 rounded-xl border border-amber-200 text-xs space-y-1 mt-2">
-                            <div class="text-stone-500 font-medium">เมนูที่คุณสั่ง:</div>
+                        <div class="bg-amber-50/70 p-2.5 rounded-xl border border-amber-200 text-xs space-y-0.5 mt-2">
+                            <div class="text-stone-500 font-medium text-[11px]">เมนูที่คุณสั่ง:</div>
                             <div id="ordered-dish-name" class="text-emerald-800 font-black text-sm">🍜 Phở Bò Tái</div>
                         </div>
 
                         <p id="order-status-desc" class="text-xs text-amber-800 font-bold animate-pulse pt-1">
-                            👀 รอดูที่จอใหญ่นะ เมื่ออาจารย์ทำเสร็จจะกดเสิร์ฟให้ทันที!
+                            👀 รอดูที่จออาจารย์ เมื่อทำเสร็จจะกดเสิร์ฟให้ทันที!
                         </p>
                     </div>
 
                     <button onclick="goToStep(0)" class="w-full py-2.5 bistro-btn bg-white hover:bg-stone-50 text-stone-800 font-bold text-xs border border-stone-200 shadow-sm">
-                        🔄 สั่งอาหารเพิ่มอีกจาน
+                        🔄 สั่งเพิ่มอีกจาน
                     </button>
                 </div>
 
@@ -1943,7 +1923,7 @@
         function prepareStep3Output() {
             const evalTitle = document.getElementById('eval-title');
             if (evalTitle) {
-                evalTitle.innerText = isTranslated ? "แปลเป็นภาษาไทยเรียบร้อย (Machine Translation)" : "สกัดข้อความภาษาเวียดนาม (Unicode Text)";
+                evalTitle.innerText = isTranslated ? "แปลภาษาไทยเรียบร้อย (Translation)" : "ข้อความภาษาเวียดนาม (OCR)";
             }
 
             const tableBadge = document.getElementById('proofread-table-badge');
@@ -1954,19 +1934,19 @@
             const alertMsg = document.getElementById('proofread-alert-msg');
             if (alertMsg) {
                 if (currentSampleNum === 2) {
-                    alertMsg.innerHTML = "<b>ภาพตัวอย่างที่ 2 มีเงาตกกระทบ:</b> สังเกตว่าเมนูทางด้านขวาล่างที่อยู่ในเงามืด ระบบ OCR อาจสกัดตัวสะกดคลาดเคลื่อน ให้นักเรียนช่วยตรวจทานชื่อเมนูและราคาก่อนกดสั่งนะ!";
+                    alertMsg.innerHTML = "<b>ภาพที่ 2 มีเงา:</b> ตัวสะกดบางส่วนอาจคลาดเคลื่อน โปรดตรวจทานก่อนสั่ง";
                 } else if (currentSampleNum === 3) {
-                    alertMsg.innerHTML = "<b>ภาพตัวอย่างที่ 3 มีแสงสะท้อนจ้า:</b> แสงแฟลชสะท้อนบนหน้าเมนูทำให้ตัวหนังสือเลือนราง ระบบ OCR จึงอ่านได้ยากขึ้น โปรดตรวจทานรายการอาหารให้ถูกต้องก่อนสั่ง!";
+                    alertMsg.innerHTML = "<b>ภาพที่ 3 มีแสงสะท้อน:</b> ตัวหนังสือบางส่วนเลือนราง โปรดตรวจทานก่อนสั่ง";
                 } else {
-                    alertMsg.innerHTML = "<b>ภาพตัวอย่างที่ 1 แสงสว่างสม่ำเสมอ:</b> ตัวหนังสือมีความคมชัดสูง ระบบ OCR สกัดข้อความได้อย่างสมบูรณ์ ตรวจทานความถูกต้องแล้วเลือกเมนูที่ต้องการสั่งได้เลย!";
+                    alertMsg.innerHTML = "<b>ภาพที่ 1 คมชัด:</b> ตัวหนังสือชัดเจน ตรวจทานแล้วกดสั่งได้เลย";
                 }
             }
 
             const subBtn = document.getElementById('btn-proofread-submit');
             if (subBtn && !chosenDish) {
                 subBtn.disabled = true;
-                subBtn.className = "w-full py-3.5 sm:py-4 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all";
-                subBtn.innerHTML = `<span>👆 ตรวจทานและแตะเลือกเมนูที่ต้องการสั่งก่อนนะ</span>`;
+                subBtn.className = "w-full py-3 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all";
+                subBtn.innerHTML = `<span>👆 แตะเลือกเมนูที่ต้องการสั่ง</span>`;
             }
         }
 
@@ -2003,13 +1983,13 @@
 
             if (isTranslated) {
                 if (nlpBox) nlpBox.classList.remove('hidden');
-                if (btnText) btnText.innerText = "✓ แสดงคำแปลภาษาไทยแล้ว (กดอีกครั้งเพื่อดูภาษาเวียดนาม OCR)";
-                if (evalTitle) evalTitle.innerText = "แปลเป็นภาษาไทยเรียบร้อย (Machine Translation)";
+                if (btnText) btnText.innerText = "✓ แสดงคำแปลแล้ว (กดเพื่อดูภาษาเวียดนาม)";
+                if (evalTitle) evalTitle.innerText = "แปลภาษาไทยเรียบร้อย (Translation)";
                 play8Bit('coin');
             } else {
                 if (nlpBox) nlpBox.classList.add('hidden');
-                if (btnText) btnText.innerText = "กดแปลภาษาไทยอัตโนมัติ (Machine Translation)";
-                if (evalTitle) evalTitle.innerText = "สกัดข้อความภาษาเวียดนาม (Unicode Text)";
+                if (btnText) btnText.innerText = "🌐 แปลเป็นภาษาไทย (Machine Translation)";
+                if (evalTitle) evalTitle.innerText = "ข้อความภาษาเวียดนาม (OCR)";
             }
 
             renderARBadgesOverlay();
@@ -2050,7 +2030,7 @@
                             <div class="text-[11px] truncate pt-0.5">
                                 ${isTranslated 
                                     ? `<span class="text-stone-700 font-medium">🇹🇭 ${dish.thaiName} <span class="text-stone-400 text-[10px]">(${dish.approxThb})</span></span>` 
-                                    : `<span class="text-blue-600 font-medium italic">[ รอแปลภาษา... กดปุ่ม "แปลภาษาไทย" ด้านบน ]</span>`
+                                    : `<span class="text-blue-600 font-medium italic">[ รอแปลภาษา... กดปุ่มด้านบน ]</span>`
                                 }
                             </div>
                         </div>
@@ -2073,9 +2053,9 @@
             const subBtn = document.getElementById('btn-proofread-submit');
             if (subBtn) {
                 subBtn.disabled = false;
-                subBtn.className = "w-full py-3.5 sm:py-4 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-md active:scale-95 transition-all cursor-pointer";
+                subBtn.className = "w-full py-3 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-md active:scale-95 transition-all cursor-pointer";
                 const thaiPart = isTranslated ? ` (${dish.thaiName})` : '';
-                subBtn.innerHTML = `<span>🚀 ยืนยันข้อมูลถูกต้อง: สั่ง ${dish.icon} ${dish.vietName}${thaiPart}</span>`;
+                subBtn.innerHTML = `<span>🚀 ยืนยันสั่ง: ${dish.icon} ${dish.vietName}${thaiPart}</span>`;
             }
         }
 

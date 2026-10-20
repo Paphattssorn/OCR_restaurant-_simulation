@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="800" height="1100">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800;900&amp;display=swap');
+      .title-main { font-family: 'Kanit', sans-serif; font-weight: 900; fill: #ffd166; font-size: 38px; letter-spacing: 3px; }
+      .title-sub { font-family: 'Kanit', sans-serif; font-weight: 600; fill: #f4a261; font-size: 15px; letter-spacing: 2px; }
+      .cat-title { font-family: 'Kanit', sans-serif; font-weight: 800; fill: #e76f51; font-size: 20px; letter-spacing: 1.5px; }
+      .dish-name { font-family: 'Kanit', sans-serif; font-weight: 700; fill: #fdfbf7; font-size: 19px; }
+      .dish-desc { font-family: 'Kanit', sans-serif; font-weight: 400; fill: #a8a29e; font-size: 12px; }
+      .dish-price { font-family: 'Kanit', sans-serif; font-weight: 800; fill: #2a9d8f; font-size: 18px; }
+      .border-line { stroke: #d4a373; stroke-width: 2; stroke-dasharray: 4,4; }
+    </style>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="50%" stop-color="#292524"/>
+      <stop offset="100%" stop-color="#1c1917"/>
+    </linearGradient>
+    <radialGradient id="lantern" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e63946" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#9a031e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background Texture -->
+  <rect width="800" height="1100" fill="url(#bg-grad)"/>
+  
+  <!-- Outer Decorative Border -->
+  <rect x="25" y="25" width="750" height="1050" fill="none" stroke="#d4a373" stroke-width="5" rx="12"/>
+  <rect x="35" y="35" width="730" height="1030" fill="none" stroke="#e76f51" stroke-width="2" rx="8" opacity="0.6"/>
+
+  <!-- Corner Decorations -->
+  <circle cx="45" cy="45" r="6" fill="#ffd166"/>
+  <circle cx="755" cy="45" r="6" fill="#ffd166"/>
+  <circle cx="45" cy="1055" r="6" fill="#ffd166"/>
+  <circle cx="755" cy="1055" r="6" fill="#ffd166"/>
+
+  <!-- Top Banner / Header -->
+  <g transform="translate(400, 95)" text-anchor="middle">
+    <text y="-25" class="title-sub">★ BẾP TRUYỀN THỐNG HÀ NỘI • EST. 1985 ★</text>
+    <text y="22" class="title-main">QUÁN ĂN VIỆT NAM</text>
+    <text y="50" class="title-sub" fill="#e9d8a6">VIETNAMESE AUTHENTIC STREET FOOD</text>
+    <line x1="-320" y1="70" x2="320" y2="70" stroke="#ffd166" stroke-width="3"/>
+    <circle cx="0" cy="70" r="8" fill="#e76f51"/>
+  </g>
+
+  <!-- ================= LEFT COLUMN ================= -->
+  
+  <!-- CATEGORY 1: PHỞ & BÚN -->
+  <g transform="translate(60, 220)">
+    <rect x="-10" y="-22" width="320" height="32" fill="#264653" rx="4"/>
+    <text x="5" y="0" class="cat-title">🍜 1. PHỞ &amp; BÚN (NÚOC)</text>
+    
+    <!-- Item 1: Pho Bo Tai -->
+    <g transform="translate(0, 45)">
+      <text x="0" y="0" class="dish-name">Phở Bò Tái</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">65.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Bánh phở tươi, thịt bò tái lăn, hành lá</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 2: Pho Ga Ta -->
+    <g transform="translate(0, 95)">
+      <text x="0" y="0" class="dish-name">Phở Gà Ta</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">55.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Gà thả vườn xé phay, lá chanh thơm</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 3: Bun Cha Ha Noi -->
+    <g transform="translate(0, 145)">
+      <text x="0" y="0" class="dish-name">Bún Chả Hà Nội</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">70.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Chả nướng than hoa, bún tươi, đu đủ ngâm</text>
+    </g>
+  </g>
+
+  <!-- CATEGORY 2: CƠM & BÁNH MÌ -->
+  <g transform="translate(60, 460)">
+    <rect x="-10" y="-22" width="320" height="32" fill="#264653" rx="4"/>
+    <text x="5" y="0" class="cat-title">🥖 2. BÁNH MÌ &amp; CƠM</text>
+
+    <!-- Item 4: Banh Mi Thit Nuong -->
+    <g transform="translate(0, 45)">
+      <text x="0" y="0" class="dish-name">Bánh Mì Thịt Nướng</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">40.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Pâté gan, thịt nướng sả, đồ chua, ngò rí</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 5: Com Ga Xoi Mo -->
+    <g transform="translate(0, 95)">
+      <text x="0" y="0" class="dish-name">Cơm Gà Xối Mỡ</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">65.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Đùi gà da giòn rụm, cơm chiên tỏi thơm</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 6: Com Tam Suon Bi -->
+    <g transform="translate(0, 145)">
+      <text x="0" y="0" class="dish-name">Cơm Tấm Sườn Bì</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">70.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Sườn heo nướng mật ong, bì thính, mỡ hành</text>
+    </g>
+  </g>
+
+  <!-- ================= RIGHT COLUMN ================= -->
+
+  <!-- CATEGORY 3: MÓN ĂN KÈM -->
+  <g transform="translate(440, 220)">
+    <rect x="-10" y="-22" width="320" height="32" fill="#264653" rx="4"/>
+    <text x="5" y="0" class="cat-title">🥢 3. MÓN ĂN KÈM</text>
+
+    <!-- Item 7: Nem Ran Ha Noi -->
+    <g transform="translate(0, 45)">
+      <text x="0" y="0" class="dish-name">Nem Rán Hà Nội</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">45.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Chả giò tôm thịt mộc nhĩ, vỏ bánh ram giòn</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 8: Goi Cuon Tom Thit -->
+    <g transform="translate(0, 95)">
+      <text x="0" y="0" class="dish-name">Gỏi Cuốn Tôm Thịt</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">50.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Tôm sú luộc, thịt ba chỉ, hẹ, chấm tương đậu</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 9: Banh Xeo Mien Tay -->
+    <g transform="translate(0, 145)">
+      <text x="0" y="0" class="dish-name">Bánh Xèo Giòn Rụm</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">60.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Bột nghệ cốt dừa, nhân tôm tép, giá đỗ</text>
+    </g>
+  </g>
+
+  <!-- CATEGORY 4: ĐỒ UỐNG -->
+  <g transform="translate(440, 460)">
+    <rect x="-10" y="-22" width="320" height="32" fill="#264653" rx="4"/>
+    <text x="5" y="0" class="cat-title">☕ 4. ĐỒ UỐNG TRUYỀN THỐNG</text>
+
+    <!-- Item 10: Ca Phe Sua Da -->
+    <g transform="translate(0, 45)">
+      <text x="0" y="0" class="dish-name">Cà Phê Sữa Đá</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">35.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Cà phê phin Robusta đậm đà, sữa đặc Ông Thọ</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 11: Ca Phe Trung -->
+    <g transform="translate(0, 95)">
+      <text x="0" y="0" class="dish-name">Cà Phê Trứng Hà Nội</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">45.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Lòng đỏ trứng đánh bông kem béo ngậy</text>
+      <line x1="0" y1="28" x2="300" y2="28" class="border-line"/>
+    </g>
+
+    <!-- Item 12: Tra Sen Vang -->
+    <g transform="translate(0, 145)">
+      <text x="0" y="0" class="dish-name">Trà Sen Vàng Hạt Sen</text>
+      <text x="300" y="0" class="dish-price" text-anchor="end">30.000 ₫</text>
+      <text x="0" y="18" class="dish-desc">Trà xanh ướp hoa sen Tây Hồ, hạt sen bùi</text>
+    </g>
+  </g>
+
+  <!-- Bottom Accent / Special Message -->
+  <g transform="translate(400, 750)">
+    <rect x="-340" y="0" width="680" height="270" fill="#231f20" stroke="#d4a373" stroke-width="2" rx="10"/>
+    <text x="0" y="35" text-anchor="middle" font-family="'Kanit', sans-serif" font-weight="900" fill="#ffd166" font-size="20px">★ ĐẶC SẢN NỔI BẬT KHUYÊN THỬ HÔM NAY ★</text>
+    
+    <g transform="translate(-300, 75)">
+      <rect x="0" y="0" width="180" height="160" fill="#1c1917" stroke="#e76f51" stroke-width="2" rx="8"/>
+      <text x="90" y="45" font-size="42px" text-anchor="middle">🍜</text>
+      <text x="90" y="90" font-family="'Kanit', sans-serif" font-weight="800" fill="#fdfbf7" font-size="14px" text-anchor="middle">Phở Bò Tái</text>
+      <text x="90" y="112" font-family="'Kanit', sans-serif" font-weight="700" fill="#2a9d8f" font-size="14px" text-anchor="middle">65.000 ₫</text>
+      <text x="90" y="135" font-family="'Kanit', sans-serif" font-weight="400" fill="#ffd166" font-size="11px" text-anchor="middle">★ TOP SELLER ★</text>
+    </g>
+
+    <g transform="translate(-90, 75)">
+      <rect x="0" y="0" width="180" height="160" fill="#1c1917" stroke="#e76f51" stroke-width="2" rx="8"/>
+      <text x="90" y="45" font-size="42px" text-anchor="middle">🥖</text>
+      <text x="90" y="90" font-family="'Kanit', sans-serif" font-weight="800" fill="#fdfbf7" font-size="14px" text-anchor="middle">Bánh Mì Thịt</text>
+      <text x="90" y="112" font-family="'Kanit', sans-serif" font-weight="700" fill="#2a9d8f" font-size="14px" text-anchor="middle">40.000 ₫</text>
+      <text x="90" y="135" font-family="'Kanit', sans-serif" font-weight="400" fill="#ffd166" font-size="11px" text-anchor="middle">★ GIÒN RỤM ★</text>
+    </g>
+
+    <g transform="translate(120, 75)">
+      <rect x="0" y="0" width="180" height="160" fill="#1c1917" stroke="#e76f51" stroke-width="2" rx="8"/>
+      <text x="90" y="45" font-size="42px" text-anchor="middle">🥢</text>
+      <text x="90" y="90" font-family="'Kanit', sans-serif" font-weight="800" fill="#fdfbf7" font-size="14px" text-anchor="middle">Nem Rán Hà Nội</text>
+      <text x="90" y="112" font-family="'Kanit', sans-serif" font-weight="700" fill="#2a9d8f" font-size="14px" text-anchor="middle">45.000 ₫</text>
+      <text x="90" y="135" font-family="'Kanit', sans-serif" font-weight="400" fill="#ffd166" font-size="11px" text-anchor="middle">★ ĐẬM VỊ BẮC ★</text>
+    </g>
+  </g>
+
+  <!-- Footer Notice -->
+  <text x="400" y="1045" text-anchor="middle" font-family="'Kanit', sans-serif" font-size="13px" fill="#78716c" font-weight="600">
+    HƯỚNG DẪN: Mở máy ảnh quét OCR để dịch sang tiếng Thái và chọn món ăn
+  </text>
+</svg>

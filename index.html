@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bếp Hà Nội 🇻🇳 ครัวเวียดนาม - ส่องกล้องสั่งอาหาร</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Local Offline High-Speed QR Code Generator -->
+    <script src="/qrcode.min.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        viet: {
+                            yellow: '#f4b836',
+                            red: '#b91c1c',
+                            green: '#15803d',
+                            cream: '#fdfaf2',
+                            dark: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Professional & Appetizing Vietnamese Bistro (Hà Nội Cuisine) */
+        body {
+            background-color: #faf7f2;
+            background-image: radial-gradient(#e6dbcc 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            color: #1c1917;
+            font-family: 'Prompt', 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.01em;
+        }
+
+        /* Professional Card System */
+        .bistro-card, .pixel-box {
+            background-color: #ffffff;
+            border: 1px solid #e7dfd5;
+            border-radius: 1.25rem;
+            box-shadow: 0 1px 3px rgba(40, 25, 15, 0.04), 0 8px 24px -4px rgba(40, 25, 15, 0.05);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bistro-card-lg, .pixel-box-lg {
+            background-color: #ffffff;
+            border: 1px solid #e2d5c3;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(40, 25, 15, 0.03), 0 16px 32px -6px rgba(40, 25, 15, 0.06);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bistro-card-sm, .pixel-box-sm {
+            border-radius: 0.75rem;
+            border: 1px solid #e2d7c7;
+        }
+
+        /* Tactile Human-Designed Buttons */
+        .bistro-btn, .pixel-btn {
+            border-radius: 0.875rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .bistro-btn:hover, .pixel-btn:hover {
+            filter: brightness(1.02);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .bistro-btn:active, .pixel-btn:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Vietnamese Bistro Awning */
+        .bistro-awning, .cafe-awning {
+            background: repeating-linear-gradient(
+                90deg,
+                #991b1b,
+                #991b1b 32px,
+                #fef3c7 32px,
+                #fef3c7 64px
+            );
+            box-shadow: 0 2px 8px rgba(153, 27, 27, 0.15);
+            border-bottom: 2px solid #7f1d1d;
+        }
+
+        .mobile-canvas-wrap {
+            width: 100%;
+            max-height: 290px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1c1917;
+            border: 1px solid #d6c7b2;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .mobile-canvas-wrap canvas {
+            max-width: 100%;
+            max-height: 280px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col antialiased select-none">
+
+    <!-- Top Vietnamese Bistro Awning -->
+    <div class="bistro-awning h-3.5 sm:h-4 w-full"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-amber-50/95 backdrop-blur border-b border-amber-200/80 px-4 py-2.5 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <span class="text-2xl">🏮</span>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-stone-900 tracking-tight flex items-center space-x-1.5">
+                        <span>Bếp Hà Nội</span>
+                        <span class="text-xs bg-red-100 text-red-700 font-semibold px-2 py-0.5 rounded-full border border-red-300">🇻🇳 ครัวเวียดนาม</span>
+                    </h1>
+                    <p class="text-[11px] text-stone-500 font-normal hidden sm:block">ส่องเมนู • สั่งของอร่อย</p>
+                </div>
+            </div>
+
+            <!-- Controls: Sound & Screen Switch (Switch hidden for students) -->
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleSound()" id="sound-btn" class="bistro-card-sm bg-white hover:bg-amber-50 text-stone-700 px-3 py-1.5 text-sm flex items-center space-x-1 shadow-sm">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <div class="flex space-x-1.5" id="screen-switch-nav">
+                    <button onclick="switchScreen('student')" id="nav-stu" class="bistro-btn bg-white text-stone-700 font-semibold text-xs sm:text-sm px-3.5 py-1.5 border border-stone-200">
+                        📱 โต๊ะนักเรียน
+                    </button>
+                    <button onclick="switchScreen('teacher')" id="nav-tea" class="bistro-btn bg-amber-400 text-stone-900 font-bold text-xs sm:text-sm px-3.5 py-1.5 shadow-sm">
+                        👨‍🍳 ครัวอาจารย์
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 w-full mx-auto p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
+
+        <!-- ========================================================
+             TEACHER SCREEN (จออาจารย์ = เปิดร้าน & รับออเดอร์)
+             ======================================================== -->
+        <section id="screen-teacher" class="max-w-7xl w-full mx-auto space-y-6">
+            
+            <!-- TEACHER STATE 1: LOBBY (หน้าร้านต้อนรับ & QR Code) -->
+            <div id="teach-lobby-view" class="space-y-6">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+                    
+                    <!-- Left 5 cols: Big QR Code -->
+                    <div class="lg:col-span-5 bistro-card-lg p-6 sm:p-7 text-center space-y-4 flex flex-col justify-between">
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">1. สแกนเข้าโต๊ะ</span>
+                            <h2 class="text-xl sm:text-2xl font-black text-stone-900 pt-1">เปิดกล้องมือถือสแกน QR CODE</h2>
+                            <p class="text-xs text-stone-500 font-medium">สแกนเข้าโต๊ะอาหารเพื่อเตรียมสั่งของอร่อย</p>
+                        </div>
+                        
+                        <div id="teach-qr-box" class="bg-white p-4 border border-stone-200 rounded-2xl w-64 h-64 sm:w-80 sm:h-80 mx-auto flex items-center justify-center shadow-sm">
+                            <span class="text-stone-400 font-bold text-sm animate-pulse">กำลังโหลด QR Code...</span>
+                        </div>
+
+                        <div class="space-y-1">
+                            <p class="text-xs font-bold text-stone-600">หรือพิมพ์ลิงก์นี้ในเบราว์เซอร์มือถือ:</p>
+                            <div id="teach-join-url" class="text-xs sm:text-sm font-bold text-amber-900 bg-amber-50 p-2.5 border border-amber-200 rounded-xl truncate">
+                                LOADING IP...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right 7 cols: Waiting Room & BIG START BUTTON -->
+                    <div class="lg:col-span-7 bistro-card-lg p-6 sm:p-7 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                                <div>
+                                    <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300">2. ลูกค้าในร้าน</span>
+                                    <h3 class="text-xl sm:text-2xl font-black text-stone-900 mt-1">ผัง 10 โต๊ะในร้าน</h3>
+                                </div>
+                                <span id="lobby-player-count" class="text-sm sm:text-base bg-amber-400 text-stone-900 px-3.5 py-1 rounded-full font-bold shadow-sm">
+                                    นั่งแล้ว 0 / 10 โต๊ะ
+                                </span>
+                            </div>
+
+                            <!-- Live 10-Table Grid of Joined Players -->
+                            <div id="lobby-player-grid" class="min-h-[240px] max-h-[380px] overflow-y-auto p-3 bg-stone-50/70 rounded-2xl border border-stone-200 grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3">
+                                <!-- Rendered dynamically by JS (Tables 1-10) -->
+                            </div>
+                        </div>
+
+                        <!-- Big Start Button -->
+                        <div class="pt-2 space-y-2">
+                            <button onclick="teacherStartGame()" class="w-full py-4 sm:py-5 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base sm:text-lg flex items-center justify-center space-x-2.5 shadow-md">
+                                <span class="text-2xl">🏮</span>
+                                <span>เปิดร้าน! เริ่มสั่งอาหารได้เลย (START)</span>
+                            </button>
+                            <div class="flex justify-between items-center text-xs text-stone-400 px-1">
+                                <span>💡 เมื่อเริ่มแล้ว จอนักเรียนทุกคนจะเริ่มสแกนพร้อมกัน</span>
+                                <button onclick="teacherClearAllTables()" class="hover:text-rose-600 font-medium underline transition-colors">
+                                    🧹 ล้างโต๊ะทั้งหมด
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEACHER STATE 2: LIVE MENU & ORDER DISPATCH (อาจารย์รับออเดอร์) -->
+            <div id="teach-battle-view" class="hidden space-y-6">
+                
+                <!-- Chef Bar -->
+                <div class="bg-amber-100/90 border border-amber-300 rounded-2xl p-3.5 flex items-center justify-between font-bold text-stone-800 shadow-sm">
+                    <div class="flex items-center space-x-2 text-sm sm:text-base">
+                        <span class="text-2xl">👨‍🍳</span>
+                        <span>ครัวอาจารย์: เมื่อนักเรียนกดสั่งอาหาร ออเดอร์จะขึ้นที่นี่</span>
+                    </div>
+                    <button onclick="teacherResetGame()" class="bistro-btn bg-white hover:bg-stone-50 text-stone-700 font-bold text-xs px-3.5 py-1.5 border border-stone-300 shadow-sm">
+                        🔄 เริ่มรอบใหม่
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+                    
+                    <!-- Left 6 cols: Authentic Vietnamese Menu for Students to Scan -->
+                    <div class="lg:col-span-6 bistro-card-lg p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+                        <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                            <div>
+                                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">📜 เมนูร้าน</span>
+                                <h3 class="text-base sm:text-lg font-black text-stone-900 mt-1">QUÁN ĂN VIỆT NAM (BẾP HÀ NỘI)</h3>
+                            </div>
+                            <button onclick="openMenuModal()" class="bistro-btn bg-amber-400 hover:bg-amber-300 text-stone-900 px-3 py-1.5 text-xs font-bold flex items-center space-x-1 shadow-sm">
+                                <span>🔍 ซูมเต็มจอ</span>
+                            </button>
+                        </div>
+
+                        <!-- Real Authentic Menu Image Display -->
+                        <div class="bg-stone-950 p-2.5 border border-stone-200 rounded-2xl shadow-sm flex items-center justify-center">
+                            <img id="teach-menu-img" src="/menu_vietnam.svg" alt="Quán Ăn Việt Nam Menu" class="max-h-[500px] w-auto object-contain cursor-pointer transition-transform hover:scale-[1.01]" onclick="openMenuModal()" title="คลิกเพื่อขยายเมนูเต็มจอ">
+                        </div>
+
+                        <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-stone-700 font-medium flex items-center justify-between">
+                            <span>💡 ให้นักเรียนส่องกล้องมาที่จอนี้ หรือใช้ภาพตัวอย่างในมือถือได้ครับ</span>
+                            <span class="text-[11px] font-bold text-amber-900 bg-amber-200 px-2 py-0.5 rounded-full">8 เมนู</span>
+                        </div>
+                    </div>
+
+                    <!-- Right 6 cols: Live Kitchen Order Tickets -->
+                    <div class="lg:col-span-6 bistro-card-lg p-5 sm:p-6 space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                            <div>
+                                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">🛎️ บิลออเดอร์</span>
+                                <h3 class="text-lg font-black text-stone-900 mt-1">ออเดอร์ที่สั่งเข้ามา</h3>
+                            </div>
+                            <span id="order-count-badge" class="text-xs bg-amber-400 text-stone-900 font-bold px-3 py-1 rounded-full shadow-sm">
+                                0 บิล
+                            </span>
+                        </div>
+
+                        <!-- Ticket Carousel Container -->
+                        <div id="teach-order-tickets" class="min-h-[380px] max-h-[520px] overflow-y-auto space-y-2.5 p-3 bg-stone-50/70 rounded-2xl border border-stone-200">
+                            <div class="p-16 text-center text-xs text-stone-400 font-medium">
+                                รอนักเรียนสแกนเมนูและกดสั่งอาหารเข้ามานะจ๊ะ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================
+             STUDENT MOBILE SCREEN (จอนักเรียนบนมือถือ)
+             ======================================================== -->
+        <section id="screen-student" class="hidden max-w-md w-full mx-auto space-y-4">
+
+            <!-- STU STATE 1: REGISTRATION -->
+            <div id="stu-step-join" class="bistro-card p-5 sm:p-6 space-y-4 text-center">
+                
+                <div class="space-y-1">
+                    <span class="text-2xl">🏮</span>
+                    <h2 class="text-lg font-black text-stone-900">เลือกโต๊ะนั่ง</h2>
+                    <p class="text-xs text-stone-500 font-medium">ใส่ชื่อเล่นกับรหัส 3 ตัวท้ายเพื่อเปิดโต๊ะนะ</p>
+                </div>
+
+                <!-- 1. Nickname First -->
+                <div class="space-y-1 text-left">
+                    <label class="text-xs font-bold text-stone-700">1. ชื่อเล่นของคุณ: <span class="text-rose-500 font-bold">*</span></label>
+                    <input type="text" id="stu-input-name" placeholder="เช่น อาร์ม, ปลาย, มีน" oninput="hideJoinError()" onkeydown="if(event.key==='Enter') document.getElementById('stu-input-id').focus()" class="w-full bg-white border border-stone-300 rounded-xl p-2.5 text-stone-900 font-bold text-base focus:outline-none focus:border-amber-500 transition-colors">
+                </div>
+
+                <!-- 2. 3-Digit ID Second -->
+                <div class="space-y-1 text-left">
+                    <label class="text-xs font-bold text-stone-700">2. รหัส 3 ตัวท้าย (เฉพาะตัวเลข): <span class="text-rose-500 font-bold">*</span></label>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-base font-black text-amber-800 bg-amber-100 px-3.5 py-2 rounded-xl border border-amber-300">#</span>
+                        <input type="text" id="stu-input-id" maxlength="3" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, ''); hideJoinError();" onkeydown="if(event.key==='Enter') studentJoinLobby()" placeholder="เช่น 311" class="w-full bg-white border border-stone-300 rounded-xl p-2.5 text-stone-900 font-bold text-base tracking-widest text-center focus:outline-none focus:border-amber-500 transition-colors">
+                    </div>
+                </div>
+
+                <!-- Live Error Box -->
+                <div id="stu-join-error-box" class="hidden text-xs text-rose-700 bg-rose-50 border border-rose-300 p-2.5 rounded-xl font-bold flex items-center space-x-2 text-left animate-pulse">
+                    <span>⚠️</span>
+                    <span id="stu-join-error-msg"></span>
+                </div>
+
+                <!-- 3. Character / Animal Avatar Picker -->
+                <div class="space-y-1 text-left">
+                    <label class="text-xs font-bold text-stone-700">3. เลือกไอคอนประจำตัว:</label>
+                    <div class="grid grid-cols-5 gap-2 bg-amber-50/60 p-2.5 rounded-xl border border-amber-200" id="emoji-picker-grid">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Join Button -->
+                <button onclick="studentJoinLobby()" id="btn-stu-join" class="w-full py-3.5 bistro-btn bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold text-sm flex items-center justify-center space-x-2 shadow-sm">
+                    <span>นั่งโต๊ะ ➔ รอร้านเปิด</span>
+                </button>
+            </div>
+
+
+            <!-- STU STATE 2: WAITING IN CAFE -->
+            <div id="stu-step-waiting" class="hidden bistro-card p-6 space-y-4 text-center">
+                <div class="w-20 h-20 mx-auto bg-amber-100/80 rounded-2xl border border-amber-300 flex items-center justify-center text-4xl shadow-sm" id="stu-waiting-avatar">
+                    🐱
+                </div>
+                
+                <div class="space-y-1.5">
+                    <div id="stu-waiting-table" class="text-xs text-amber-900 font-bold bg-amber-200/90 px-3 py-1 inline-block rounded-full">โต๊ะ 1</div>
+                    <h3 class="text-base font-black text-stone-900 pt-0.5" id="stu-waiting-name">นักเรียน #311</h3>
+                    <p class="text-xs text-stone-600 font-medium leading-relaxed">
+                        นั่งรอที่โต๊ะแล้วจ้า 🥢<br>
+                        <span class="text-emerald-700 animate-pulse font-bold">รออาจารย์เปิดร้านสักครู่นะครับ</span>
+                    </p>
+                </div>
+
+                <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-xs text-stone-600 font-medium">
+                    💡 เตรียมเล็งกล้องไปที่เมนูบนจอใหญ่ได้เลย
+                </div>
+
+                <button onclick="studentLeaveTable()" class="text-xs text-stone-400 hover:text-stone-600 underline font-medium pt-1">
+                    🚪 เปลี่ยนชื่อ / ลุกจากโต๊ะ
+                </button>
+            </div>
+
+
+            <!-- STU STATE 3: STEP-BY-STEP HANDS-ON WORKFLOW -->
+            <div id="stu-step-workflow" class="hidden space-y-3">
+
+                <!-- Player mini HUD bar -->
+                <div class="bg-amber-100/90 border border-amber-200 rounded-xl px-3.5 py-2 flex items-center justify-between text-xs font-bold shadow-sm">
+                    <div class="flex items-center space-x-2">
+                        <span id="player-hud-avatar" class="text-xl">🐱</span>
+                        <span id="player-hud-name" class="text-amber-950 font-bold text-xs">โต๊ะ 1 • อาร์ม #311</span>
+                    </div>
+                    <span id="lab-step-indicator" class="bg-amber-500 text-stone-950 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+                        1. เตรียมภาพ
+                    </span>
+                </div>
+
+                <!-- 3-STEP PROGRESS BAR (Directly from User Reference Image 1 & 2) -->
+                <div class="grid grid-cols-3 gap-1.5 sm:gap-2 text-left select-none pb-1" id="student-step-indicator-bar">
+                    <!-- Step 1 Card -->
+                    <div id="step-bar-1" class="p-2 sm:p-2.5 rounded-xl border transition-all bg-amber-100/90 border-amber-400 shadow-sm ring-1 ring-amber-400">
+                        <div class="text-[10px] font-black text-amber-900 flex items-center justify-between">
+                            <span>ขั้นตอนที่ 1</span>
+                            <span id="step-bar-dot-1" class="w-2 h-2 rounded-full bg-amber-600 animate-pulse"></span>
+                        </div>
+                        <div class="text-xs sm:text-sm font-black text-stone-900 leading-tight pt-0.5">เตรียมภาพ</div>
+                        <div class="text-[9px] text-stone-600 font-medium truncate">Pre-processing (ตัดเงา)</div>
+                    </div>
+
+                    <!-- Step 2 Card -->
+                    <div id="step-bar-2" class="p-2 sm:p-2.5 rounded-xl border transition-all bg-stone-50 border-stone-200 opacity-60">
+                        <div class="text-[10px] font-bold text-stone-400 flex items-center justify-between">
+                            <span>ขั้นตอนที่ 2</span>
+                            <span id="step-bar-dot-2" class="w-2 h-2 rounded-full bg-stone-300"></span>
+                        </div>
+                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">วิเคราะห์อักษร</div>
+                        <div class="text-[9px] text-stone-400 font-medium truncate">Segmentation (ตีกรอบ)</div>
+                    </div>
+
+                    <!-- Step 3 Card -->
+                    <div id="step-bar-3" class="p-2 sm:p-2.5 rounded-xl border transition-all bg-stone-50 border-stone-200 opacity-60">
+                        <div class="text-[10px] font-bold text-stone-400 flex items-center justify-between">
+                            <span>ขั้นตอนที่ 3</span>
+                            <span id="step-bar-dot-3" class="w-2 h-2 rounded-full bg-stone-300"></span>
+                        </div>
+                        <div class="text-xs sm:text-sm font-black text-stone-700 leading-tight pt-0.5">สกัดข้อความ & แปล</div>
+                        <div class="text-[9px] text-stone-400 font-medium truncate">OCR Text + Translate</div>
+                    </div>
+                </div>
+
+                <!-- SUB-STEP 0: SELECT SAMPLE OR SNAP PHOTO -->
+                <div id="flow-step-0" class="bistro-card p-4 sm:p-5 space-y-4 text-center">
+                    <div class="space-y-1 text-left">
+                        <span class="text-xs font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">1. เลือกภาพเมนู</span>
+                        <h2 class="text-base sm:text-lg font-black text-stone-900 pt-0.5">เลือกภาพเมนูอาหารเวียดนาม (ทดสอบสแกน) 📸</h2>
+                        <p class="text-xs text-stone-500 font-medium">กดเลือกภาพตัวอย่างเพื่อทดสอบว่าระบบ OCR อ่านข้อความได้แม่นยำแค่ไหน</p>
+                    </div>
+
+                    <!-- 3 Sample Image Selection Buttons (No hints about clear/unclear) -->
+                    <div class="grid grid-cols-3 gap-2 text-left">
+                        <button type="button" onclick="selectSampleImage(1)" id="btn-sample-1" class="sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm active:scale-95">
+                            <span class="text-2xl block mb-1">🖼️</span>
+                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพตัวอย่างที่ 1</div>
+                            <div class="text-[10px] text-stone-400 font-medium">กดเพื่อเลือกภาพ</div>
+                        </button>
+                        <button type="button" onclick="selectSampleImage(2)" id="btn-sample-2" class="sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm active:scale-95">
+                            <span class="text-2xl block mb-1">🖼️</span>
+                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพตัวอย่างที่ 2</div>
+                            <div class="text-[10px] text-stone-400 font-medium">กดเพื่อเลือกภาพ</div>
+                        </button>
+                        <button type="button" onclick="selectSampleImage(3)" id="btn-sample-3" class="sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm active:scale-95">
+                            <span class="text-2xl block mb-1">🖼️</span>
+                            <div class="text-xs sm:text-sm font-black text-stone-900">ภาพตัวอย่างที่ 3</div>
+                            <div class="text-[10px] text-stone-400 font-medium">กดเพื่อเลือกภาพ</div>
+                        </button>
+                    </div>
+
+                    <!-- Photo Preview Box -->
+                    <div id="snap-preview-box" class="mobile-canvas-wrap">
+                        <img id="snap-img" src="" class="hidden max-w-full max-h-[260px] object-contain block mx-auto rounded-xl">
+                        <div id="snap-placeholder" class="text-center space-y-2 pointer-events-none py-8">
+                            <span class="text-4xl block animate-bounce">👆</span>
+                            <p class="text-xs text-stone-500 font-bold">กรุณากดเลือกภาพตัวอย่างที่ 1, 2 หรือ 3 ด้านบน</p>
+                        </div>
+                    </div>
+
+                    <!-- Next Step 1 Button -->
+                    <button onclick="goToStep(1)" id="btn-next-step1" class="hidden w-full py-3.5 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-md transition-all">
+                        <span>⚡ ไปต่อ: ขั้นตอนที่ 1 เตรียมภาพ (Pre-processing) ➔</span>
+                    </button>
+
+                    <!-- Real Camera Option Fallback -->
+                    <div class="pt-1 border-t border-stone-200">
+                        <label class="cursor-pointer w-full py-2 bistro-btn bg-stone-50 hover:bg-stone-100 text-stone-600 font-bold text-xs flex items-center justify-center space-x-1.5 border border-stone-200">
+                            <span>📷 หรือถ่ายภาพเมนูจริงด้วยกล้องมือถือ</span>
+                            <input type="file" id="native-cam-input" accept="image/*" capture="environment" class="hidden" onchange="handleStudentCamera(event)">
+                        </label>
+                    </div>
+                </div>
+
+
+                <!-- SUB-STEP 1: PRE-PROCESSING (ตัดเงาขาว-ดำ) -->
+                <div id="flow-step-1" class="hidden bistro-card p-4 space-y-3">
+                    <div class="space-y-0.5 text-center">
+                        <span class="text-xs font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">ขั้นตอนที่ 1: เตรียมภาพ</span>
+                        <h2 class="text-base font-black text-stone-900 pt-1">ปรับตัวหนังสือให้ชัด (Pre-processing) 🎚️</h2>
+                        <p class="text-xs text-stone-500 font-medium">
+                            เลื่อนแถบ Binarization เพื่อตัดเงาให้ตัวหนังสือคมชัดที่สุด
+                        </p>
+                    </div>
+
+                    <!-- Live High-Resolution Canvas Container -->
+                    <div class="mobile-canvas-wrap">
+                        <canvas id="canvas-step1-live"></canvas>
+                    </div>
+
+                    <!-- Slider Control & Inversion Toggle -->
+                    <div class="bg-amber-50/70 p-2.5 rounded-xl border border-amber-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs font-bold">
+                            <span class="text-stone-800">🎚️ ระดับตัดเงา (Threshold):</span>
+                            <span id="slider-val-txt" class="font-bold text-amber-900 text-xs">128</span>
+                        </div>
+                        <input type="range" id="thresh-slider" min="30" max="230" value="128" oninput="onThresholdChange(this.value)" class="w-full accent-amber-500 cursor-pointer h-2">
+                        
+                        <div class="pt-1 border-t border-stone-200">
+                            <button onclick="toggleInvertBinarization()" id="btn-invert-mode" class="w-full bistro-card-sm bg-white hover:bg-amber-50 text-stone-800 text-xs py-1.5 font-bold text-center border border-stone-200">
+                                🔄 สีตัวหนังสือ: ดำ / พื้นขาว (มาตรฐาน OCR)
+                            </button>
+                        </div>
+
+                        <p id="thresh-hint" class="text-xs text-center font-medium text-stone-600">
+                            💡 เลื่อนหาจุดที่ชื่อเมนูคมชัดที่สุด
+                        </p>
+                    </div>
+
+                    <button onclick="goToStep(2)" class="w-full py-3.5 bistro-btn bg-blue-600 hover:bg-blue-500 text-white font-black text-xs sm:text-sm shadow-sm">
+                        <span>⚡ ไปต่อ: ขั้นตอนที่ 2 วิเคราะห์อักษร (Segmentation) ➔</span>
+                    </button>
+                </div>
+
+
+                <!-- SUB-STEP 2: SEGMENTATION (ตีกรอบข้อความ) -->
+                <div id="flow-step-2" class="hidden bistro-card p-4 space-y-3">
+                    <div class="space-y-0.5 text-center">
+                        <span class="text-xs font-black text-blue-800 bg-blue-100 px-2.5 py-0.5 rounded-full border border-blue-300">ขั้นตอนที่ 2: วิเคราะห์อักษร</span>
+                        <h2 class="text-base font-black text-stone-900 pt-1">ตรวจจับกรอบข้อความ (Segmentation) 📦</h2>
+                        <p class="text-xs text-stone-500 font-medium">
+                            ระบบตีกรอบ Bounding Box แยกคำและตำแหน่งแต่ละบรรทัด
+                        </p>
+                    </div>
+
+                    <!-- High-Res Bounding Box Canvas -->
+                    <div class="mobile-canvas-wrap">
+                        <canvas id="canvas-step2-live"></canvas>
+                    </div>
+
+                    <div class="bg-amber-50/70 p-2.5 rounded-xl border border-amber-200 flex items-center justify-between text-xs font-bold">
+                        <span id="box-count-disp" class="text-emerald-700">📦 ตรวจพบ 8 กรอบข้อความ</span>
+                        <span id="box-conf-score" class="text-emerald-700 text-xs font-bold">ตัวหนังสือชัดเจนดี</span>
+                    </div>
+
+                    <button onclick="goToStep(3)" class="w-full py-3.5 bistro-btn bg-purple-600 hover:bg-purple-500 text-white font-black text-xs sm:text-sm shadow-sm">
+                        <span>⚡ ไปต่อ: ขั้นตอนที่ 3 สกัดข้อความ & แปลภาษา ➔</span>
+                    </button>
+                </div>
+
+
+                <!-- SUB-STEP 3: OCR EXTRACTION & TRANSLATION & PROOFREADING -->
+                <div id="flow-step-3" class="hidden space-y-3.5">
+                    
+                    <!-- 3A: OCR Extracted Bounding Boxes -->
+                    <div class="bistro-card p-4 space-y-3">
+                        <div class="space-y-0.5 text-center">
+                            <span class="text-xs font-black text-purple-800 bg-purple-100 px-2.5 py-0.5 rounded-full border border-purple-300">ขั้นตอนที่ 3: สกัดข้อความ (Output)</span>
+                            <h2 class="text-base font-black text-stone-900 pt-1">ผลลัพธ์การสกัดตัวอักษรด้วย OCR 🔤</h2>
+                            <p class="text-xs text-stone-500 font-medium">
+                                ระบบถอดรหัสภาพออกมาเป็นตัวอักษรดิจิทัล (Unicode Text)
+                            </p>
+                        </div>
+
+                        <!-- Mini status pill -->
+                        <div class="flex items-center justify-between text-xs font-bold px-1 text-stone-600">
+                            <span id="eval-status-pill" class="text-emerald-700 flex items-center space-x-1">
+                                <span>🇻🇳</span>
+                                <span id="eval-title">สกัดข้อความภาษาเวียดนาม</span>
+                            </span>
+                            <span id="eval-xp" class="text-xs text-emerald-700 font-bold">✓ สกัดอักษรสำเร็จ</span>
+                        </div>
+
+                        <!-- Interactive Canvas Viewport -->
+                        <div class="relative w-full bg-stone-950 border border-stone-300 rounded-2xl overflow-hidden flex items-center justify-center select-none p-1 shadow-inner" id="ar-viewport">
+                            <div id="ar-inner-wrap" class="relative inline-block max-w-full">
+                                <canvas id="canvas-step3-ar" class="max-w-full max-h-[300px] object-contain block mx-auto"></canvas>
+                                <!-- Interactive translation badges layer -->
+                                <div id="ar-badges-layer" class="absolute inset-0 pointer-events-auto"></div>
+                            </div>
+                        </div>
+
+                        <!-- OCR Explanation Banner -->
+                        <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-xs text-stone-700 font-medium text-left">
+                            💡 <b>ระบบ OCR สิ้นสุดที่ขั้นตอนนี้:</b> ได้ตัวอักษรภาษาเวียดนามในรูปแบบดิจิทัล (Unicode Text) เรียบร้อยแล้ว
+                        </div>
+
+                        <!-- Machine Translation Trigger Button -->
+                        <div class="pt-0.5">
+                            <button type="button" onclick="triggerMachineTranslation()" id="btn-trigger-translate" class="w-full py-3 bistro-btn bg-blue-600 hover:bg-blue-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm transition-all active:scale-95">
+                                <span class="text-base">🌐</span>
+                                <span id="translate-btn-text">กดแปลภาษาไทยอัตโนมัติ (Machine Translation)</span>
+                            </button>
+                        </div>
+
+                        <!-- Educational NLP Concept Box (Revealed upon translation) -->
+                        <div id="nlp-concept-box" class="hidden p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 leading-relaxed space-y-1 text-left">
+                            <div class="font-bold flex items-center space-x-1 text-blue-900">
+                                <span>🤖</span>
+                                <span>เกร็ดความรู้: OCR แตกต่างจากการแปลภาษาอย่างไร?</span>
+                            </div>
+                            <p class="text-[11px] text-stone-600">
+                                • <b>OCR (Optical Character Recognition)</b> ทำหน้าที่เพียง "อ่านภาพออกมาเป็นข้อความดิจิทัล"<br>
+                                • ส่วน <b>Machine Translation</b> เป็นเทคโนโลยี AI ด้านภาษา (NLP) ที่นำข้อความที่อ่านได้มาแปลความหมายต่อ
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- 3B: PROOFREADING SECTION (DIRECTLY ADAPTED FROM USER REFERENCE IMAGE 2) -->
+                    <div class="bistro-card p-4 sm:p-5 space-y-3.5 text-left">
+                        <div class="space-y-0.5">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xl">📑</span>
+                                <h3 class="text-base font-black text-stone-900">ตรวจทานข้อความดิจิทัล (Proofreading) และสั่งอาหาร</h3>
+                            </div>
+                            <p class="text-xs text-stone-500 font-medium">
+                                ตรวจสอบความถูกต้องของรายการอาหารและราคาก่อนส่งเข้าห้องครัวอาจารย์
+                            </p>
+                        </div>
+
+                        <!-- Callout Warning Box from Image 2 -->
+                        <div class="bg-amber-50 border border-amber-300 rounded-xl p-3 text-xs text-amber-950 space-y-1">
+                            <div class="font-bold flex items-center space-x-1.5 text-amber-900">
+                                <span>⚠️</span>
+                                <span>ตรวจพบข้อจำกัดของภาพถ่าย:</span>
+                            </div>
+                            <p class="text-[11px] leading-relaxed text-stone-700" id="proofread-alert-msg">
+                                เนื่องจากภาพอาจมีเงาตกกระทบ หรือแสงสะท้อน ระบบ OCR จึงอาจอ่านข้อความหรือราคาคลาดเคลื่อน ให้นักเรียนช่วยตรวจทานข้อมูลให้ถูกต้องก่อนสั่ง!
+                            </p>
+                        </div>
+
+                        <!-- Table indicator -->
+                        <div class="flex items-center justify-between py-1 border-b border-stone-200 text-xs font-bold">
+                            <span class="text-stone-600">หมายเลขโต๊ะของคุณ:</span>
+                            <span id="proofread-table-badge" class="bg-amber-200 text-amber-950 px-3 py-0.5 rounded-full font-black text-xs">
+                                โต๊ะ 1
+                            </span>
+                        </div>
+
+                        <!-- Proofreading Dish Items List -->
+                        <div id="proofread-dish-list" class="space-y-2 max-h-[340px] overflow-y-auto pr-1">
+                            <!-- Injected dynamically by JS -->
+                        </div>
+
+                        <!-- Submit Order Button -->
+                        <button onclick="studentSubmitOrder()" id="btn-proofread-submit" disabled class="w-full py-3.5 sm:py-4 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all">
+                            <span>🚀 ยืนยันข้อมูลถูกต้อง และส่งออเดอร์เข้าห้องครัวอาจารย์</span>
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- SUB-STEP 4: LIVE ORDER STATUS TRACKER -->
+                <div id="flow-step-4" class="hidden bistro-card p-5 space-y-3.5 text-center">
+                    <div class="text-4xl" id="order-status-icon">⏳</div>
+                    
+                    <div class="space-y-1">
+                        <div class="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full inline-block" id="order-status-badge">
+                            [ รอคิวปรุง... ]
+                        </div>
+                        <h2 class="text-base font-black text-stone-900 pt-1" id="order-status-title">ส่งออเดอร์เข้าครัวแล้ว!</h2>
+                        
+                        <div class="bg-amber-50/70 p-3 rounded-xl border border-amber-200 text-xs space-y-1 mt-2">
+                            <div class="text-stone-500 font-medium">เมนูที่คุณสั่ง:</div>
+                            <div id="ordered-dish-name" class="text-emerald-800 font-black text-sm">🍜 Phở Bò Tái</div>
+                        </div>
+
+                        <p id="order-status-desc" class="text-xs text-amber-800 font-bold animate-pulse pt-1">
+                            👀 รอดูที่จอใหญ่นะ เมื่ออาจารย์ทำเสร็จจะกดเสิร์ฟให้ทันที!
+                        </p>
+                    </div>
+
+                    <button onclick="goToStep(0)" class="w-full py-2.5 bistro-btn bg-white hover:bg-stone-50 text-stone-800 font-bold text-xs border border-stone-200 shadow-sm">
+                        🔄 สั่งอาหารเพิ่มอีกจาน
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Fullscreen Menu Modal for Projector -->
+    <div id="menu-modal" class="fixed inset-0 z-50 bg-black/90 hidden flex flex-col items-center justify-center p-3">
+        <div class="relative max-w-4xl w-full max-h-[92vh] flex flex-col items-center">
+            <button onclick="closeMenuModal()" class="self-end mb-2 pixel-btn bg-rose-500 hover:bg-rose-400 text-white font-black text-xs sm:text-sm px-4 py-2 flex items-center space-x-1.5 shadow-lg">
+                <span>✕ ปิดหน้าต่างซูม (ESC)</span>
+            </button>
+            <div class="border-4 border-amber-400 bg-stone-950 p-2 rounded shadow-2xl max-h-[82vh] overflow-hidden flex items-center justify-center">
+                <img src="/menu_vietnam.svg" alt="Menu Fullscreen" class="max-h-[80vh] w-auto object-contain">
+            </div>
+            <p class="text-white text-xs font-bold mt-2 text-center drop-shadow">💡 ให้นักเรียนยกมือถือเล็งกล้องถ่ายภาพเมนูนี้ได้เลย</p>
+        </div>
+    </div>
+
+    <!-- Hidden Math Canvas -->
+    <canvas id="math-canvas" class="hidden"></canvas>
+
+    <!-- ========================================================
+         SCRIPT: Real Photo Manipulation, Audio & State
+         ======================================================== -->
+    <script>
+        let audioCtx = null;
+        let soundOn = true;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        function play8Bit(type) {
+            if (!soundOn) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const t = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'bell') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1400, t);
+                osc.frequency.exponentialRampToValueAtTime(1050, t + 0.1);
+                gain.gain.setValueAtTime(0.4, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.8);
+                osc.start(t);
+                osc.stop(t + 0.8);
+            } else if (type === 'coin') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(987.77, t);
+                osc.frequency.setValueAtTime(1318.51, t + 0.08);
+                gain.gain.setValueAtTime(0.2, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.35);
+                osc.start(t);
+                osc.stop(t + 0.35);
+            } else if (type === 'blip') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, t);
+                osc.frequency.exponentialRampToValueAtTime(880, t + 0.05);
+                gain.gain.setValueAtTime(0.15, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.05);
+                osc.start(t);
+                osc.stop(t + 0.05);
+            } else if (type === 'snap') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, t);
+                osc.frequency.exponentialRampToValueAtTime(60, t + 0.1);
+                gain.gain.setValueAtTime(0.4, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.1);
+                osc.start(t);
+                osc.stop(t + 0.1);
+            } else if (type === 'start') {
+                const notes = [261.63, 329.63, 392.00, 523.25];
+                notes.forEach((f, i) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'square';
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(f, t + i * 0.1);
+                    g.gain.setValueAtTime(0.2, t + i * 0.1);
+                    g.gain.linearRampToValueAtTime(0.01, t + i * 0.1 + 0.2);
+                    o.start(t + i * 0.1);
+                    o.stop(t + i * 0.1 + 0.2);
+                });
+            } else if (type === 'buzz') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(120, t);
+                gain.gain.setValueAtTime(0.3, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.25);
+                osc.start(t);
+                osc.stop(t + 0.25);
+            }
+        }
+
+        function toggleSound() {
+            soundOn = !soundOn;
+            document.getElementById('sound-icon').innerText = soundOn ? '🔊' : '🔇';
+            if (soundOn) play8Bit('blip');
+        }
+
+        const AVATAR_EMOJIS = ['🐶', '🐱', '🐼', '🐰', '🦊', '🐻', '👦', '👧', '🧑‍🎓', '🥷'];
+        let selectedEmoji = '🐱';
+
+        const VIET_DISHES = [
+            {
+                id: 1,
+                vietName: "Phở Bò Tái",
+                thaiName: "ก๋วยเตี๋ยวเฝอเนื้อสไลด์สด",
+                price: "65.000 ₫",
+                approxThb: "~95 บาท",
+                icon: "🍜",
+                desc: "เส้นเฝอนุ่มสด ซุปกระดูกวัวเคี่ยว 12 ชม. เนื้อวัวสไลด์บาง หอมต้นหอมซอย",
+                box: { xF: 0.06, yF: 0.22, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 2,
+                vietName: "Phở Gà Ta",
+                thaiName: "เฝอไก่บ้านฉีกสูตรฮานอย",
+                price: "55.000 ₫",
+                approxThb: "~80 บาท",
+                icon: "🍗",
+                desc: "ไก่บ้านเนื้อนุ่ม หนังกรอบกรุบ ใบมะนาวซอยหอมสดชื่น น้ำซุปใสกลมกล่อม",
+                box: { xF: 0.06, yF: 0.265, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 3,
+                vietName: "Bún Chả Hà Nội",
+                thaiName: "ขนมจีนหมูย่างฮานอย",
+                price: "70.000 ₫",
+                approxThb: "~100 บาท",
+                icon: "🍲",
+                desc: "หมูย่างเตาถ่านหอมกรุ่น น้ำซุปปรุงรสเปรี้ยวหวาน มะละกอดอง ผักชีลาว",
+                box: { xF: 0.06, yF: 0.31, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 4,
+                vietName: "Bánh Mì Thịt Nướng",
+                thaiName: "แซนด์วิชเวียดนามหมูย่าง",
+                price: "40.000 ₫",
+                approxThb: "~60 บาท",
+                icon: "🥖",
+                desc: "บาแก็ตต์ฝรั่งเศสกรอบนอกนุ่มใน ปาเต้ตับบด หมูย่างตะไคร้ ผักชีอาจาด",
+                box: { xF: 0.06, yF: 0.435, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 5,
+                vietName: "Cơm Gà Xối Mỡ",
+                thaiName: "ข้าวหน้าไก่กรอบหนังทอง",
+                price: "65.000 ₫",
+                approxThb: "~95 บาท",
+                icon: "🍛",
+                desc: "สะโพกไก่ทอดหนังกรอบไม่อมน้ำมัน ข้าวหุงน้ำมันกระเทียม น้ำจิ้มสูตรเด็ด",
+                box: { xF: 0.06, yF: 0.48, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 6,
+                vietName: "Cơm Tấm Sườn Bì",
+                thaiName: "ข้าวซี่โครงหมูย่างน้ำผึ้ง",
+                price: "70.000 ₫",
+                approxThb: "~100 บาท",
+                icon: "🥩",
+                desc: "ซี่โครงหมูหมักน้ำผึ้งย่างหอมเตาถ่าน ข้าวหัก หนังหมูซอย ต้นหอมเจียว",
+                box: { xF: 0.06, yF: 0.525, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 7,
+                nem: true,
+                vietName: "Nem Rán Hà Nội",
+                thaiName: "เปาะเปี๊ยะทอดกรอบฮานอย",
+                price: "45.000 ₫",
+                approxThb: "~65 บาท",
+                icon: "🥢",
+                desc: "เปาะเปี๊ยะทอดกรอบ ไส้หมูสับเห็ดหูหนูวุ้นเส้น จิ้มน้ำส้มสายชูพริก",
+                box: { xF: 0.535, yF: 0.22, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 8,
+                vietName: "Gỏi Cuốn Tôm Thịt",
+                thaiName: "ปอเปี๊ยะสดกุ้งหมูผักสด",
+                price: "50.000 ₫",
+                approxThb: "~75 บาท",
+                icon: "🍤",
+                desc: "กุ้งสดตัวโต หมูสามชั้น ผักแพว ใบสะระแหน่ น้ำจิ้มถั่วบดสูตรเวียดนาม",
+                box: { xF: 0.535, yF: 0.265, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 9,
+                vietName: "Bánh Xèo Giòn Rụm",
+                thaiName: "ขนมเบื้องญวนสูตรกุ้งสด",
+                price: "60.000 ₫",
+                approxThb: "~88 บาท",
+                icon: "🥞",
+                desc: "แป้งขมิ้นกะทิกรอบฟู ไส้กุ้งหมูถั่วงอก ห่อผักกาดหอมจิ้มน้ำอาจาด",
+                box: { xF: 0.535, yF: 0.31, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 10,
+                vietName: "Cà Phê Sữa Đá",
+                thaiName: "กาแฟดริปเวียดนามนมข้นเย็น",
+                price: "35.000 ₫",
+                approxThb: "~50 บาท",
+                icon: "☕",
+                desc: "เมล็ดโรบัสต้าเข้มข้น ดริปผ่านฟิน ใส่นมข้นหวาน หอมเข้มตื่นเต็มตา",
+                box: { xF: 0.535, yF: 0.435, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 11,
+                vietName: "Cà Phê Trứng Hà Nội",
+                thaiName: "กาแฟไข่ฟองครีมฮานอย",
+                price: "45.000 ₫",
+                approxThb: "~65 บาท",
+                icon: "🍮",
+                desc: "กาแฟดำเข้มข้น ท็อปด้วยไข่แดงตีฟองฟูเหมือนคัสตาร์ดนุ่มละมุน",
+                box: { xF: 0.535, yF: 0.48, wF: 0.41, hF: 0.042 }
+            },
+            {
+                id: 12,
+                vietName: "Trà Sen Vàng Hạt Sen",
+                thaiName: "ชาดอกบัวเชื่อมเม็ดบัว",
+                price: "30.000 ₫",
+                approxThb: "~45 บาท",
+                icon: "🧋",
+                desc: "ชาเขียวมะลิอบดอกบัวหลวงฮานอย ใส่เม็ดบัวเชื่อมนุ่มเคี้ยวเพลิน",
+                box: { xF: 0.535, yF: 0.525, wF: 0.41, hF: 0.042 }
+            }
+        ];
+        let chosenDish = null; // Do not auto-select beforehand! Forced user tap in Step 3
+        let currentSampleNum = 1;
+        let isTranslated = false;
+
+        let currentScreen = 'teacher';
+        let myPlayer = null;
+        let rawPhotoDataUrl = ''; // Original unedited photo
+        let activePhotoDataUrl = ''; // Currently manipulated photo
+        let currentThresholdVal = 128;
+        let isInverted = true; // Invert dark background to white background for standard OCR
+        let photoAnalysis = null;
+        let pollTimer = null;
+        let loadedImgObj = null;
+        let isOrderServed = false;
+
+        function toggleInvertBinarization() {
+            isInverted = !isInverted;
+            play8Bit('blip');
+            const btn = document.getElementById('btn-invert-mode');
+            if (btn) {
+                btn.innerText = isInverted ? "🔄 ตัวหนังสือดำ / พื้นขาว (OCR นิยม)" : "🔄 ตัวหนังสือขาว / พื้นดำ (ตามภาพต้นฉบับ)";
+            }
+            renderStep1Canvas();
+        }
+
+        function selectSampleImage(sampleNum) {
+            currentSampleNum = sampleNum;
+            play8Bit('coin');
+
+            // Visual feedback on the 3 sample buttons
+            [1, 2, 3].forEach(n => {
+                const btn = document.getElementById('btn-sample-' + n);
+                if (!btn) return;
+                if (n === sampleNum) {
+                    btn.className = 'sample-btn p-3 rounded-2xl border text-center transition-all bg-amber-100 border-amber-500 ring-2 ring-amber-400 shadow-md scale-[1.02]';
+                } else {
+                    btn.className = 'sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm';
+                }
+            });
+
+            const img = new Image();
+            img.onload = function() {
+                const c = document.getElementById('math-canvas');
+                c.width = img.naturalWidth || 800;
+                c.height = img.naturalHeight || 1100;
+                const ctx = c.getContext('2d');
+                ctx.drawImage(img, 0, 0, c.width, c.height);
+
+                if (sampleNum === 1) {
+                    // Normal evenly-lit menu
+                    photoAnalysis = { avgLum: 128, tag: 'ภาพคมชัดดี', icon: '🌟', sampleNum: 1 };
+                } else if (sampleNum === 2) {
+                    // Realistic shadow cast diagonally
+                    const grad = ctx.createLinearGradient(0, 0, c.width * 0.9, c.height * 0.9);
+                    grad.addColorStop(0, 'rgba(10, 15, 25, 0.05)');
+                    grad.addColorStop(0.35, 'rgba(10, 15, 25, 0.45)');
+                    grad.addColorStop(0.7, 'rgba(10, 15, 25, 0.72)');
+                    grad.addColorStop(1, 'rgba(5, 10, 20, 0.85)');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, c.width, c.height);
+                    photoAnalysis = { avgLum: 62, tag: 'มีเงาตกกระทบ', icon: '🌓', sampleNum: 2 };
+                } else if (sampleNum === 3) {
+                    // Radial glare / flash hotspot
+                    const rad = Math.min(c.width, c.height) * 0.45;
+                    const grad = ctx.createRadialGradient(c.width * 0.5, c.height * 0.42, 20, c.width * 0.5, c.height * 0.42, rad);
+                    grad.addColorStop(0, 'rgba(255, 255, 255, 0.96)');
+                    grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.7)');
+                    grad.addColorStop(0.75, 'rgba(255, 255, 255, 0.25)');
+                    grad.addColorStop(1, 'rgba(255, 255, 255, 0.02)');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, c.width, c.height);
+                    photoAnalysis = { avgLum: 228, tag: 'มีแสงสะท้อนจ้า', icon: '⚡', sampleNum: 3 };
+                }
+
+                rawPhotoDataUrl = c.toDataURL('image/jpeg', 0.95);
+                activePhotoDataUrl = rawPhotoDataUrl;
+                loadAndPrepareImage(activePhotoDataUrl);
+            };
+            img.src = '/menu_vietnam.svg';
+        }
+
+        function loadSampleMenuImage() {
+            selectSampleImage(1);
+        }
+
+        function openMenuModal() {
+            const modal = document.getElementById('menu-modal');
+            if (modal) modal.classList.remove('hidden');
+            play8Bit('blip');
+        }
+
+        function closeMenuModal() {
+            const modal = document.getElementById('menu-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenuModal();
+        });
+
+        let isStudentLocked = false;
+
+        function startPolling(intervalMs) {
+            if (pollTimer) clearInterval(pollTimer);
+            pollGameState();
+            pollTimer = setInterval(pollGameState, intervalMs);
+        }
+
+        function switchScreen(s) {
+            if (isStudentLocked && s === 'teacher') return;
+            currentScreen = s;
+            const stu = document.getElementById('screen-student');
+            const tea = document.getElementById('screen-teacher');
+            const nStu = document.getElementById('nav-stu');
+            const nTea = document.getElementById('nav-tea');
+
+            if (s === 'teacher') {
+                stu.classList.add('hidden');
+                tea.classList.remove('hidden');
+                if (nTea) nTea.className = 'bistro-btn bg-amber-400 text-stone-900 font-bold text-xs sm:text-sm px-3.5 py-1.5 shadow-sm';
+                if (nStu) nStu.className = 'bistro-btn bg-white text-stone-700 font-bold text-xs sm:text-sm px-3.5 py-1.5 border border-stone-200';
+                
+                fetchInfoAndQR();
+                startPolling(800);
+            } else {
+                tea.classList.add('hidden');
+                stu.classList.remove('hidden');
+                if (nStu) nStu.className = 'bistro-btn bg-amber-400 text-stone-900 font-bold text-xs sm:text-sm px-3.5 py-1.5 shadow-sm';
+                if (nTea) nTea.className = 'bistro-btn bg-white text-stone-700 font-bold text-xs sm:text-sm px-3.5 py-1.5 border border-stone-200';
+                
+                if (myPlayer) {
+                    startPolling(500);
+                }
+            }
+        }
+
+        function initEmojiPicker() {
+            const grid = document.getElementById('emoji-picker-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            AVATAR_EMOJIS.forEach(em => {
+                const b = document.createElement('button');
+                b.className = `p-2 text-2xl rounded-xl border text-center flex items-center justify-center transition-all ${em === selectedEmoji ? 'bg-amber-400 border-amber-500 shadow-sm' : 'bg-white hover:bg-amber-100/70 border-stone-200'}`;
+                b.innerText = em;
+                b.onclick = () => {
+                    selectedEmoji = em;
+                    play8Bit('blip');
+                    initEmojiPicker();
+                };
+                grid.appendChild(b);
+            });
+        }
+
+        function initDishPicker() {
+            const container = document.getElementById('dish-selection-container');
+            if (!container) return;
+            container.innerHTML = '';
+            VIET_DISHES.forEach(dish => {
+                const isSelected = chosenDish && chosenDish.id === dish.id;
+                const div = document.createElement('div');
+                div.className = `p-2.5 rounded-xl border cursor-pointer flex items-center justify-between transition-all ${isSelected ? 'bg-amber-300 border-amber-500 font-bold text-stone-950' : 'bg-white hover:bg-amber-50 border-stone-200 text-stone-800'}`;
+                div.onclick = () => {
+                    selectDish(dish);
+                };
+                div.innerHTML = `
+                    <div class="flex items-center space-x-2.5">
+                        <span class="text-2xl">${dish.icon}</span>
+                        <div>
+                            <div class="font-bold text-xs sm:text-sm">${dish.thaiName}</div>
+                            <div class="text-[11px] text-stone-500 font-mono">${dish.vietName} (${dish.approxThb})</div>
+                        </div>
+                    </div>
+                    <span class="font-mono font-bold text-xs sm:text-sm whitespace-nowrap pl-2 text-emerald-700">${dish.price}</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function hideJoinError() {
+            const errBox = document.getElementById('stu-join-error-box');
+            const nameInput = document.getElementById('stu-input-name');
+            const idInput = document.getElementById('stu-input-id');
+            if (errBox) errBox.classList.add('hidden');
+            if (nameInput) nameInput.classList.remove('border-rose-500', 'bg-rose-50/50');
+            if (idInput) idInput.classList.remove('border-rose-500', 'bg-rose-50/50');
+        }
+
+        function showJoinError(msg, targetInput) {
+            play8Bit('buzz');
+            const errBox = document.getElementById('stu-join-error-box');
+            const errMsg = document.getElementById('stu-join-error-msg');
+            if (errBox && errMsg) {
+                errMsg.innerText = msg;
+                errBox.classList.remove('hidden');
+            } else {
+                alert(msg);
+            }
+            if (targetInput) {
+                targetInput.classList.add('border-rose-500', 'bg-rose-50/50');
+                targetInput.focus();
+            }
+        }
+
+        async function studentJoinLobby() {
+            const nameInput = document.getElementById('stu-input-name');
+            const idInput = document.getElementById('stu-input-id');
+
+            hideJoinError();
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const id = idInput ? idInput.value.replace(/[^0-9]/g, '').trim() : '';
+
+            // 1. Strict validation: Name must not be empty
+            if (!name) {
+                showJoinError("กรุณาป้อนชื่อเล่นของคุณก่อนเข้าโต๊ะนะจ๊ะ", nameInput);
+                return;
+            }
+
+            // 2. Strict validation: ID must not be empty
+            if (!id) {
+                showJoinError("กรุณาป้อนรหัส 3 ตัวท้าย (เฉพาะตัวเลข) ด้วยนะ", idInput);
+                return;
+            }
+
+            // 3. Strict validation: ID must be 3 digits
+            if (id.length < 3) {
+                showJoinError("กรุณาป้อนรหัสตัวเลขให้ครบ 3 หลักนะ (เช่น 311)", idInput);
+                return;
+            }
+
+            play8Bit('coin');
+
+            let clientId = sessionStorage.getItem('ocr_quest_client_id');
+            if (!clientId) {
+                clientId = 'client_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
+                sessionStorage.setItem('ocr_quest_client_id', clientId);
+            }
+
+            myPlayer = {
+                clientId: clientId,
+                name: name,
+                studentId: id,
+                emoji: selectedEmoji
+            };
+
+            try {
+                const res = await fetch('/api/join', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(myPlayer)
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.status === 'room_full') {
+                        play8Bit('buzz');
+                        showJoinError("⚠️ ร้านเต็มแล้ว (ครบ 10 โต๊ะแล้ว)!\nกรุณารอรอบถัดไปหรือแจ้งให้อาจารย์เริ่มรอบใหม่นะ", null);
+                        return;
+                    }
+                    if (data && data.player && data.player.tableNum) {
+                        myPlayer.tableNum = data.player.tableNum;
+                    }
+                } else {
+                    const errData = await res.json().catch(() => ({}));
+                    if (errData && errData.message) {
+                        showJoinError(errData.message, null);
+                        return;
+                    }
+                }
+            } catch (e) {}
+
+            sessionStorage.setItem('ocr_quest_player', JSON.stringify(myPlayer));
+
+            document.getElementById('stu-step-join').classList.add('hidden');
+            document.getElementById('stu-step-waiting').classList.remove('hidden');
+
+            updateWaitingCard();
+            startPolling(500);
+        }
+
+        async function fetchInfoAndQR() {
+            let joinUrl = `${window.location.origin}/play`;
+            try {
+                const res = await fetch('/api/info');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.joinUrl) joinUrl = data.joinUrl;
+                }
+            } catch (e) {
+                console.warn("fetch /api/info error, using fallback origin", e);
+            }
+
+            const joinUrlEl = document.getElementById('teach-join-url');
+            if (joinUrlEl) joinUrlEl.innerText = joinUrl;
+
+            const qrBox = document.getElementById('teach-qr-box');
+            if (qrBox) {
+                qrBox.innerHTML = '';
+                if (typeof QRCode !== 'undefined') {
+                    new QRCode(qrBox, {
+                        text: joinUrl,
+                        width: 256,
+                        height: 256,
+                        colorDark: "#292524",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } else {
+                    const img = document.createElement('img');
+                    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(joinUrl)}`;
+                    img.className = "w-full h-full object-contain";
+                    qrBox.appendChild(img);
+                }
+            }
+        }
+
+        async function teacherStartGame() {
+            play8Bit('bell');
+            try {
+                await fetch('/api/start_game', { method: 'POST' });
+            } catch (e) {}
+            pollGameState();
+        }
+
+        async function teacherResetGame() {
+            if (confirm("ต้องการรีเซ็ตเริ่มรอบใหม่ใช่หรือไม่?\n(นักเรียนที่นั่งโต๊ะอยู่จะเริ่มรอบใหม่พร้อมกันทันที)")) {
+                try {
+                    await fetch('/api/reset_game', { method: 'POST' });
+                } catch (e) {}
+                pollGameState();
+            }
+        }
+
+        async function teacherClearAllTables() {
+            if (confirm("ต้องการล้างโต๊ะทั้งหมดใช่หรือไม่?\n(นักเรียนทุกคนจะถูกเชิญออกจากโต๊ะเพื่อรับนักเรียนชุดใหม่)")) {
+                try {
+                    await fetch('/api/clear_all_players', { method: 'POST' });
+                } catch (e) {}
+                pollGameState();
+            }
+        }
+
+        async function studentLeaveTable() {
+            if (myPlayer) {
+                try {
+                    await fetch('/api/leave', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ clientId: myPlayer.clientId, studentId: myPlayer.studentId })
+                    });
+                } catch(e) {}
+            }
+            myPlayer = null;
+            sessionStorage.removeItem('ocr_quest_player');
+            hideJoinError();
+            document.getElementById('stu-step-waiting').classList.add('hidden');
+            document.getElementById('stu-step-workflow').classList.add('hidden');
+            document.getElementById('stu-step-join').classList.remove('hidden');
+            play8Bit('blip');
+        }
+
+        async function rejoinServerLobby() {
+            if (!myPlayer) return;
+            try {
+                const res = await fetch('/api/join', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(myPlayer)
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.player && data.player.tableNum) {
+                        myPlayer.tableNum = data.player.tableNum;
+                        sessionStorage.setItem('ocr_quest_player', JSON.stringify(myPlayer));
+                        updateWaitingCard();
+                    }
+                }
+            } catch(e) {}
+        }
+
+        function updateWaitingCard() {
+            if (!myPlayer) return;
+            const wAvatar = document.getElementById('stu-waiting-avatar');
+            const wTable = document.getElementById('stu-waiting-table');
+            const wName = document.getElementById('stu-waiting-name');
+            const hudAvatar = document.getElementById('player-hud-avatar');
+            const hudName = document.getElementById('player-hud-name');
+
+            if (wAvatar) wAvatar.innerText = myPlayer.emoji || '🐱';
+            if (wTable) wTable.innerText = `โต๊ะ ${myPlayer.tableNum || 1}`;
+            if (wName) wName.innerText = `${myPlayer.name} #${myPlayer.studentId}`;
+
+            if (hudAvatar) hudAvatar.innerText = myPlayer.emoji || '🐱';
+            if (hudName) hudName.innerText = `โต๊ะ ${myPlayer.tableNum || 1} • ${myPlayer.name} #${myPlayer.studentId}`;
+        }
+
+        function resetStudentForNewRound(state) {
+            play8Bit('bell');
+
+            // Reset algorithm & image variables
+            rawPhotoDataUrl = '';
+            activePhotoDataUrl = '';
+            loadedImgObj = null;
+            photoAnalysis = null;
+            chosenDish = null;
+            isTranslated = false;
+            currentSampleNum = 1;
+            isOrderServed = false;
+            currentThresholdVal = 128;
+            isInverted = true;
+
+            // Reset Step 0 DOM
+            [1, 2, 3].forEach(n => {
+                const btn = document.getElementById('btn-sample-' + n);
+                if (btn) btn.className = 'sample-btn p-3 rounded-2xl border text-center transition-all bg-white hover:bg-amber-50 border-stone-200 shadow-sm';
+            });
+            const snapImg = document.getElementById('snap-img');
+            if (snapImg) {
+                snapImg.src = '';
+                snapImg.classList.add('hidden');
+            }
+            const snapPlaceholder = document.getElementById('snap-placeholder');
+            if (snapPlaceholder) snapPlaceholder.classList.remove('hidden');
+            const nextBtn = document.getElementById('btn-next-step1');
+            if (nextBtn) nextBtn.classList.add('hidden');
+            const camInput = document.getElementById('native-cam-input');
+            if (camInput) camInput.value = '';
+
+            // Reset Step 1 Threshold
+            const threshSlider = document.getElementById('thresh-slider');
+            if (threshSlider) threshSlider.value = 128;
+            const threshValDisp = document.getElementById('thresh-val-disp');
+            if (threshValDisp) threshValDisp.innerText = '128';
+
+            // Reset Step 3 (Translation & Proofread)
+            const nlpBox = document.getElementById('nlp-concept-box');
+            if (nlpBox) nlpBox.classList.add('hidden');
+            const transBtn = document.getElementById('translate-btn-text');
+            if (transBtn) transBtn.innerText = "กดแปลภาษาไทยอัตโนมัติ (Machine Translation)";
+            const subBtn = document.getElementById('btn-proofread-submit');
+            if (subBtn) {
+                subBtn.disabled = true;
+                subBtn.className = "w-full py-3.5 sm:py-4 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all";
+                subBtn.innerHTML = `<span>🚀 ยืนยันข้อมูลถูกต้อง และส่งออเดอร์เข้าห้องครัวอาจารย์</span>`;
+            }
+
+            // Reset Step 4 (Order status)
+            const statusIcon = document.getElementById('order-status-icon');
+            if (statusIcon) statusIcon.innerText = '⏳';
+            const statusBadge = document.getElementById('order-status-badge');
+            if (statusBadge) {
+                statusBadge.innerText = '[ รอคิวปรุง... ]';
+                statusBadge.className = 'text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full inline-block';
+            }
+            const statusTitle = document.getElementById('order-status-title');
+            if (statusTitle) statusTitle.innerText = 'ส่งออเดอร์เข้าครัวแล้ว!';
+            const statusDesc = document.getElementById('order-status-desc');
+            if (statusDesc) {
+                statusDesc.innerText = '👀 รอดูที่จอใหญ่นะ เมื่ออาจารย์ทำเสร็จจะกดเสิร์ฟให้ทันที!';
+                statusDesc.className = 'text-xs text-amber-800 font-bold animate-pulse pt-1';
+            }
+
+            // Go back to Step 0 and hide workflow
+            goToStep(0);
+            updateStepProgressBar(0);
+            const workflowView = document.getElementById('stu-step-workflow');
+            if (workflowView) workflowView.classList.add('hidden');
+
+            // If player was already seated, show waiting room & re-sync with server
+            if (myPlayer) {
+                const waitingView = document.getElementById('stu-step-waiting');
+                if (waitingView) waitingView.classList.remove('hidden');
+                const joinView = document.getElementById('stu-step-join');
+                if (joinView) joinView.classList.add('hidden');
+                updateWaitingCard();
+                rejoinServerLobby();
+            } else {
+                const joinView = document.getElementById('stu-step-join');
+                if (joinView) joinView.classList.remove('hidden');
+                const waitingView = document.getElementById('stu-step-waiting');
+                if (waitingView) waitingView.classList.add('hidden');
+            }
+        }
+
+        async function teacherServeOrder(studentId) {
+            play8Bit('bell');
+            try {
+                await fetch('/api/serve_order', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ studentId: studentId })
+                });
+            } catch (e) {}
+            pollGameState();
+        }
+
+        let currentRoundId = 1;
+        let lastGameStatus = 'LOBBY';
+
+        async function pollGameState() {
+            try {
+                const res = await fetch('/api/game_state');
+                if (!res.ok) return;
+                const state = await res.json();
+
+                const serverRound = state.roundId || 1;
+                const isNewRound = serverRound !== currentRoundId;
+
+                // TEACHER VIEW SYNC
+                if (currentScreen === 'teacher') {
+                    if (state.status === 'LOBBY') {
+                        document.getElementById('teach-lobby-view').classList.remove('hidden');
+                        document.getElementById('teach-battle-view').classList.add('hidden');
+                        renderLobbyPlayers(state.players);
+                    } else {
+                        document.getElementById('teach-lobby-view').classList.add('hidden');
+                        document.getElementById('teach-battle-view').classList.remove('hidden');
+                        renderTeacherOrderTickets(state.scores);
+                    }
+                }
+
+                // STUDENT VIEW SYNC
+                if (currentScreen === 'student') {
+                    // Check if teacher cleared all players
+                    if (myPlayer && state.players) {
+                        const stillInList = state.players.some(p => p.studentId === myPlayer.studentId || p.clientId === myPlayer.clientId);
+                        if (!stillInList && state.status === 'LOBBY' && !isNewRound) {
+                            rejoinServerLobby();
+                        }
+                    }
+
+                    // Check if teacher reset the game to LOBBY or started a new round!
+                    if (isNewRound || (lastGameStatus === 'PLAYING' && state.status === 'LOBBY')) {
+                        currentRoundId = serverRound;
+                        resetStudentForNewRound(state);
+                    } else if (state.status === 'PLAYING') {
+                        const waitingView = document.getElementById('stu-step-waiting');
+                        const workflowView = document.getElementById('stu-step-workflow');
+                        if (waitingView && !waitingView.classList.contains('hidden')) {
+                            waitingView.classList.add('hidden');
+                            if (workflowView) workflowView.classList.remove('hidden');
+                            play8Bit('start');
+                            goToStep(0);
+                        }
+                    } else if (state.status === 'LOBBY') {
+                        // In case student is in workflow while status is LOBBY
+                        const workflowView = document.getElementById('stu-step-workflow');
+                        if (workflowView && !workflowView.classList.contains('hidden')) {
+                            resetStudentForNewRound(state);
+                        }
+                    }
+
+                    // Check if teacher has served my order!
+                    if (myPlayer && state.scores) {
+                        const myScore = state.scores.find(s => s.studentId === myPlayer.studentId);
+                        if (myScore && myScore.orderStatus === 'SERVED' && !isOrderServed) {
+                            isOrderServed = true;
+                            play8Bit('bell');
+                            if (typeof confetti === 'function') {
+                                confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+                            }
+                            document.getElementById('order-status-icon').innerText = '🍽️';
+                            document.getElementById('order-status-badge').innerText = '[ เสิร์ฟแล้ว! ]';
+                            document.getElementById('order-status-badge').className = 'text-xs text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-block font-bold';
+                            document.getElementById('order-status-title').innerText = 'อาหารมาเสิร์ฟแล้วจ้า!';
+                            document.getElementById('order-status-desc').innerText = '😋 เสิร์ฟร้อนๆ ถึงโต๊ะเรียบร้อย ทานให้อร่อยนะ!';
+                            document.getElementById('order-status-desc').className = 'text-xs text-emerald-700 font-bold';
+                        }
+                    }
+                }
+
+                lastGameStatus = state.status;
+                currentRoundId = serverRound;
+            } catch (e) {}
+        }
+
+        function renderLobbyPlayers(players) {
+            const count = players.length;
+            const countEl = document.getElementById('lobby-player-count');
+            if (countEl) {
+                countEl.innerText = `นั่งแล้ว ${count} / 10 โต๊ะ`;
+                if (count >= 10) {
+                    countEl.className = 'text-sm sm:text-base bg-emerald-400 text-stone-900 px-3.5 py-1 rounded-full font-bold shadow-sm';
+                } else {
+                    countEl.className = 'text-sm sm:text-base bg-amber-400 text-stone-900 px-3.5 py-1 rounded-full font-bold shadow-sm';
+                }
+            }
+
+            const grid = document.getElementById('lobby-player-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            for (let i = 0; i < 10; i++) {
+                const card = document.createElement('div');
+                if (i < players.length) {
+                    const p = players[i];
+                    card.className = 'bg-white p-2.5 rounded-xl border border-amber-300 shadow-sm flex flex-col justify-between min-h-[85px] transition-all';
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between pb-1 border-b border-stone-100">
+                            <span class="text-xs font-black text-amber-900">โต๊ะ ${p.tableNum || (i + 1)}</span>
+                            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded-full border border-emerald-300">✓ นั่งแล้ว</span>
+                        </div>
+                        <div class="flex items-center space-x-2 my-1">
+                            <span class="text-2xl">${p.emoji || '🐱'}</span>
+                            <div class="truncate">
+                                <div class="font-bold text-stone-900 text-xs sm:text-sm truncate">${escapeHtml(p.name)}</div>
+                                <div class="text-[10px] text-amber-800 font-bold">#${escapeHtml(p.studentId)}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    card.className = 'bg-stone-50 p-2.5 rounded-xl border border-dashed border-stone-200 flex flex-col justify-between min-h-[85px] text-stone-400 transition-all';
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between pb-1 border-b border-stone-200">
+                            <span class="text-xs font-bold text-stone-400">โต๊ะ ${i + 1}</span>
+                            <span class="text-[10px] bg-stone-200 text-stone-500 font-bold px-1.5 py-0.2 rounded-full">ว่าง</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-1.5 my-1.5">
+                            <span class="text-xl opacity-40">🪑</span>
+                            <span class="text-[11px] font-medium text-stone-400">โต๊ะว่าง</span>
+                        </div>
+                    `;
+                }
+                grid.appendChild(card);
+            }
+        }
+
+        function renderTeacherOrderTickets(scores) {
+            const badge = document.getElementById('order-count-badge');
+            if (badge) badge.innerText = `${scores.length} บิล`;
+            const container = document.getElementById('teach-order-tickets');
+            if (!scores || scores.length === 0) {
+                container.innerHTML = `<div class="p-16 text-center text-xs text-stone-400 font-medium">รอนักเรียนสแกนเมนูและกดสั่งอาหารเข้ามานะจ๊ะ...</div>`;
+                return;
+            }
+            container.innerHTML = '';
+            scores.forEach((s, idx) => {
+                const isServed = s.orderStatus === 'SERVED';
+                const ticket = document.createElement('div');
+                ticket.className = `p-3.5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm transition-all ${isServed ? 'bg-emerald-50/80 border-emerald-300' : 'bg-white border-stone-200'}`;
+                
+                ticket.innerHTML = `
+                    <div class="flex items-start sm:items-center space-x-3">
+                        <span class="text-3xl pt-1 sm:pt-0">${s.emoji || '🐱'}</span>
+                        <div class="space-y-1">
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <span class="text-xs font-black text-amber-900 bg-amber-200/90 px-2.5 py-0.5 rounded-full">โต๊ะ ${s.tableNum || (idx + 1)}</span>
+                                <span class="font-bold text-sm text-stone-900">${escapeHtml(s.name)}</span>
+                                <span class="text-xs text-stone-400 font-medium font-mono">#${escapeHtml(s.studentId)}</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${isServed ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300'}">
+                                    ${isServed ? '✓ เสิร์ฟแล้ว' : '⏳ รอเสิร์ฟ'}
+                                </span>
+                                <span class="text-[10px] text-stone-500 font-medium bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">
+                                    ${s.qualityIcon || '🖼️'} ${escapeHtml(s.qualityTag || 'ภาพปกติ')}
+                                </span>
+                            </div>
+
+                            <!-- Dual Language Display: Vietnamese OCR + Thai Translation -->
+                            <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-2 text-xs space-y-0.5 mt-1">
+                                <div class="flex items-center space-x-1.5 font-bold text-stone-900">
+                                    <span class="text-sm">${s.dishIcon || '🍜'}</span>
+                                    <span class="text-stone-500 font-medium text-[11px]">🇻🇳 สกัดจาก OCR:</span>
+                                    <span class="text-emerald-800 font-mono font-black">${escapeHtml(s.vietDish || s.orderDish)}</span>
+                                    <span class="text-amber-800 font-bold ml-auto font-mono">${escapeHtml(s.orderPrice || '')}</span>
+                                </div>
+                                <div class="flex items-center space-x-1.5 pl-5 text-[11px] text-stone-600 font-medium">
+                                    <span class="text-stone-500">🇹🇭 คำแปลไทย:</span>
+                                    <span class="text-stone-800 font-bold">${escapeHtml(s.thaiDish || '')}</span>
+                                    <span class="text-stone-400 font-normal">(${escapeHtml(s.approxThb || '')})</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sm:self-center">
+                        ${isServed 
+                            ? `<span class="text-xs text-emerald-700 font-bold flex items-center justify-center space-x-1 px-3.5 py-2 bg-emerald-100 rounded-xl border border-emerald-200"><span>✓ เสิร์ฟเรียบร้อย</span></span>`
+                            : `<button onclick="teacherServeOrder('${s.studentId}')" class="w-full sm:w-auto px-4 py-2.5 bistro-btn bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold text-xs flex items-center justify-center space-x-1.5 shadow-sm active:scale-95">
+                                <span>🍳 เสิร์ฟอาหาร</span>
+                               </button>`
+                        }
+                    </div>
+                `;
+                container.appendChild(ticket);
+            });
+        }
+
+        // ========================================================
+        // 3-STEP PROGRESS BAR ENGINE
+        // ========================================================
+        function updateStepProgressBar(step) {
+            const s1 = document.getElementById('step-bar-1');
+            const s2 = document.getElementById('step-bar-2');
+            const s3 = document.getElementById('step-bar-3');
+            const dot1 = document.getElementById('step-bar-dot-1');
+            const dot2 = document.getElementById('step-bar-dot-2');
+            const dot3 = document.getElementById('step-bar-dot-3');
+            if (!s1 || !s2 || !s3) return;
+
+            const activeAmberStyle = 'p-2 sm:p-2.5 rounded-xl border transition-all bg-amber-100/90 border-amber-400 shadow-sm ring-1 ring-amber-400 opacity-100';
+            const activeBlueStyle = 'p-2 sm:p-2.5 rounded-xl border transition-all bg-blue-100/90 border-blue-400 shadow-sm ring-1 ring-blue-400 opacity-100';
+            const activePurpleStyle = 'p-2 sm:p-2.5 rounded-xl border transition-all bg-purple-100/90 border-purple-400 shadow-sm ring-1 ring-purple-400 opacity-100';
+            const completedStyle = 'p-2 sm:p-2.5 rounded-xl border transition-all bg-emerald-50 border-emerald-300 opacity-100';
+            const inactiveStyle = 'p-2 sm:p-2.5 rounded-xl border transition-all bg-stone-50 border-stone-200 opacity-60';
+
+            if (step === 0 || step === 1) {
+                s1.className = activeAmberStyle;
+                s2.className = inactiveStyle;
+                s3.className = inactiveStyle;
+                if (dot1) dot1.className = 'w-2 h-2 rounded-full bg-amber-600 animate-pulse';
+                if (dot2) dot2.className = 'w-2 h-2 rounded-full bg-stone-300';
+                if (dot3) dot3.className = 'w-2 h-2 rounded-full bg-stone-300';
+            } else if (step === 2) {
+                s1.className = completedStyle;
+                s2.className = activeBlueStyle;
+                s3.className = inactiveStyle;
+                if (dot1) dot1.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (dot2) dot2.className = 'w-2 h-2 rounded-full bg-blue-600 animate-pulse';
+                if (dot3) dot3.className = 'w-2 h-2 rounded-full bg-stone-300';
+            } else if (step === 3) {
+                s1.className = completedStyle;
+                s2.className = completedStyle;
+                s3.className = activePurpleStyle;
+                if (dot1) dot1.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (dot2) dot2.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (dot3) dot3.className = 'w-2 h-2 rounded-full bg-purple-600 animate-pulse';
+            } else if (step === 4) {
+                s1.className = completedStyle;
+                s2.className = completedStyle;
+                s3.className = completedStyle;
+                if (dot1) dot1.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (dot2) dot2.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (dot3) dot3.className = 'w-2 h-2 rounded-full bg-emerald-500';
+            }
+        }
+
+        // ========================================================
+        // HIGH-RESOLUTION IMAGE PROCESSING ENGINE
+        // ========================================================
+        function goToStep(step) {
+            play8Bit('blip');
+            [0, 1, 2, 3, 4].forEach(n => {
+                const el = document.getElementById('flow-step-' + n);
+                if (el) el.classList.add('hidden');
+            });
+
+            const target = document.getElementById('flow-step-' + step);
+            if (target) target.classList.remove('hidden');
+
+            updateStepProgressBar(step);
+
+            const ind = document.getElementById('lab-step-indicator');
+            if (step === 0) {
+                if (ind) ind.innerText = "1. เลือกภาพเมนู";
+                isOrderServed = false;
+            } else if (step === 1) {
+                if (ind) ind.innerText = "1. ปรับความชัด (Pre-processing)";
+                renderStep1Canvas();
+            } else if (step === 2) {
+                if (ind) ind.innerText = "2. วิเคราะห์อักษร (Segmentation)";
+                renderStep2Canvas();
+            } else if (step === 3) {
+                if (ind) ind.innerText = "3. สกัดข้อความ & แปลภาษา";
+                chosenDish = null;
+                isTranslated = false;
+                prepareStep3Output();
+                renderStep3AR();
+                renderProofreadDishList();
+            } else if (step === 4) {
+                if (ind) ind.innerText = "บิลสั่งอาหาร";
+            }
+        }
+
+        function handleStudentCamera(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            play8Bit('snap');
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                rawPhotoDataUrl = evt.target.result;
+                activePhotoDataUrl = rawPhotoDataUrl;
+                photoAnalysis = { avgLum: 128, tag: 'ภาพจากกล้องสด', icon: '📷', sampleNum: 0 };
+                loadAndPrepareImage(activePhotoDataUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Apply filters directly on student's actual photo!
+        function applyPhotoEffect(mode) {
+            if (!rawPhotoDataUrl) return;
+            play8Bit('snap');
+
+            if (mode === 'normal') {
+                activePhotoDataUrl = rawPhotoDataUrl;
+                loadAndPrepareImage(activePhotoDataUrl);
+                return;
+            }
+
+            const img = new Image();
+            img.onload = function() {
+                const c = document.getElementById('math-canvas');
+                c.width = img.naturalWidth || 800;
+                c.height = img.naturalHeight || 600;
+                const ctx = c.getContext('2d');
+                ctx.drawImage(img, 0, 0, c.width, c.height);
+
+                if (mode === 'dark') {
+                    // Real Underexposure: reduce brightness to 30%
+                    const imgData = ctx.getImageData(0, 0, c.width, c.height);
+                    const d = imgData.data;
+                    for (let i = 0; i < d.length; i += 4) {
+                        d[i] = Math.round(d[i] * 0.28);
+                        d[i+1] = Math.round(d[i+1] * 0.28);
+                        d[i+2] = Math.round(d[i+2] * 0.28);
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                } else if (mode === 'glare') {
+                    // Real Flash Reflection: radial glare washout
+                    const rad = Math.min(c.width, c.height) * 0.5;
+                    const grad = ctx.createRadialGradient(c.width * 0.5, c.height * 0.5, 10, c.width * 0.5, c.height * 0.5, rad);
+                    grad.addColorStop(0, 'rgba(255,255,255,0.92)');
+                    grad.addColorStop(0.5, 'rgba(255,255,255,0.6)');
+                    grad.addColorStop(1, 'rgba(255,255,255,0.05)');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, c.width, c.height);
+                }
+
+                activePhotoDataUrl = c.toDataURL('image/jpeg', 0.95);
+                loadAndPrepareImage(activePhotoDataUrl);
+            };
+            img.src = rawPhotoDataUrl;
+        }
+
+        function loadAndPrepareImage(dataUrl) {
+            const img = new Image();
+            img.onload = function() {
+                loadedImgObj = img;
+                const snapImg = document.getElementById('snap-img');
+                snapImg.src = dataUrl;
+                snapImg.classList.remove('hidden');
+                document.getElementById('snap-placeholder').classList.add('hidden');
+                document.getElementById('btn-next-step1').classList.remove('hidden');
+
+                analyzeImageLuminance(img);
+            };
+            img.src = dataUrl;
+        }
+
+        function analyzeImageLuminance(img) {
+            const mathC = document.getElementById('math-canvas');
+            const sampleW = 400;
+            const sampleH = Math.round(sampleW * (img.naturalHeight / img.naturalWidth));
+            mathC.width = sampleW;
+            mathC.height = sampleH;
+            const ctx = mathC.getContext('2d');
+            ctx.drawImage(img, 0, 0, sampleW, sampleH);
+
+            const imgData = ctx.getImageData(0, 0, sampleW, sampleH);
+            const d = imgData.data;
+
+            let sumLum = 0;
+            let count = 0;
+            for (let i = 0; i < d.length; i += 16) {
+                sumLum += Math.round(0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2]);
+                count++;
+            }
+            const avgLum = Math.round(sumLum / count);
+            photoAnalysis = { avgLum: avgLum };
+
+            currentThresholdVal = avgLum < 65 ? 80 : (avgLum > 215 ? 180 : 128);
+            document.getElementById('thresh-slider').value = currentThresholdVal;
+            document.getElementById('slider-val-txt').innerText = currentThresholdVal;
+        }
+
+        // --- STEP 1: Crisp Binarization at High Resolution ---
+        function onThresholdChange(val) {
+            currentThresholdVal = parseInt(val);
+            document.getElementById('slider-val-txt').innerText = val;
+            renderStep1Canvas();
+        }
+
+        function renderStep1Canvas() {
+            if (!loadedImgObj) return;
+            const c = document.getElementById('canvas-step1-live');
+            const img = loadedImgObj;
+
+            const maxW = 1000;
+            let targetW = img.naturalWidth || img.width;
+            let targetH = img.naturalHeight || img.height;
+            if (targetW > maxW) {
+                targetH = Math.round(targetH * (maxW / targetW));
+                targetW = maxW;
+            }
+
+            c.width = targetW;
+            c.height = targetH;
+            const ctx = c.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            ctx.drawImage(img, 0, 0, targetW, targetH);
+            const imgData = ctx.getImageData(0, 0, targetW, targetH);
+            const d = imgData.data;
+
+            for (let i = 0; i < d.length; i += 4) {
+                const gray = Math.round(0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2]);
+                let val;
+                if (isInverted) {
+                    val = gray > currentThresholdVal ? 0 : 255;
+                } else {
+                    val = gray < currentThresholdVal ? 0 : 255;
+                }
+                d[i] = val;
+                d[i+1] = val;
+                d[i+2] = val;
+                d[i+3] = 255;
+            }
+            ctx.putImageData(imgData, 0, 0);
+
+            const hint = document.getElementById('thresh-hint');
+            if (currentThresholdVal < 70) {
+                hint.innerText = "⚠️ Threshold ต่ำไป: ตัวหนังสือชื่อเมนูขาดแหว่ง";
+                hint.className = "text-xs text-rose-600 font-bold";
+            } else if (currentThresholdVal > 190) {
+                hint.innerText = "⚠️ Threshold สูงไป: เงาดำล้นบวมกลืนตัวหนังสือ";
+                hint.className = "text-xs text-rose-600 font-bold";
+            } else {
+                hint.innerText = "✓ กำลังดี: ตัดเงาออกหมดจด ตัวหนังสือคมชัด!";
+                hint.className = "text-xs text-emerald-700 font-bold";
+            }
+        }
+
+        // --- STEP 2: Segmentation Bounding Boxes ---
+        function renderStep2Canvas() {
+            play8Bit('blip');
+            if (!loadedImgObj) return;
+            const c = document.getElementById('canvas-step2-live');
+            const img = loadedImgObj;
+
+            const maxW = 1000;
+            let targetW = img.naturalWidth || img.width;
+            let targetH = img.naturalHeight || img.height;
+            if (targetW > maxW) {
+                targetH = Math.round(targetH * (maxW / targetW));
+                targetW = maxW;
+            }
+
+            c.width = targetW;
+            c.height = targetH;
+            const ctx = c.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const prevCanvas = document.getElementById('canvas-step1-live');
+            if (!prevCanvas || prevCanvas.width === 0) {
+                renderStep1Canvas();
+            }
+            if (prevCanvas && prevCanvas.width > 0) {
+                ctx.drawImage(prevCanvas, 0, 0, targetW, targetH);
+            } else {
+                ctx.drawImage(img, 0, 0, targetW, targetH);
+            }
+
+            const lum = photoAnalysis ? photoAnalysis.avgLum : 128;
+            const isDark = lum < 65;
+            const isGlare = lum > 215;
+
+            // 1. Draw 4 Category Sections
+            const categories = [
+                { title: "PHỞ & BÚN (NƯỚC)", xF: 0.05, yF: 0.17, wF: 0.43, hF: 0.20 },
+                { title: "BÁNH MÌ & CƠM", xF: 0.05, yF: 0.39, wF: 0.43, hF: 0.20 },
+                { title: "MÓN ĂN KÈM", xF: 0.52, yF: 0.17, wF: 0.43, hF: 0.20 },
+                { title: "ĐỒ UỐNG TRUYỀN THỐNG", xF: 0.52, yF: 0.39, wF: 0.43, hF: 0.20 }
+            ];
+
+            categories.forEach(cat => {
+                const cx = Math.round(targetW * cat.xF);
+                const cy = Math.round(targetH * cat.yF);
+                const cw = Math.round(targetW * cat.wF);
+                const ch = Math.round(targetH * cat.hF);
+
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#38bdf8';
+                ctx.setLineDash([6, 4]);
+                ctx.strokeRect(cx, cy, cw, ch);
+                ctx.setLineDash([]);
+
+                const badgeH = Math.max(18, Math.round(targetH * 0.024));
+                const badgeW = Math.max(100, Math.round(targetW * 0.25));
+                ctx.fillStyle = '#0284c7';
+                ctx.fillRect(cx, Math.max(0, cy - badgeH), badgeW, badgeH);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold ${Math.round(badgeH * 0.65)}px sans-serif`;
+                ctx.fillText(`ZONE: ${cat.title}`, cx + 6, Math.max(0, cy - badgeH) + badgeH * 0.72);
+            });
+
+            // 2. Draw 12 Dish Text-Line Segmentation Bounding Boxes
+            VIET_DISHES.forEach(dish => {
+                const b = dish.box;
+                const bx = Math.round(targetW * b.xF);
+                const by = Math.round(targetH * b.yF);
+                const bw = Math.round(targetW * b.wF);
+                const bh = Math.round(targetH * b.hF);
+
+                let conf = 98;
+                let stroke = '#10b981';
+                let fill = 'rgba(16, 185, 129, 0.14)';
+                if (isDark) {
+                    conf = Math.floor(35 + Math.random() * 15);
+                    stroke = '#ef4444';
+                    fill = 'rgba(239, 68, 68, 0.2)';
+                } else if (isGlare) {
+                    const isCenter = dish.id >= 3 && dish.id <= 8;
+                    conf = isCenter ? Math.floor(45 + Math.random() * 12) : 92;
+                    stroke = isCenter ? '#f59e0b' : '#10b981';
+                    fill = isCenter ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.12)';
+                }
+
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = stroke;
+                ctx.fillStyle = fill;
+                ctx.fillRect(bx, by, bw, bh);
+                ctx.strokeRect(bx, by, bw, bh);
+
+                // Small corner brackets (AR aesthetic)
+                const cLen = Math.min(8, bh * 0.4);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = stroke;
+                // Top-left
+                ctx.beginPath();
+                ctx.moveTo(bx, by + cLen); ctx.lineTo(bx, by); ctx.lineTo(bx + cLen, by); ctx.stroke();
+                // Top-right
+                ctx.beginPath();
+                ctx.moveTo(bx + bw - cLen, by); ctx.lineTo(bx + bw, by); ctx.lineTo(bx + bw, by + cLen); ctx.stroke();
+                // Bottom-left
+                ctx.beginPath();
+                ctx.moveTo(bx, by + bh - cLen); ctx.lineTo(bx, by + bh); ctx.lineTo(bx + cLen, by + bh); ctx.stroke();
+                // Bottom-right
+                ctx.beginPath();
+                ctx.moveTo(bx + bw - cLen, by + bh); ctx.lineTo(bx + bw, by + bh); ctx.lineTo(bx + bw, by + bh - cLen); ctx.stroke();
+            });
+
+            document.getElementById('box-count-disp').innerText = `ตรวจพบ 8 เมนูในร้าน`;
+            document.getElementById('box-conf-score').innerText = isDark ? "ภาพมืดไป ตัวหนังสือไม่ชัด" : (isGlare ? "แสงสะท้อนจ้า" : "ตัวหนังสือชัดเจนดี");
+            document.getElementById('box-conf-score').className = (isDark || isGlare) ? "text-rose-600 text-xs font-bold" : "text-emerald-700 text-xs font-bold";
+        }
+
+        // --- STEP 3: Evaluation Output & AR Translation Camera View ---
+        function prepareStep3Output() {
+            const evalTitle = document.getElementById('eval-title');
+            if (evalTitle) {
+                evalTitle.innerText = isTranslated ? "แปลเป็นภาษาไทยเรียบร้อย (Machine Translation)" : "สกัดข้อความภาษาเวียดนาม (Unicode Text)";
+            }
+
+            const tableBadge = document.getElementById('proofread-table-badge');
+            if (tableBadge) {
+                tableBadge.innerText = `โต๊ะ ${myPlayer ? myPlayer.tableNum || 1 : 1}`;
+            }
+
+            const alertMsg = document.getElementById('proofread-alert-msg');
+            if (alertMsg) {
+                if (currentSampleNum === 2) {
+                    alertMsg.innerHTML = "<b>ภาพตัวอย่างที่ 2 มีเงาตกกระทบ:</b> สังเกตว่าเมนูทางด้านขวาล่างที่อยู่ในเงามืด ระบบ OCR อาจสกัดตัวสะกดคลาดเคลื่อน ให้นักเรียนช่วยตรวจทานชื่อเมนูและราคาก่อนกดสั่งนะ!";
+                } else if (currentSampleNum === 3) {
+                    alertMsg.innerHTML = "<b>ภาพตัวอย่างที่ 3 มีแสงสะท้อนจ้า:</b> แสงแฟลชสะท้อนบนหน้าเมนูทำให้ตัวหนังสือเลือนราง ระบบ OCR จึงอ่านได้ยากขึ้น โปรดตรวจทานรายการอาหารให้ถูกต้องก่อนสั่ง!";
+                } else {
+                    alertMsg.innerHTML = "<b>ภาพตัวอย่างที่ 1 แสงสว่างสม่ำเสมอ:</b> ตัวหนังสือมีความคมชัดสูง ระบบ OCR สกัดข้อความได้อย่างสมบูรณ์ ตรวจทานความถูกต้องแล้วเลือกเมนูที่ต้องการสั่งได้เลย!";
+                }
+            }
+
+            const subBtn = document.getElementById('btn-proofread-submit');
+            if (subBtn && !chosenDish) {
+                subBtn.disabled = true;
+                subBtn.className = "w-full py-3.5 sm:py-4 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all";
+                subBtn.innerHTML = `<span>👆 ตรวจทานและแตะเลือกเมนูที่ต้องการสั่งก่อนนะ</span>`;
+            }
+        }
+
+        function renderStep3AR() {
+            if (!loadedImgObj) return;
+            const c = document.getElementById('canvas-step3-ar');
+            const img = loadedImgObj;
+
+            const maxW = 1000;
+            let targetW = img.naturalWidth || img.width;
+            let targetH = img.naturalHeight || img.height;
+            if (targetW > maxW) {
+                targetH = Math.round(targetH * (maxW / targetW));
+                targetW = maxW;
+            }
+
+            c.width = targetW;
+            c.height = targetH;
+            const ctx = c.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, targetW, targetH);
+
+            renderARBadgesOverlay();
+        }
+
+        function triggerMachineTranslation() {
+            isTranslated = !isTranslated;
+            play8Bit('bell');
+
+            const nlpBox = document.getElementById('nlp-concept-box');
+            const btnText = document.getElementById('translate-btn-text');
+            const evalTitle = document.getElementById('eval-title');
+
+            if (isTranslated) {
+                if (nlpBox) nlpBox.classList.remove('hidden');
+                if (btnText) btnText.innerText = "✓ แสดงคำแปลภาษาไทยแล้ว (กดอีกครั้งเพื่อดูภาษาเวียดนาม OCR)";
+                if (evalTitle) evalTitle.innerText = "แปลเป็นภาษาไทยเรียบร้อย (Machine Translation)";
+                play8Bit('coin');
+            } else {
+                if (nlpBox) nlpBox.classList.add('hidden');
+                if (btnText) btnText.innerText = "กดแปลภาษาไทยอัตโนมัติ (Machine Translation)";
+                if (evalTitle) evalTitle.innerText = "สกัดข้อความภาษาเวียดนาม (Unicode Text)";
+            }
+
+            renderARBadgesOverlay();
+            renderProofreadDishList();
+
+            if (chosenDish) {
+                selectDish(chosenDish);
+            }
+        }
+
+        function renderProofreadDishList() {
+            const listContainer = document.getElementById('proofread-dish-list');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+
+            VIET_DISHES.forEach(dish => {
+                const isSelected = chosenDish && chosenDish.id === dish.id;
+                const item = document.createElement('div');
+                item.className = `p-2.5 rounded-xl border cursor-pointer flex items-center justify-between transition-all select-none ${
+                    isSelected 
+                        ? 'bg-amber-100 border-amber-500 ring-2 ring-amber-400 shadow-sm' 
+                        : 'bg-white hover:bg-stone-50 border-stone-200'
+                }`;
+
+                item.onclick = () => selectDish(dish);
+
+                item.innerHTML = `
+                    <div class="flex items-center space-x-2.5 min-w-0 pr-2">
+                        <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
+                            isSelected ? 'bg-amber-500 text-white' : 'border border-stone-300 text-stone-400'
+                        }">${isSelected ? '✓' : ''}</span>
+                        <span class="text-2xl shrink-0">${dish.icon}</span>
+                        <div class="min-w-0 truncate">
+                            <div class="flex items-center space-x-1.5 truncate">
+                                <span class="text-[10px] bg-stone-100 text-stone-600 px-1 rounded font-mono">🇻🇳 OCR</span>
+                                <span class="font-bold text-xs sm:text-sm font-mono text-stone-900 truncate">${dish.vietName}</span>
+                            </div>
+                            <div class="text-[11px] truncate pt-0.5">
+                                ${isTranslated 
+                                    ? `<span class="text-stone-700 font-medium">🇹🇭 ${dish.thaiName} <span class="text-stone-400 text-[10px]">(${dish.approxThb})</span></span>` 
+                                    : `<span class="text-blue-600 font-medium italic">[ รอแปลภาษา... กดปุ่ม "แปลภาษาไทย" ด้านบน ]</span>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="font-mono font-black text-xs sm:text-sm text-amber-900">${dish.price}</span>
+                    </div>
+                `;
+
+                listContainer.appendChild(item);
+            });
+        }
+
+        function selectDish(dish) {
+            chosenDish = dish;
+            play8Bit('blip');
+            renderARBadgesOverlay();
+            renderProofreadDishList();
+
+            const subBtn = document.getElementById('btn-proofread-submit');
+            if (subBtn) {
+                subBtn.disabled = false;
+                subBtn.className = "w-full py-3.5 sm:py-4 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-md active:scale-95 transition-all cursor-pointer";
+                const thaiPart = isTranslated ? ` (${dish.thaiName})` : '';
+                subBtn.innerHTML = `<span>🚀 ยืนยันข้อมูลถูกต้อง: สั่ง ${dish.icon} ${dish.vietName}${thaiPart}</span>`;
+            }
+        }
+
+        function renderARBadgesOverlay() {
+            const layer = document.getElementById('ar-badges-layer');
+            if (!layer) return;
+            layer.innerHTML = '';
+
+            const lum = photoAnalysis ? photoAnalysis.avgLum : 128;
+            const isDark = lum < 65;
+            const isGlare = lum > 215;
+
+            VIET_DISHES.forEach(dish => {
+                const isSelected = chosenDish && chosenDish.id === dish.id;
+                const b = dish.box;
+
+                const badge = document.createElement('div');
+                badge.style.position = 'absolute';
+                badge.style.left = (b.xF * 100) + '%';
+                badge.style.top = (b.yF * 100) + '%';
+                badge.style.width = (b.wF * 100) + '%';
+                badge.style.height = (b.hF * 100) + '%';
+
+                let badgeHtml = '';
+                const displayText = isTranslated ? dish.thaiName : dish.vietName;
+                const prefixIcon = isTranslated ? dish.icon : '🔤';
+
+                if (isDark) {
+                    badge.className = `cursor-pointer flex items-center justify-between px-1.5 py-0.5 rounded border transition-all text-[9px] sm:text-[11px] font-bold ${
+                        isSelected 
+                            ? 'bg-rose-900/90 border-amber-400 text-amber-200 ring-2 ring-amber-400 shadow-lg scale-[1.02] z-20' 
+                            : 'bg-rose-950/75 border-rose-500/70 text-rose-300 hover:bg-rose-900/80 z-10'
+                    }`;
+                    badgeHtml = `
+                        <span class="truncate flex items-center space-x-1">
+                            <span class="text-[10px]">❓</span>
+                            <span class="truncate font-mono">[? ? ?] ${displayText.substring(0, 7)}...</span>
+                        </span>
+                        <span class="text-[8px] sm:text-[10px] text-rose-300 font-mono pl-1">38%</span>
+                    `;
+                } else if (isGlare) {
+                    const isCenter = dish.id >= 3 && dish.id <= 8;
+                    if (isCenter) {
+                        badge.className = `cursor-pointer flex items-center justify-between px-1.5 py-0.5 rounded border transition-all text-[9px] sm:text-[11px] font-bold ${
+                            isSelected 
+                                ? 'bg-amber-900/90 border-amber-300 text-white ring-2 ring-amber-400 scale-[1.02] z-20' 
+                                : 'bg-stone-800/80 border-amber-500/60 text-amber-200 hover:bg-amber-900/80 z-10'
+                        }`;
+                        badgeHtml = `
+                            <span class="truncate flex items-center space-x-1">
+                                <span class="text-[10px]">⚡</span>
+                                <span class="truncate font-mono">[แสงจ้า] ${displayText.substring(0, 6)}...</span>
+                            </span>
+                            <span class="text-[8px] sm:text-[10px] text-amber-300 font-mono pl-1">52%</span>
+                        `;
+                    } else {
+                        badge.className = `cursor-pointer flex items-center justify-between px-1.5 py-0.5 rounded border transition-all text-[9px] sm:text-[11px] font-bold ${
+                            isSelected 
+                                ? 'bg-emerald-600 border-amber-300 text-white ring-2 ring-amber-400 shadow-lg scale-[1.02] z-20' 
+                                : 'bg-stone-900/85 border-cyan-400/80 text-cyan-200 hover:bg-emerald-900/90 z-10'
+                        }`;
+                        badgeHtml = `
+                            <span class="truncate flex items-center space-x-1">
+                                <span class="text-[10px]">${prefixIcon}</span>
+                                <span class="truncate">${displayText}</span>
+                            </span>
+                            <span class="text-[8px] sm:text-[10px] text-emerald-300 font-mono font-bold pl-1 whitespace-nowrap">${dish.price}</span>
+                        `;
+                    }
+                } else {
+                    badge.className = `cursor-pointer flex items-center justify-between px-1.5 py-0.5 rounded-lg border transition-all text-[9px] sm:text-[11px] font-bold select-none ${
+                        isSelected 
+                            ? 'bg-emerald-600/95 border-amber-300 text-white ring-2 ring-amber-400 shadow-xl scale-[1.02] z-20' 
+                            : (isTranslated 
+                                ? 'bg-stone-900/85 hover:bg-emerald-800/90 border-emerald-400/70 hover:border-emerald-300 text-emerald-100 hover:text-white shadow-sm z-10' 
+                                : 'bg-stone-900/90 hover:bg-purple-900/90 border-purple-400/80 hover:border-purple-300 text-purple-100 hover:text-white shadow-sm z-10')
+                    }`;
+                    badgeHtml = `
+                        <span class="truncate flex items-center space-x-1">
+                            <span class="text-[10px]">${prefixIcon}</span>
+                            <span class="truncate tracking-tight font-mono">${displayText}</span>
+                        </span>
+                        <span class="text-[8px] sm:text-[10px] ${isSelected ? 'text-amber-200' : 'text-emerald-300'} font-mono font-bold pl-1 whitespace-nowrap">${dish.price}</span>
+                    `;
+                }
+
+                badge.innerHTML = badgeHtml;
+                badge.onclick = (e) => {
+                    e.stopPropagation();
+                    selectDish(dish);
+                };
+                layer.appendChild(badge);
+            });
+        }
+
+        async function studentSubmitOrder() {
+            if (!chosenDish) {
+                play8Bit('buzz');
+                alert("กรุณาแตะเลือกเมนูอาหารที่ต้องการสั่งก่อนครับ!");
+                return;
+            }
+
+            play8Bit('coin');
+            isOrderServed = false;
+
+            const dishText = `${chosenDish.icon} ${chosenDish.vietName} (${chosenDish.thaiName}) - ${chosenDish.price}`;
+            const payload = {
+                clientId: myPlayer ? myPlayer.clientId : undefined,
+                studentId: myPlayer ? myPlayer.studentId : '311',
+                tableNum: myPlayer ? myPlayer.tableNum : 1,
+                emoji: myPlayer ? myPlayer.emoji : '🐱',
+                name: myPlayer ? myPlayer.name : 'นักเรียน',
+                sampleNum: currentSampleNum,
+                qualityTag: photoAnalysis ? photoAnalysis.tag : `ภาพตัวอย่างที่ ${currentSampleNum}`,
+                qualityIcon: photoAnalysis ? photoAnalysis.icon : '🖼️',
+                vietDish: chosenDish.vietName,
+                thaiDish: chosenDish.thaiName,
+                orderPrice: chosenDish.price,
+                approxThb: chosenDish.approxThb,
+                dishIcon: chosenDish.icon,
+                orderDish: dishText
+            };
+
+            try {
+                await fetch('/api/scores', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) {}
+
+            const orderedDishEl = document.getElementById('ordered-dish-name');
+            if (orderedDishEl) {
+                orderedDishEl.innerHTML = `
+                    <div class="text-base font-black text-emerald-900">${chosenDish.icon} ${chosenDish.vietName}</div>
+                    <div class="text-xs text-stone-600 font-bold pt-0.5">🇹🇭 ${chosenDish.thaiName} • <span class="text-amber-800 font-mono">${chosenDish.price}</span></div>
+                `;
+            }
+
+            document.getElementById('order-status-icon').innerText = '⏳';
+            document.getElementById('order-status-badge').innerText = '[ รอคิวปรุง... ]';
+            document.getElementById('order-status-badge').className = 'text-xs text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full inline-block font-bold';
+            document.getElementById('order-status-title').innerText = 'ส่งออเดอร์เข้าครัวแล้ว!';
+            document.getElementById('order-status-desc').innerText = '👀 รอดูที่จอใหญ่นะ เมื่ออาจารย์ทำเสร็จจะกดเสิร์ฟให้ทันที!';
+            document.getElementById('order-status-desc').className = 'text-xs text-amber-800 font-bold animate-pulse pt-1';
+
+            goToStep(4);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            try { initEmojiPicker(); } catch (e) { console.error(e); }
+
+            // Restore saved student profile if previously joined
+            try {
+                const saved = sessionStorage.getItem('ocr_quest_player');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed && parsed.name) {
+                        const nameEl = document.getElementById('stu-input-name');
+                        if (nameEl) nameEl.value = parsed.name;
+                    }
+                    if (parsed && parsed.studentId) {
+                        const idEl = document.getElementById('stu-input-id');
+                        if (idEl) idEl.value = parsed.studentId;
+                    }
+                    if (parsed && parsed.emoji) {
+                        selectedEmoji = parsed.emoji;
+                        document.querySelectorAll('.emoji-select-btn').forEach(btn => {
+                            if (btn.dataset.emoji === selectedEmoji) {
+                                btn.classList.add('border-amber-500', 'bg-amber-200');
+                            } else {
+                                btn.classList.remove('border-amber-500', 'bg-amber-200');
+                            }
+                        });
+                    }
+                }
+            } catch (e) {}
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const role = urlParams.get('role');
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname;
+
+            if (role === 'student' || isMobile) {
+                isStudentLocked = true;
+                const switchNav = document.getElementById('screen-switch-nav');
+                if (switchNav) switchNav.style.display = 'none';
+                switchScreen('student');
+            } else if (role === 'teacher' || isLocalhost) {
+                switchScreen('teacher');
+            } else {
+                switchScreen('teacher');
+            }
+        });
+    </script>
+</body>
+</html>

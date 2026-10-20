@@ -4,26 +4,42 @@ import json
 import socket
 import os
 import urllib.parse
+import threading
 from datetime import datetime
 
 PORT = 8080
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 def get_local_ip():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    """Detect LAN IP address with multi-strategy fallback (online & offline)."""
+    # Strategy 1: Connect to public DNS without sending packets to detect default outbound LAN adapter
     try:
-        s.connect(('8.8.8.8', 80))
-        ip = s.getsockname()[0]
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect(('8.8.8.8', 80))
+            ip = s.getsockname()[0]
+            if ip and not ip.startswith('127.'):
+                return ip
     except Exception:
-        ip = '127.0.0.1'
-    finally:
-        s.close()
-    return ip
+        pass
 
-# Global In-Memory Game State
+    # Strategy 2: Fallback to host adapter lookup (works even completely offline / no internet gateway)
+    try:
+        hostname = socket.gethostname()
+        candidates = socket.gethostbyname_ex(hostname)[2]
+        for candidate in candidates:
+            if not candidate.startswith('127.'):
+                return candidate
+    except Exception:
+        pass
+
+    return '127.0.0.1'
+
+# Global In-Memory Game State guarded by Thread Lock
+state_lock = threading.Lock()
 game_state = {
     'status': 'LOBBY',  # 'LOBBY', 'PLAYING', 'ENDED'
     'roundId': 1,
+    'custom_url': '',   # Optional custom public tunnel URL (ngrok, localtunnel, etc.)
     'players': [],      # list of { studentId, emoji, name, joinedAt, tableNum, clientId }
     'scores': []        # list of { studentId, emoji, name, score, accuracy, qualityTag, qualityIcon, orderDish, orderPrice, orderStatus, timestamp }
 }
@@ -67,10 +83,15 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
+            local_ip = get_local_ip()
+            with state_lock:
+                custom_url = game_state.get('custom_url', '').strip()
+            join_url = custom_url if custom_url else f"http://{local_ip}:{PORT}/play"
             data = {
-                'ip': get_local_ip(),
+                'ip': local_ip,
                 'port': PORT,
-                'joinUrl': f"http://{get_local_ip()}:{PORT}/play"
+                'joinUrl': join_url,
+                'customUrl': custom_url
             }
             self.wfile.write(json.dumps(data, ensure_ascii=False).encode('utf-8'))
             return
@@ -79,15 +100,17 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
             self.end_headers()
-            # Sort orders by table number for easy kitchen serving
-            orders = sorted(game_state['scores'], key=lambda x: x.get('tableNum', 99))
-            res = {
-                'status': game_state['status'],
-                'roundId': game_state.get('roundId', 1),
-                'players': game_state['players'],
-                'scores': orders,
-                'orders': orders
-            }
+            with state_lock:
+                # Sort orders by table number for easy kitchen serving
+                orders = sorted(game_state['scores'], key=lambda x: x.get('tableNum', 99))
+                res = {
+                    'status': game_state['status'],
+                    'roundId': game_state.get('roundId', 1),
+                    'customUrl': game_state.get('custom_url', ''),
+                    'players': list(game_state['players']),
+                    'scores': list(orders),
+                    'orders': list(orders)
+                }
             self.wfile.write(json.dumps(res, ensure_ascii=False).encode('utf-8'))
             return
 
@@ -104,7 +127,22 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
             except Exception:
                 pass
 
-        if parsed.path == '/api/join':
+        if parsed.path == '/api/set_public_url':
+            raw_url = str(payload.get('url', '')).strip()
+            if raw_url:
+                if not raw_url.startswith(('http://', 'https://')):
+                    raw_url = 'https://' + raw_url
+                if not raw_url.endswith('/play'):
+                    raw_url = raw_url.rstrip('/') + '/play'
+            with state_lock:
+                game_state['custom_url'] = raw_url
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json; charset=utf-8')
+            self.end_headers()
+            self.wfile.write(json.dumps({'status': 'ok', 'customUrl': raw_url}, ensure_ascii=False).encode('utf-8'))
+            return
+
+        elif parsed.path == '/api/join':
             student_id = str(payload.get('studentId', '')).strip()
             name = str(payload.get('name', '')).strip()
             emoji = payload.get('emoji', '🐱')
@@ -117,49 +155,53 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(json.dumps({'status': 'error', 'message': 'กรุณาป้อนชื่อเล่นและรหัสตัวเลขให้ครบถ้วนก่อนเข้าโต๊ะ'}, ensure_ascii=False).encode('utf-8'))
                 return
 
-            # Find existing table if rejoining
-            existing_table = None
-            for pl in game_state['players']:
-                if pl.get('clientId') == client_id or pl.get('studentId') == student_id:
-                    existing_table = pl.get('tableNum')
-                    break
+            with state_lock:
+                # Find existing table if rejoining
+                existing_table = None
+                for pl in game_state['players']:
+                    if pl.get('clientId') == client_id or pl.get('studentId') == student_id:
+                        existing_table = pl.get('tableNum')
+                        break
 
-            # Remove any player with same clientId or studentId so re-joining updates cleanly
-            game_state['players'] = [x for x in game_state['players'] if x.get('clientId') != client_id and x.get('studentId') != student_id]
+                # Remove any player with same clientId or studentId so re-joining updates cleanly
+                game_state['players'] = [x for x in game_state['players'] if x.get('clientId') != client_id and x.get('studentId') != student_id]
 
-            if len(game_state['players']) < 10:
-                occupied_tables = {x.get('tableNum') for x in game_state['players'] if x.get('tableNum')}
-                if existing_table and existing_table not in occupied_tables:
-                    table_num = existing_table
+                if len(game_state['players']) < 10:
+                    occupied_tables = {x.get('tableNum') for x in game_state['players'] if x.get('tableNum')}
+                    if existing_table and existing_table not in occupied_tables:
+                        table_num = existing_table
+                    else:
+                        table_num = 1
+                        for t in range(1, 11):
+                            if t not in occupied_tables:
+                                table_num = t
+                                break
+
+                    p = {
+                        'clientId': client_id,
+                        'studentId': student_id,
+                        'emoji': emoji,
+                        'name': name,
+                        'tableNum': table_num,
+                        'joinedAt': datetime.now().strftime('%H:%M:%S')
+                    }
+                    game_state['players'].append(p)
+                    status = 'joined'
                 else:
-                    table_num = 1
-                    for t in range(1, 11):
-                        if t not in occupied_tables:
-                            table_num = t
-                            break
+                    p = {'clientId': client_id, 'studentId': student_id, 'name': name, 'emoji': emoji, 'tableNum': None}
+                    status = 'room_full'
 
-                p = {
-                    'clientId': client_id,
-                    'studentId': student_id,
-                    'emoji': emoji,
-                    'name': name,
-                    'tableNum': table_num,
-                    'joinedAt': datetime.now().strftime('%H:%M:%S')
-                }
-                game_state['players'].append(p)
-                status = 'joined'
-            else:
-                p = {'clientId': client_id, 'studentId': student_id, 'name': name, 'emoji': emoji, 'tableNum': None}
-                status = 'room_full'
+                player_count = len(game_state['players'])
 
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
-            self.wfile.write(json.dumps({'status': status, 'player': p, 'count': len(game_state['players'])}, ensure_ascii=False).encode('utf-8'))
+            self.wfile.write(json.dumps({'status': status, 'player': p, 'count': player_count}, ensure_ascii=False).encode('utf-8'))
             return
 
         elif parsed.path == '/api/start_game':
-            game_state['status'] = 'PLAYING'
+            with state_lock:
+                game_state['status'] = 'PLAYING'
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
@@ -167,20 +209,23 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         elif parsed.path == '/api/reset_game':
-            game_state['status'] = 'LOBBY'
-            game_state['roundId'] = game_state.get('roundId', 1) + 1
-            game_state['scores'].clear()
+            with state_lock:
+                game_state['status'] = 'LOBBY'
+                game_state['roundId'] = game_state.get('roundId', 1) + 1
+                game_state['scores'].clear()
+                round_id = game_state['roundId']
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
-            self.wfile.write(json.dumps({'status': 'reset_ok', 'roundId': game_state['roundId']}).encode('utf-8'))
+            self.wfile.write(json.dumps({'status': 'reset_ok', 'roundId': round_id}).encode('utf-8'))
             return
 
         elif parsed.path == '/api/clear_all_players':
-            game_state['status'] = 'LOBBY'
-            game_state['roundId'] = game_state.get('roundId', 1) + 1
-            game_state['players'].clear()
-            game_state['scores'].clear()
+            with state_lock:
+                game_state['status'] = 'LOBBY'
+                game_state['roundId'] = game_state.get('roundId', 1) + 1
+                game_state['players'].clear()
+                game_state['scores'].clear()
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
@@ -190,7 +235,8 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
         elif parsed.path == '/api/leave':
             client_id = payload.get('clientId')
             student_id = payload.get('studentId')
-            game_state['players'] = [x for x in game_state['players'] if x.get('clientId') != client_id and x.get('studentId') != student_id]
+            with state_lock:
+                game_state['players'] = [x for x in game_state['players'] if x.get('clientId') != client_id and x.get('studentId') != student_id]
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
@@ -200,13 +246,14 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
         elif parsed.path == '/api/scores':
             payload['timestamp'] = datetime.now().strftime('%H:%M:%S')
             payload['orderStatus'] = 'PENDING'  # PENDING -> SERVED
-            if not payload.get('tableNum'):
-                for pl in game_state['players']:
-                    if pl.get('studentId') == payload.get('studentId') or pl.get('clientId') == payload.get('clientId'):
-                        payload['tableNum'] = pl.get('tableNum')
-                        break
-            game_state['scores'] = [x for x in game_state['scores'] if x.get('studentId') != payload.get('studentId')]
-            game_state['scores'].append(payload)
+            with state_lock:
+                if not payload.get('tableNum'):
+                    for pl in game_state['players']:
+                        if pl.get('studentId') == payload.get('studentId') or pl.get('clientId') == payload.get('clientId'):
+                            payload['tableNum'] = pl.get('tableNum')
+                            break
+                game_state['scores'] = [x for x in game_state['scores'] if x.get('studentId') != payload.get('studentId')]
+                game_state['scores'].append(payload)
 
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
@@ -217,10 +264,11 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
         elif parsed.path == '/api/serve_order':
             # Teacher marks order as SERVED
             target_id = payload.get('studentId')
-            for s in game_state['scores']:
-                if s.get('studentId') == target_id:
-                    s['orderStatus'] = 'SERVED'
-                    break
+            with state_lock:
+                for s in game_state['scores']:
+                    if s.get('studentId') == target_id:
+                        s['orderStatus'] = 'SERVED'
+                        break
 
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
@@ -228,7 +276,7 @@ class OCRQuestHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({'status': 'served_ok'}).encode('utf-8'))
             return
 
-        super().do_POST()
+        self.send_error(404, "Endpoint not found")
 
 if __name__ == '__main__':
     local_ip = get_local_ip()

@@ -192,6 +192,24 @@
                                 LOADING IP...
                             </div>
                         </div>
+
+                        <!-- Tunnel / Cross Wi-Fi Custom URL -->
+                        <div class="pt-1 text-left">
+                            <details class="text-xs text-stone-500 cursor-pointer group">
+                                <summary class="font-bold text-stone-600 hover:text-amber-800 flex items-center justify-between p-2 bg-stone-100 rounded-xl select-none">
+                                    <span>🌐 สแกนข้าม Wi-Fi (ใส่ลิงก์ Tunnel / ngrok)</span>
+                                    <span class="text-[10px] text-stone-400 group-open:rotate-180 transition-transform">▼</span>
+                                </summary>
+                                <div class="p-2.5 bg-stone-50 border border-stone-200 rounded-b-xl space-y-2 mt-1">
+                                    <p class="text-[11px] text-stone-500">หากนักเรียนใช้ 4G หรือคนละ Wi-Fi ให้ใส่ลิงก์ ngrok / localtunnel ที่นี่:</p>
+                                    <div class="flex space-x-1.5">
+                                        <input id="custom-tunnel-url-input" type="url" placeholder="https://xxxx.loca.lt" class="flex-1 px-2.5 py-1.5 text-xs border border-stone-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500">
+                                        <button onclick="saveCustomTunnelUrl()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs whitespace-nowrap shadow-sm">บันทึก</button>
+                                        <button onclick="clearCustomTunnelUrl()" class="px-2 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg text-xs" title="รีเซ็ตกลับเป็น Local IP">↩</button>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
                     </div>
 
                     <!-- Right 7 cols: Waiting Room & BIG START BUTTON -->
@@ -1025,31 +1043,6 @@
             });
         }
 
-        function initDishPicker() {
-            const container = document.getElementById('dish-selection-container');
-            if (!container) return;
-            container.innerHTML = '';
-            VIET_DISHES.forEach(dish => {
-                const isSelected = chosenDish && chosenDish.id === dish.id;
-                const div = document.createElement('div');
-                div.className = `p-2.5 rounded-xl border cursor-pointer flex items-center justify-between transition-all ${isSelected ? 'bg-amber-300 border-amber-500 font-bold text-stone-950' : 'bg-white hover:bg-amber-50 border-stone-200 text-stone-800'}`;
-                div.onclick = () => {
-                    selectDish(dish);
-                };
-                div.innerHTML = `
-                    <div class="flex items-center space-x-2.5">
-                        <span class="text-2xl">${dish.icon}</span>
-                        <div>
-                            <div class="font-bold text-xs sm:text-sm">${dish.thaiName}</div>
-                            <div class="text-[11px] text-stone-500 font-mono">${dish.vietName} (${dish.approxThb})</div>
-                        </div>
-                    </div>
-                    <span class="font-mono font-bold text-xs sm:text-sm whitespace-nowrap pl-2 text-emerald-700">${dish.price}</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
         function hideJoinError() {
             const errBox = document.getElementById('stu-join-error-box');
             const nameInput = document.getElementById('stu-input-name');
@@ -1153,11 +1146,13 @@
 
         async function fetchInfoAndQR() {
             let joinUrl = `${window.location.origin}/play`;
+            let customUrl = '';
             try {
                 const res = await fetch('/api/info');
                 if (res.ok) {
                     const data = await res.json();
                     if (data && data.joinUrl) joinUrl = data.joinUrl;
+                    if (data && data.customUrl) customUrl = data.customUrl;
                 }
             } catch (e) {
                 console.warn("fetch /api/info error, using fallback origin", e);
@@ -1165,6 +1160,11 @@
 
             const joinUrlEl = document.getElementById('teach-join-url');
             if (joinUrlEl) joinUrlEl.innerText = joinUrl;
+
+            const customInput = document.getElementById('custom-tunnel-url-input');
+            if (customInput && customUrl && !customInput.value) {
+                customInput.value = customUrl;
+            }
 
             const qrBox = document.getElementById('teach-qr-box');
             if (qrBox) {
@@ -1185,6 +1185,39 @@
                     qrBox.appendChild(img);
                 }
             }
+        }
+
+        async function saveCustomTunnelUrl() {
+            const input = document.getElementById('custom-tunnel-url-input');
+            if (!input) return;
+            const url = input.value.trim();
+            try {
+                const res = await fetch('/api/set_public_url', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ url })
+                });
+                if (res.ok) {
+                    play8Bit('bell');
+                    await fetchInfoAndQR();
+                }
+            } catch (e) {
+                alert("ไม่สามารถบันทึกลิงก์ได้");
+            }
+        }
+
+        async function clearCustomTunnelUrl() {
+            const input = document.getElementById('custom-tunnel-url-input');
+            if (input) input.value = '';
+            try {
+                await fetch('/api/set_public_url', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ url: '' })
+                });
+                play8Bit('blip');
+                await fetchInfoAndQR();
+            } catch (e) {}
         }
 
         async function teacherStartGame() {
@@ -1309,12 +1342,12 @@
             const nlpBox = document.getElementById('nlp-concept-box');
             if (nlpBox) nlpBox.classList.add('hidden');
             const transBtn = document.getElementById('translate-btn-text');
-            if (transBtn) transBtn.innerText = "กดแปลภาษาไทยอัตโนมัติ (Machine Translation)";
+            if (transBtn) transBtn.innerText = "กดแปลภาษาไทย (Machine Translation)";
             const subBtn = document.getElementById('btn-proofread-submit');
             if (subBtn) {
                 subBtn.disabled = true;
                 subBtn.className = "w-full py-3.5 sm:py-4 bistro-btn bg-stone-200 text-stone-400 font-black text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm cursor-not-allowed transition-all";
-                subBtn.innerHTML = `<span>🚀 ยืนยันข้อมูลถูกต้อง และส่งออเดอร์เข้าห้องครัวอาจารย์</span>`;
+                subBtn.innerHTML = `<span>🚀 ยืนยันข้อมูล & ส่งเข้าครัว</span>`;
             }
 
             // Reset Step 4 (Order status)
@@ -1329,7 +1362,7 @@
             if (statusTitle) statusTitle.innerText = 'ส่งออเดอร์เข้าครัวแล้ว!';
             const statusDesc = document.getElementById('order-status-desc');
             if (statusDesc) {
-                statusDesc.innerText = '👀 รอดูที่จอใหญ่นะ เมื่ออาจารย์ทำเสร็จจะกดเสิร์ฟให้ทันที!';
+                statusDesc.innerText = '👀 รออาจารย์กดเสิร์ฟที่จอใหญ่';
                 statusDesc.className = 'text-xs text-amber-800 font-bold animate-pulse pt-1';
             }
 
@@ -2199,7 +2232,7 @@
             document.getElementById('order-status-badge').innerText = '[ รอคิวปรุง... ]';
             document.getElementById('order-status-badge').className = 'text-xs text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full inline-block font-bold';
             document.getElementById('order-status-title').innerText = 'ส่งออเดอร์เข้าครัวแล้ว!';
-            document.getElementById('order-status-desc').innerText = '👀 รอดูที่จอใหญ่นะ เมื่ออาจารย์ทำเสร็จจะกดเสิร์ฟให้ทันที!';
+            document.getElementById('order-status-desc').innerText = '👀 รออาจารย์กดเสิร์ฟที่จอใหญ่';
             document.getElementById('order-status-desc').className = 'text-xs text-amber-800 font-bold animate-pulse pt-1';
 
             goToStep(4);

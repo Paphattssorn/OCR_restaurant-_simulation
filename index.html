@@ -192,24 +192,6 @@
                                 LOADING IP...
                             </div>
                         </div>
-
-                        <!-- Tunnel / Cross Wi-Fi Custom URL -->
-                        <div class="pt-1 text-left">
-                            <details class="text-xs text-stone-500 cursor-pointer group">
-                                <summary class="font-bold text-stone-600 hover:text-amber-800 flex items-center justify-between p-2 bg-stone-100 rounded-xl select-none">
-                                    <span>🌐 สแกนข้าม Wi-Fi (ใส่ลิงก์ Tunnel / ngrok)</span>
-                                    <span class="text-[10px] text-stone-400 group-open:rotate-180 transition-transform">▼</span>
-                                </summary>
-                                <div class="p-2.5 bg-stone-50 border border-stone-200 rounded-b-xl space-y-2 mt-1">
-                                    <p class="text-[11px] text-stone-500">หากนักเรียนใช้ 4G หรือคนละ Wi-Fi ให้ใส่ลิงก์ ngrok / localtunnel ที่นี่:</p>
-                                    <div class="flex space-x-1.5">
-                                        <input id="custom-tunnel-url-input" type="url" placeholder="https://xxxx.loca.lt" class="flex-1 px-2.5 py-1.5 text-xs border border-stone-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500">
-                                        <button onclick="saveCustomTunnelUrl()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs whitespace-nowrap shadow-sm">บันทึก</button>
-                                        <button onclick="clearCustomTunnelUrl()" class="px-2 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg text-xs" title="รีเซ็ตกลับเป็น Local IP">↩</button>
-                                    </div>
-                                </div>
-                            </details>
-                        </div>
                     </div>
 
                     <!-- Right 7 cols: Waiting Room & BIG START BUTTON -->
@@ -1161,11 +1143,6 @@
             const joinUrlEl = document.getElementById('teach-join-url');
             if (joinUrlEl) joinUrlEl.innerText = joinUrl;
 
-            const customInput = document.getElementById('custom-tunnel-url-input');
-            if (customInput && customUrl && !customInput.value) {
-                customInput.value = customUrl;
-            }
-
             const qrBox = document.getElementById('teach-qr-box');
             if (qrBox) {
                 qrBox.innerHTML = '';
@@ -1185,39 +1162,6 @@
                     qrBox.appendChild(img);
                 }
             }
-        }
-
-        async function saveCustomTunnelUrl() {
-            const input = document.getElementById('custom-tunnel-url-input');
-            if (!input) return;
-            const url = input.value.trim();
-            try {
-                const res = await fetch('/api/set_public_url', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ url })
-                });
-                if (res.ok) {
-                    play8Bit('bell');
-                    await fetchInfoAndQR();
-                }
-            } catch (e) {
-                alert("ไม่สามารถบันทึกลิงก์ได้");
-            }
-        }
-
-        async function clearCustomTunnelUrl() {
-            const input = document.getElementById('custom-tunnel-url-input');
-            if (input) input.value = '';
-            try {
-                await fetch('/api/set_public_url', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ url: '' })
-                });
-                play8Bit('blip');
-                await fetchInfoAndQR();
-            } catch (e) {}
         }
 
         async function teacherStartGame() {

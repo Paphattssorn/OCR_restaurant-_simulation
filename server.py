@@ -7,7 +7,7 @@ import urllib.parse
 import threading
 from datetime import datetime
 
-PORT = 8080
+PORT = int(os.environ.get('PORT', 8080))
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 def get_local_ip():

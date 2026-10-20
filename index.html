@@ -231,33 +231,59 @@
             <!-- TEACHER STATE 2: LIVE MENU & ORDER DISPATCH (อาจารย์รับออเดอร์) -->
             <div id="teach-battle-view" class="hidden space-y-6">
                 
-                <!-- Chef Bar -->
-                <div class="bg-amber-100/90 border border-amber-300 rounded-2xl p-3.5 flex items-center justify-between font-bold text-stone-800 shadow-sm">
+                <!-- Chef Bar with Summary Badges -->
+                <div class="bg-amber-100/90 border border-amber-300 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3 font-bold text-stone-800 shadow-sm">
                     <div class="flex items-center space-x-2 text-sm sm:text-base">
                         <span>ครัวอาจารย์: รายการสั่งอาหารจากนักเรียน</span>
                     </div>
-                    <button onclick="teacherResetGame()" class="bistro-btn bg-white hover:bg-stone-50 text-stone-700 font-bold text-xs px-3.5 py-1.5 border border-stone-300 shadow-sm">
-                        เริ่มรอบใหม่
-                    </button>
+                    <div class="flex items-center space-x-2">
+                        <!-- Quick Summary Badges -->
+                        <div class="flex items-center space-x-1.5 text-xs">
+                            <button type="button" onclick="switchTeacherOrderTab('ordered')" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-900 px-2.5 py-1 rounded-xl border border-emerald-300 font-bold transition-all shadow-xs flex items-center space-x-1" title="คลิกเพื่อดูออเดอร์ที่สั่งแล้ว">
+                                <span>สั่งแล้ว</span>
+                                <span id="badge-summary-ordered" class="bg-emerald-700 text-white px-1.5 py-0.2 rounded-full font-mono text-[11px]">0</span>
+                            </button>
+                            <button type="button" onclick="switchTeacherOrderTab('pending')" class="bg-rose-100 hover:bg-rose-200 text-rose-900 px-2.5 py-1 rounded-xl border border-rose-300 font-bold transition-all shadow-xs flex items-center space-x-1" title="คลิกเพื่อดูนักเรียนที่ยังไม่สั่ง">
+                                <span>ยังไม่สั่ง</span>
+                                <span id="badge-summary-pending" class="bg-rose-600 text-white px-1.5 py-0.2 rounded-full font-mono text-[11px]">0</span>
+                            </button>
+                        </div>
+                        <button onclick="teacherResetGame()" class="bistro-btn bg-white hover:bg-stone-50 text-stone-700 font-bold text-xs px-3.5 py-1.5 border border-stone-300 shadow-sm">
+                            เริ่มรอบใหม่
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
                     
-                    <!-- Left 6 cols: Authentic Vietnamese Menu for Students to Scan -->
+                    <!-- Left 6 cols: Authentic Vietnamese Menu OR 10-Table Live Status Grid -->
                     <div class="lg:col-span-6 bistro-card-lg p-5 sm:p-6 space-y-4 flex flex-col justify-between">
                         <div class="flex items-center justify-between pb-3 border-b border-stone-200">
                             <div>
-                                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">เมนูร้าน</span>
-                                <h3 class="text-base sm:text-lg font-black text-stone-900 mt-1">QUÁN ĂN VIỆT NAM (BẾP HÀ NỘI)</h3>
+                                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">หน้าต่างแสดงผล</span>
+                                <h3 class="text-base sm:text-lg font-black text-stone-900 mt-1" id="teach-left-title">เมนูอาหาร Quán Ăn</h3>
                             </div>
-                            <button onclick="openMenuModal()" class="bistro-btn bg-amber-400 hover:bg-amber-300 text-stone-900 px-3 py-1.5 text-xs font-bold flex items-center space-x-1 shadow-sm">
-                                <span>ดูภาพเต็มจอ</span>
-                            </button>
+                            <div class="flex items-center space-x-1.5">
+                                <button type="button" onclick="toggleTeacherLeftView('menu')" id="btn-left-menu" class="bistro-btn bg-amber-400 text-stone-900 px-2.5 sm:px-3 py-1.5 text-xs font-bold shadow-sm transition-all">
+                                    <span>ภาพเมนู</span>
+                                </button>
+                                <button type="button" onclick="toggleTeacherLeftView('grid')" id="btn-left-grid" class="bistro-btn bg-white hover:bg-stone-50 text-stone-700 px-2.5 sm:px-3 py-1.5 text-xs font-bold border border-stone-200 transition-all">
+                                    <span>ผัง 10 โต๊ะ</span>
+                                </button>
+                                <button type="button" onclick="openMenuModal()" class="bistro-btn bg-white hover:bg-stone-50 text-stone-700 px-2 py-1.5 text-xs font-bold border border-stone-200" title="ขยายเต็มจอ">
+                                    <span>เต็มจอ</span>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Real Authentic Menu Image Display -->
-                        <div class="bg-stone-950 p-2.5 border border-stone-200 rounded-2xl shadow-sm flex items-center justify-center">
+                        <div id="teach-left-menu-box" class="bg-stone-950 p-2.5 border border-stone-200 rounded-2xl shadow-sm flex items-center justify-center">
                             <img id="teach-menu-img" src="/menu_vietnam.svg" alt="Quán Ăn Việt Nam Menu" class="max-h-[500px] w-auto object-contain cursor-pointer transition-transform hover:scale-[1.01]" onclick="openMenuModal()" title="คลิกเพื่อขยายเมนูเต็มจอ">
+                        </div>
+
+                        <!-- 10-Table Live Status Grid (Alternative View) -->
+                        <div id="teach-left-grid-box" class="hidden min-h-[420px] max-h-[500px] overflow-y-auto p-3 bg-stone-50/70 rounded-2xl border border-stone-200 grid grid-cols-2 gap-2.5">
+                            <!-- Rendered dynamically by JS -->
                         </div>
 
                         <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-stone-700 font-medium flex items-center justify-between">
@@ -266,23 +292,36 @@
                         </div>
                     </div>
 
-                    <!-- Right 6 cols: Live Kitchen Order Tickets -->
+                    <!-- Right 6 cols: Orders Received & Students Not Yet Ordered (Tabs) -->
                     <div class="lg:col-span-6 bistro-card-lg p-5 sm:p-6 space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-stone-200 gap-2">
                             <div>
-                                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">รายการออเดอร์</span>
-                                <h3 class="text-lg font-black text-stone-900 mt-1">ออเดอร์ที่สั่งเข้ามา</h3>
+                                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">ติดตามสถานะ</span>
+                                <h3 class="text-lg font-black text-stone-900 mt-1" id="teach-view-title">ออเดอร์ที่สั่งเข้ามา</h3>
                             </div>
-                            <span id="order-count-badge" class="text-xs bg-amber-400 text-stone-900 font-bold px-3 py-1 rounded-full shadow-sm">
-                                0 บิล
-                            </span>
+                            <!-- 2 Tabs: สั่งแล้ว vs ยังไม่สั่ง -->
+                            <div class="flex items-center space-x-1.5 bg-stone-100 p-1 rounded-xl border border-stone-200 text-xs font-bold">
+                                <button type="button" onclick="switchTeacherOrderTab('ordered')" id="tab-btn-ordered" class="px-3 py-1.5 rounded-lg bg-amber-400 text-stone-900 shadow-sm transition-all flex items-center space-x-1.5">
+                                    <span>สั่งแล้ว</span>
+                                    <span id="order-count-badge" class="bg-stone-900 text-amber-300 text-[11px] px-1.5 py-0.2 rounded-full font-mono">0</span>
+                                </button>
+                                <button type="button" onclick="switchTeacherOrderTab('pending')" id="tab-btn-pending" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-all flex items-center space-x-1.5">
+                                    <span>ยังไม่สั่ง</span>
+                                    <span id="pending-count-badge" class="bg-rose-500 text-white text-[11px] px-1.5 py-0.2 rounded-full font-mono">0</span>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Ticket Carousel Container -->
+                        <!-- Tab 1: Ticket List (ออเดอร์ที่สั่งแล้ว) -->
                         <div id="teach-order-tickets" class="min-h-[380px] max-h-[520px] overflow-y-auto space-y-2.5 p-3 bg-stone-50/70 rounded-2xl border border-stone-200">
                             <div class="p-16 text-center text-xs text-stone-400 font-medium">
                                 รอนักเรียนสแกนเมนูและกดสั่งอาหารเข้ามานะจ๊ะ...
                             </div>
+                        </div>
+
+                        <!-- Tab 2: Pending Students (นักเรียนที่ยังไม่สั่ง) -->
+                        <div id="teach-pending-students" class="hidden min-h-[380px] max-h-[520px] overflow-y-auto space-y-2.5 p-3 bg-stone-50/70 rounded-2xl border border-stone-200">
+                            <!-- Rendered dynamically by JS -->
                         </div>
                     </div>
                 </div>
@@ -1302,6 +1341,8 @@
                 try {
                     await fetch('/api/reset_game', { method: 'POST' });
                 } catch (e) {}
+                switchTeacherOrderTab('ordered');
+                toggleTeacherLeftView('menu');
                 pollGameState();
             }
         }
@@ -1311,6 +1352,8 @@
                 try {
                     await fetch('/api/clear_all_players', { method: 'POST' });
                 } catch (e) {}
+                switchTeacherOrderTab('ordered');
+                toggleTeacherLeftView('menu');
                 pollGameState();
             }
         }
@@ -1505,7 +1548,7 @@
                             }, 120);
                         }
                         lastOrderCount = oCount;
-                        renderTeacherOrderTickets(state.scores);
+                        renderTeacherOrderTickets(state.scores || [], state.players || []);
                     }
                 }
 
@@ -1617,63 +1660,269 @@
             }
         }
 
-        function renderTeacherOrderTickets(scores) {
-            const badge = document.getElementById('order-count-badge');
-            if (badge) badge.innerText = `${scores.length} บิล`;
-            const container = document.getElementById('teach-order-tickets');
-            if (!scores || scores.length === 0) {
-                container.innerHTML = `<div class="p-16 text-center text-xs text-stone-400 font-medium">รอนักเรียนส่งออเดอร์เข้ามา...</div>`;
-                return;
-            }
-            container.innerHTML = '';
-            scores.forEach((s, idx) => {
-                const isServed = s.orderStatus === 'SERVED';
-                const ticket = document.createElement('div');
-                ticket.className = `p-3.5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm transition-all ${isServed ? 'bg-emerald-50/80 border-emerald-300' : 'bg-white border-stone-200'}`;
-                
-                ticket.innerHTML = `
-                    <div class="flex items-start sm:items-center space-x-3">
-                        <span class="text-3xl pt-1 sm:pt-0">${s.emoji || '🐱'}</span>
-                        <div class="space-y-1">
-                            <div class="flex flex-wrap items-center gap-1.5">
-                                <span class="text-xs font-bold text-amber-900 bg-amber-200/90 px-2.5 py-0.5 rounded-full">โต๊ะ ${s.tableNum || (idx + 1)}</span>
-                                <span class="font-bold text-sm text-stone-900">${escapeHtml(s.name)}</span>
-                                <span class="text-xs text-stone-400 font-medium font-mono">#${escapeHtml(s.studentId)}</span>
-                                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${isServed ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300'}">
-                                    ${isServed ? 'เสิร์ฟแล้ว' : 'รอเสิร์ฟ'}
-                                </span>
-                                <span class="text-[10px] text-stone-500 font-medium bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">
-                                    ${escapeHtml(s.qualityTag || 'ภาพปกติ')}
-                                </span>
-                            </div>
+        let currentTeacherOrderTab = 'ordered'; // 'ordered' | 'pending'
+        let teacherLeftViewMode = 'menu'; // 'menu' | 'grid'
 
-                            <!-- Dual Language Display: Vietnamese OCR + Thai Translation -->
-                            <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-2 text-xs space-y-0.5 mt-1">
-                                <div class="flex items-center space-x-1.5 font-bold text-stone-900">
-                                    <span class="text-stone-500 font-medium text-[11px]">สกัดจาก OCR:</span>
-                                    <span class="text-emerald-800 font-mono font-bold">${escapeHtml(s.vietDish || s.orderDish)}</span>
-                                    <span class="text-amber-800 font-bold ml-auto font-mono">${escapeHtml(s.orderPrice || '')}</span>
-                                </div>
-                                <div class="flex items-center space-x-1.5 pl-2 text-[11px] text-stone-600 font-medium">
-                                    <span class="text-stone-500">ผลการแปลภาษา:</span>
-                                    <span class="text-stone-800 font-bold">${escapeHtml(s.thaiDish || '')}</span>
-                                    <span class="text-stone-400 font-normal">(${escapeHtml(s.approxThb || '')})</span>
+        function switchTeacherOrderTab(tab) {
+            currentTeacherOrderTab = tab;
+            const btnOrdered = document.getElementById('tab-btn-ordered');
+            const btnPending = document.getElementById('tab-btn-pending');
+            const boxOrdered = document.getElementById('teach-order-tickets');
+            const boxPending = document.getElementById('teach-pending-students');
+            const titleEl = document.getElementById('teach-view-title');
+
+            if (tab === 'ordered') {
+                if (btnOrdered) btnOrdered.className = "px-3 py-1.5 rounded-lg bg-amber-400 text-stone-900 shadow-sm transition-all flex items-center space-x-1.5 font-bold";
+                if (btnPending) btnPending.className = "px-3 py-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-all flex items-center space-x-1.5 font-bold";
+                if (boxOrdered) boxOrdered.classList.remove('hidden');
+                if (boxPending) boxPending.classList.add('hidden');
+                if (titleEl) titleEl.innerText = "ออเดอร์ที่สั่งเข้ามา";
+            } else {
+                if (btnOrdered) btnOrdered.className = "px-3 py-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-all flex items-center space-x-1.5 font-bold";
+                if (btnPending) btnPending.className = "px-3 py-1.5 rounded-lg bg-rose-500 text-white shadow-sm transition-all flex items-center space-x-1.5 font-bold";
+                if (boxOrdered) boxOrdered.classList.add('hidden');
+                if (boxPending) boxPending.classList.remove('hidden');
+                if (titleEl) titleEl.innerText = "นักเรียนที่ยังไม่สั่งอาหาร";
+            }
+        }
+
+        function toggleTeacherLeftView(mode) {
+            teacherLeftViewMode = mode;
+            const btnMenu = document.getElementById('btn-left-menu');
+            const btnGrid = document.getElementById('btn-left-grid');
+            const boxMenu = document.getElementById('teach-left-menu-box');
+            const boxGrid = document.getElementById('teach-left-grid-box');
+            const titleEl = document.getElementById('teach-left-title');
+
+            if (mode === 'menu') {
+                if (btnMenu) btnMenu.className = "bistro-btn bg-amber-400 text-stone-900 px-2.5 sm:px-3 py-1.5 text-xs font-bold shadow-sm transition-all";
+                if (btnGrid) btnGrid.className = "bistro-btn bg-white hover:bg-stone-50 text-stone-700 px-2.5 sm:px-3 py-1.5 text-xs font-bold border border-stone-200 transition-all";
+                if (boxMenu) boxMenu.classList.remove('hidden');
+                if (boxGrid) boxGrid.classList.add('hidden');
+                if (titleEl) titleEl.innerText = "เมนูอาหาร Quán Ăn";
+            } else {
+                if (btnMenu) btnMenu.className = "bistro-btn bg-white hover:bg-stone-50 text-stone-700 px-2.5 sm:px-3 py-1.5 text-xs font-bold border border-stone-200 transition-all";
+                if (btnGrid) btnGrid.className = "bistro-btn bg-amber-400 text-stone-900 px-2.5 sm:px-3 py-1.5 text-xs font-bold shadow-sm transition-all";
+                if (boxMenu) boxMenu.classList.add('hidden');
+                if (boxGrid) boxGrid.classList.remove('hidden');
+                if (titleEl) titleEl.innerText = "ผังสถานะทั้ง 10 โต๊ะ (Live)";
+            }
+        }
+
+        function renderTeacherOrderTickets(scores, players) {
+            scores = scores || [];
+            players = players || [];
+
+            // Identify ordered vs pending students
+            const orderedIds = new Set(scores.map(s => String(s.studentId)));
+            const pendingPlayers = players.filter(p => !orderedIds.has(String(p.studentId)));
+
+            // 1. Update Badge Counters
+            const badge = document.getElementById('order-count-badge');
+            if (badge) badge.innerText = `${scores.length}`;
+
+            const pendingBadge = document.getElementById('pending-count-badge');
+            if (pendingBadge) pendingBadge.innerText = `${pendingPlayers.length}`;
+
+            const sumOrdered = document.getElementById('badge-summary-ordered');
+            if (sumOrdered) sumOrdered.innerText = `${scores.length}`;
+
+            const sumPending = document.getElementById('badge-summary-pending');
+            if (sumPending) sumPending.innerText = `${pendingPlayers.length}`;
+
+            // 2. Render Ordered Tickets Container
+            const container = document.getElementById('teach-order-tickets');
+            if (container) {
+                if (scores.length === 0) {
+                    container.innerHTML = `<div class="p-16 text-center text-xs text-stone-400 font-medium">รอนักเรียนส่งออเดอร์เข้ามา...</div>`;
+                } else {
+                    container.innerHTML = '';
+                    scores.forEach((s, idx) => {
+                        const isServed = s.orderStatus === 'SERVED';
+                        const ticket = document.createElement('div');
+                        ticket.className = `p-3.5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm transition-all ${isServed ? 'bg-emerald-50/80 border-emerald-300' : 'bg-white border-stone-200'}`;
+                        
+                        ticket.innerHTML = `
+                            <div class="flex items-start sm:items-center space-x-3">
+                                <span class="text-3xl pt-1 sm:pt-0">${s.emoji || '🐱'}</span>
+                                <div class="space-y-1">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="text-xs font-bold text-amber-900 bg-amber-200/90 px-2.5 py-0.5 rounded-full">โต๊ะ ${s.tableNum || (idx + 1)}</span>
+                                        <span class="font-bold text-sm text-stone-900">${escapeHtml(s.name)}</span>
+                                        <span class="text-xs text-stone-400 font-medium font-mono">#${escapeHtml(s.studentId)}</span>
+                                        <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${isServed ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300'}">
+                                            ${isServed ? 'เสิร์ฟแล้ว' : 'รอเสิร์ฟ'}
+                                        </span>
+                                        <span class="text-[10px] text-stone-500 font-medium bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">
+                                            ${escapeHtml(s.qualityTag || 'ภาพปกติ')}
+                                        </span>
+                                    </div>
+
+                                    <!-- Dual Language Display: Vietnamese OCR + Thai Translation -->
+                                    <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-2 text-xs space-y-0.5 mt-1">
+                                        <div class="flex items-center space-x-1.5 font-bold text-stone-900">
+                                            <span class="text-stone-500 font-medium text-[11px]">สกัดจาก OCR:</span>
+                                            <span class="text-emerald-800 font-mono font-bold">${escapeHtml(s.vietDish || s.orderDish)}</span>
+                                            <span class="text-amber-800 font-bold ml-auto font-mono">${escapeHtml(s.orderPrice || '')}</span>
+                                        </div>
+                                        <div class="flex items-center space-x-1.5 pl-2 text-[11px] text-stone-600 font-medium">
+                                            <span class="text-stone-500">ผลการแปลภาษา:</span>
+                                            <span class="text-stone-800 font-bold">${escapeHtml(s.thaiDish || '')}</span>
+                                            <span class="text-stone-400 font-normal">(${escapeHtml(s.approxThb || '')})</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            
+                            <div class="sm:self-center">
+                                ${isServed 
+                                    ? `<span class="text-xs text-emerald-700 font-bold flex items-center justify-center px-3.5 py-2 bg-emerald-100 rounded-xl border border-emerald-200"><span>เสิร์ฟเรียบร้อยแล้ว</span></span>`
+                                    : `<button onclick="teacherServeOrder('${s.studentId}')" class="w-full sm:w-auto px-4 py-2.5 bistro-btn bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold text-xs flex items-center justify-center shadow-sm active:scale-95">
+                                        <span>เสิร์ฟอาหาร</span>
+                                       </button>`
+                                }
+                            </div>
+                        `;
+                        container.appendChild(ticket);
+                    });
+                }
+            }
+
+            // 3. Render Pending Students Container (นักเรียนที่ยังไม่สั่ง)
+            const pendingContainer = document.getElementById('teach-pending-students');
+            if (pendingContainer) {
+                if (players.length === 0) {
+                    pendingContainer.innerHTML = `
+                        <div class="p-16 text-center text-xs text-stone-400 font-medium">
+                            ยังไม่มีนักเรียนลงทะเบียนเข้าโต๊ะ
                         </div>
-                    </div>
+                    `;
+                } else if (pendingPlayers.length === 0) {
+                    pendingContainer.innerHTML = `
+                        <div class="p-12 text-center space-y-2 bg-emerald-50/60 rounded-2xl border border-emerald-200">
+                            <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">✓</div>
+                            <div class="text-sm font-bold text-emerald-900">นักเรียนทุกคนสั่งอาหารครบแล้ว!</div>
+                            <div class="text-xs text-emerald-700 font-medium">นักเรียนที่เข้าโต๊ะทั้งหมด ${players.length} คน ส่งออเดอร์มายังครัวเรียบร้อย</div>
+                        </div>
+                    `;
+                } else {
+                    pendingContainer.innerHTML = '';
                     
-                    <div class="sm:self-center">
-                        ${isServed 
-                            ? `<span class="text-xs text-emerald-700 font-bold flex items-center justify-center px-3.5 py-2 bg-emerald-100 rounded-xl border border-emerald-200"><span>เสิร์ฟเรียบร้อยแล้ว</span></span>`
-                            : `<button onclick="teacherServeOrder('${s.studentId}')" class="w-full sm:w-auto px-4 py-2.5 bistro-btn bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold text-xs flex items-center justify-center shadow-sm active:scale-95">
-                                <span>เสิร์ฟอาหาร</span>
-                               </button>`
-                        }
-                    </div>
-                `;
-                container.appendChild(ticket);
-            });
+                    const banner = document.createElement('div');
+                    banner.className = 'p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-900 font-bold flex items-center justify-between';
+                    banner.innerHTML = `
+                        <span>รายชื่อนักเรียนที่ยังไม่ส่งออเดอร์</span>
+                        <span class="bg-rose-200 text-rose-900 px-2 py-0.5 rounded-full text-[11px] font-bold font-mono">รออีก ${pendingPlayers.length} คน</span>
+                    `;
+                    pendingContainer.appendChild(banner);
+
+                    pendingPlayers.forEach(p => {
+                        const card = document.createElement('div');
+                        card.className = 'p-3 rounded-2xl border border-amber-300 bg-amber-50/70 flex items-center justify-between shadow-sm transition-all';
+                        card.innerHTML = `
+                            <div class="flex items-center space-x-3 min-w-0">
+                                <span class="text-2xl sm:text-3xl">${p.emoji || '🐱'}</span>
+                                <div class="min-w-0">
+                                    <div class="flex items-center space-x-1.5 flex-wrap">
+                                        <span class="text-xs font-bold text-amber-950 bg-amber-200 px-2.5 py-0.5 rounded-full">โต๊ะ ${p.tableNum || '?'}</span>
+                                        <span class="font-bold text-sm text-stone-900 truncate">${escapeHtml(p.name)}</span>
+                                        <span class="text-xs text-stone-500 font-mono">#${escapeHtml(p.studentId)}</span>
+                                    </div>
+                                    <div class="text-[11px] text-stone-600 font-medium pt-0.5">
+                                        สถานะ: กำลังทดลองขั้นตอน OCR / ยังไม่กดยืนยันสั่ง
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="shrink-0 text-[11px] font-bold bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full border border-rose-300 ml-2">
+                                ยังไม่สั่ง
+                            </span>
+                        `;
+                        pendingContainer.appendChild(card);
+                    });
+
+                    // List empty tables if any
+                    const seatedTableNums = new Set(players.map(p => Number(p.tableNum)));
+                    const emptyTables = [];
+                    for (let t = 1; t <= 10; t++) {
+                        if (!seatedTableNums.has(t)) emptyTables.push(`โต๊ะ ${t}`);
+                    }
+                    if (emptyTables.length > 0) {
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'p-2.5 bg-stone-100/80 border border-stone-200 rounded-xl text-[11px] text-stone-500 flex items-center justify-between';
+                        emptyDiv.innerHTML = `
+                            <span>โต๊ะว่าง (ไม่มีคนนั่ง):</span>
+                            <span class="font-bold text-stone-600">${emptyTables.join(', ')}</span>
+                        `;
+                        pendingContainer.appendChild(emptyDiv);
+                    }
+                }
+            }
+
+            // 4. Render Left Column 10-Table Live Status Grid
+            const leftGrid = document.getElementById('teach-left-grid-box');
+            if (leftGrid) {
+                leftGrid.innerHTML = '';
+                const tableMap = {};
+                players.forEach(p => {
+                    tableMap[p.tableNum] = { player: p, order: null };
+                });
+                scores.forEach(s => {
+                    const t = s.tableNum;
+                    if (!tableMap[t]) tableMap[t] = { player: null, order: s };
+                    else tableMap[t].order = s;
+                });
+
+                for (let t = 1; t <= 10; t++) {
+                    const item = tableMap[t];
+                    const card = document.createElement('div');
+                    if (item && item.order) {
+                        const isServed = item.order.orderStatus === 'SERVED';
+                        card.className = `p-2.5 rounded-xl border flex flex-col justify-between text-xs transition-all ${
+                            isServed ? 'bg-emerald-50 border-emerald-300 text-emerald-950' : 'bg-amber-50 border-amber-300 text-amber-950'
+                        }`;
+                        card.innerHTML = `
+                            <div class="flex items-center justify-between pb-1 border-b border-black/5">
+                                <span class="font-bold text-[11px]">โต๊ะ ${t}</span>
+                                <span class="text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                                    isServed ? 'bg-emerald-200 text-emerald-900' : 'bg-amber-200 text-amber-900'
+                                }">${isServed ? 'เสิร์ฟแล้ว' : 'สั่งแล้ว (รอเสิร์ฟ)'}</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 py-1">
+                                <span class="text-xl">${item.order.emoji || '🐱'}</span>
+                                <div class="truncate">
+                                    <div class="font-bold truncate text-[11px]">${escapeHtml(item.order.name)}</div>
+                                    <div class="text-[10px] text-emerald-700 font-bold truncate">${escapeHtml(item.order.vietDish || item.order.orderDish)}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (item && item.player) {
+                        card.className = 'p-2.5 rounded-xl border border-rose-300 bg-rose-50/70 text-rose-950 flex flex-col justify-between text-xs transition-all';
+                        card.innerHTML = `
+                            <div class="flex items-center justify-between pb-1 border-b border-rose-100">
+                                <span class="font-bold text-[11px]">โต๊ะ ${t}</span>
+                                <span class="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-rose-200 text-rose-900">ยังไม่สั่ง</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 py-1">
+                                <span class="text-xl">${item.player.emoji || '🐱'}</span>
+                                <div class="truncate">
+                                    <div class="font-bold truncate text-[11px]">${escapeHtml(item.player.name)}</div>
+                                    <div class="text-[10px] text-stone-500 font-mono">#${escapeHtml(item.player.studentId)}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        card.className = 'p-2.5 rounded-xl border border-dashed border-stone-200 bg-stone-50 text-stone-400 flex flex-col justify-between text-xs';
+                        card.innerHTML = `
+                            <div class="flex items-center justify-between pb-1 border-b border-stone-100">
+                                <span class="font-bold text-[11px]">โต๊ะ ${t}</span>
+                                <span class="text-[10px] px-1.5 py-0.2 rounded-full font-medium bg-stone-200 text-stone-500">ว่าง</span>
+                            </div>
+                            <div class="py-2 text-center text-[10px] text-stone-400">ยังไม่มีผู้เรียน</div>
+                        `;
+                    }
+                    leftGrid.appendChild(card);
+                }
+            }
         }
 
         // ========================================================

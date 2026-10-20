@@ -446,14 +446,6 @@
                     <button onclick="goToStep(1)" id="btn-next-step1" class="hidden w-full py-3 bistro-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all">
                         <span>ถัดไป: ขั้นที่ 1 การประมวลผลภาพ (Pre-processing)</span>
                     </button>
-
-                    <!-- Real Camera Option Fallback -->
-                    <div class="pt-1 border-t border-stone-100">
-                        <label class="cursor-pointer w-full py-2 bistro-btn bg-stone-50 hover:bg-stone-100 text-stone-600 font-bold text-xs flex items-center justify-center space-x-1.5 border border-stone-200">
-                            <span>หรือถ่ายภาพเมนูจริง</span>
-                            <input type="file" id="native-cam-input" accept="image/*" capture="environment" class="hidden" onchange="handleStudentCamera(event)">
-                        </label>
-                    </div>
                 </div>
 
 
@@ -668,10 +660,10 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(1400, t);
                 osc.frequency.exponentialRampToValueAtTime(1050, t + 0.1);
-                gain.gain.setValueAtTime(0.4, t);
-                gain.gain.linearRampToValueAtTime(0.01, t + 0.8);
+                gain.gain.setValueAtTime(0.12, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.6);
                 osc.start(t);
-                osc.stop(t + 0.8);
+                osc.stop(t + 0.6);
             } else if (type === 'seat') {
                 // Pleasant welcoming cafe chime (C5 -> E5 -> G5 -> C6)
                 const notes = [523.25, 659.25, 783.99, 1046.50];
@@ -683,10 +675,10 @@
                     g.connect(audioCtx.destination);
                     const st = t + idx * 0.08;
                     o.frequency.setValueAtTime(f, st);
-                    g.gain.setValueAtTime(0.25, st);
-                    g.gain.exponentialRampToValueAtTime(0.001, st + 0.45);
+                    g.gain.setValueAtTime(0.10, st);
+                    g.gain.exponentialRampToValueAtTime(0.001, st + 0.4);
                     o.start(st);
-                    o.stop(st + 0.45);
+                    o.stop(st + 0.4);
                 });
             } else if (type === 'kitchen_bell') {
                 // Realistic restaurant service desk bell (C7 strike + harmonic)
@@ -700,12 +692,12 @@
                 o1.connect(g);
                 o2.connect(g);
                 g.connect(audioCtx.destination);
-                g.gain.setValueAtTime(0.35, t);
-                g.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+                g.gain.setValueAtTime(0.12, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.9);
                 o1.start(t);
                 o2.start(t);
-                o1.stop(t + 1.2);
-                o2.stop(t + 1.2);
+                o1.stop(t + 0.9);
+                o2.stop(t + 0.9);
             } else if (type === 'serve') {
                 // Cheerful serving chime (G5 -> C6 -> E6)
                 const notes = [783.99, 1046.50, 1318.51];
@@ -717,56 +709,57 @@
                     g.connect(audioCtx.destination);
                     const st = t + idx * 0.1;
                     o.frequency.setValueAtTime(f, st);
-                    g.gain.setValueAtTime(0.3, st);
-                    g.gain.exponentialRampToValueAtTime(0.001, st + 0.6);
+                    g.gain.setValueAtTime(0.12, st);
+                    g.gain.exponentialRampToValueAtTime(0.001, st + 0.5);
                     o.start(st);
-                    o.stop(st + 0.6);
+                    o.stop(st + 0.5);
                 });
             } else if (type === 'coin') {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(987.77, t);
-                osc.frequency.setValueAtTime(1318.51, t + 0.08);
-                gain.gain.setValueAtTime(0.2, t);
-                gain.gain.linearRampToValueAtTime(0.01, t + 0.35);
+                // Soft chime
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, t);
+                osc.frequency.setValueAtTime(1174.66, t + 0.06);
+                gain.gain.setValueAtTime(0.05, t);
+                gain.gain.linearRampToValueAtTime(0.001, t + 0.2);
                 osc.start(t);
-                osc.stop(t + 0.35);
+                osc.stop(t + 0.2);
             } else if (type === 'blip') {
-                osc.type = 'square';
+                osc.type = 'sine';
                 osc.frequency.setValueAtTime(440, t);
-                osc.frequency.exponentialRampToValueAtTime(880, t + 0.05);
-                gain.gain.setValueAtTime(0.15, t);
-                gain.gain.linearRampToValueAtTime(0.01, t + 0.05);
+                osc.frequency.exponentialRampToValueAtTime(880, t + 0.04);
+                gain.gain.setValueAtTime(0.05, t);
+                gain.gain.linearRampToValueAtTime(0.001, t + 0.04);
                 osc.start(t);
-                osc.stop(t + 0.05);
+                osc.stop(t + 0.04);
             } else if (type === 'snap') {
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(300, t);
-                osc.frequency.exponentialRampToValueAtTime(60, t + 0.1);
-                gain.gain.setValueAtTime(0.4, t);
-                gain.gain.linearRampToValueAtTime(0.01, t + 0.1);
+                osc.frequency.exponentialRampToValueAtTime(60, t + 0.08);
+                gain.gain.setValueAtTime(0.1, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.08);
                 osc.start(t);
-                osc.stop(t + 0.1);
+                osc.stop(t + 0.08);
             } else if (type === 'start') {
                 const notes = [261.63, 329.63, 392.00, 523.25];
                 notes.forEach((f, i) => {
                     const o = audioCtx.createOscillator();
                     const g = audioCtx.createGain();
-                    o.type = 'square';
+                    o.type = 'sine';
                     o.connect(g);
                     g.connect(audioCtx.destination);
-                    o.frequency.setValueAtTime(f, t + i * 0.1);
-                    g.gain.setValueAtTime(0.2, t + i * 0.1);
-                    g.gain.linearRampToValueAtTime(0.01, t + i * 0.1 + 0.2);
-                    o.start(t + i * 0.1);
-                    o.stop(t + i * 0.1 + 0.2);
+                    o.frequency.setValueAtTime(f, t + i * 0.08);
+                    g.gain.setValueAtTime(0.1, t + i * 0.08);
+                    g.gain.linearRampToValueAtTime(0.01, t + i * 0.08 + 0.16);
+                    o.start(t + i * 0.08);
+                    o.stop(t + i * 0.08 + 0.16);
                 });
             } else if (type === 'buzz') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(120, t);
-                gain.gain.setValueAtTime(0.3, t);
-                gain.gain.linearRampToValueAtTime(0.01, t + 0.25);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, t);
+                gain.gain.setValueAtTime(0.1, t);
+                gain.gain.linearRampToValueAtTime(0.01, t + 0.2);
                 osc.start(t);
-                osc.stop(t + 0.25);
+                osc.stop(t + 0.2);
             }
         }
 
@@ -993,22 +986,16 @@
                     };
                 }
             } else if (sampleNum === 3) {
-                // Flash Glare Reflection affects upper area (dishes 2, 3)
-                if (dish.id === 2) { // Phở Gà Ta (แสงจ้ากลืนตัวอักษร แปลไม่ได้)
+                // Flash Glare Reflection: แสงสะท้อนแฟลชบดบังครึ่งบน-กลางของเมนูมิดชิด
+                // รายการที่สามารถตรวจจับและแปลได้จะมีเฉพาะรายการด้านล่างเมนู (dishes 5, 6 ทางซ้าย และ 11, 12 ทางขวา)
+                const isBottomDish = [5, 6, 11, 12].includes(dish.id);
+                if (!isBottomDish) {
                     return {
                         vietName: "",
                         thaiName: "[แปลไม่ได้]",
                         price: "",
                         status: 'FAILED',
-                        note: 'แสงสะท้อนจ้ากลืนตัวอักษร'
-                    };
-                } else if (dish.id === 3) { // Bún Chả Hà Nội (แสงจ้ากลืนตัวอักษร แปลไม่ได้)
-                    return {
-                        vietName: "",
-                        thaiName: "[แปลไม่ได้]",
-                        price: "",
-                        status: 'FAILED',
-                        note: 'แสงแฟลชทำให้คอนทราสต์หาย'
+                        note: 'แสงสะท้อนจ้าบดบังมิดชิด ไม่สามารถตรวจจับตัวอักษรได้'
                     };
                 } else {
                     return {
@@ -1016,7 +1003,7 @@
                         thaiName: dish.thaiName,
                         price: dish.price,
                         status: 'OK',
-                        note: 'อยู่นอกเขตแสงสะท้อน'
+                        note: 'อยู่นอกเขตแสงสะท้อน (ครึ่งล่างของเมนู)'
                     };
                 }
             } else {
@@ -1032,7 +1019,7 @@
 
         function selectSampleImage(sampleNum) {
             currentSampleNum = sampleNum;
-            play8Bit('coin');
+            // ปิดเสียงตอนกดเลือกภาพเพื่อป้องกันเสียงรบกวน
 
             // Visual feedback on the 3 sample buttons
             [1, 2, 3].forEach(n => {
@@ -1150,7 +1137,6 @@
                 b.innerText = em;
                 b.onclick = () => {
                     selectedEmoji = em;
-                    play8Bit('blip');
                     initEmojiPicker();
                 };
                 grid.appendChild(b);
@@ -1925,7 +1911,7 @@
                 if (boxEl) boxEl.className = "p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-left space-y-1 text-amber-950";
             } else if (currentSampleNum === 3) {
                 if (titleEl) titleEl.innerText = "การประมวลผลภาพ: ตรวจพบปัญหาแสงสะท้อน";
-                if (descEl) descEl.innerText = "ภาพมีแสงสะท้อนจ้า (Glare) ทำให้คอนทราสต์บริเวณกึ่งกลางสูญหาย ระบบไม่สามารถแยกตัวอักษรออกจากพื้นหลังได้";
+                if (descEl) descEl.innerText = "ภาพมีแสงสะท้อนจ้า (Glare) บดบังบริเวณครึ่งบน-กลางของเมนูมิดชิด ระบบตรวจจับได้เฉพาะรายการอาหารบริเวณด้านล่าง";
                 if (boxEl) boxEl.className = "p-3 bg-rose-50 rounded-xl border border-rose-200 text-xs text-left space-y-1 text-rose-950";
             } else {
                 if (titleEl) titleEl.innerText = "การประมวลผลภาพ: สำเร็จ";
@@ -1936,7 +1922,6 @@
 
         // --- STEP 2: Segmentation Bounding Boxes ---
         function renderStep2Canvas() {
-            play8Bit('blip');
             if (!loadedImgObj) return;
             const c = document.getElementById('canvas-step2-live');
             const img = loadedImgObj;
@@ -1965,15 +1950,21 @@
                 ctx.drawImage(img, 0, 0, targetW, targetH);
             }
 
-            // 1. Draw 4 Category Sections
+            // 1. Draw 4 Category Sections (วาดเฉพาะหมวดที่มีรายการอาหารตรวจพบ)
             const categories = [
-                { title: "PHỞ & BÚN (NƯỚC)", xF: 0.05, yF: 0.17, wF: 0.43, hF: 0.20 },
-                { title: "BÁNH MÌ & CƠM", xF: 0.05, yF: 0.39, wF: 0.43, hF: 0.20 },
-                { title: "MÓN ĂN KÈM", xF: 0.52, yF: 0.17, wF: 0.43, hF: 0.20 },
-                { title: "ĐỒ UỐNG TRUYỀN THỐNG", xF: 0.52, yF: 0.39, wF: 0.43, hF: 0.20 }
+                { title: "PHỞ & BÚN (NƯỚC)", xF: 0.05, yF: 0.17, wF: 0.43, hF: 0.20, dishIds: [1, 2, 3] },
+                { title: "BÁNH MÌ & CƠM", xF: 0.05, yF: 0.39, wF: 0.43, hF: 0.20, dishIds: [4, 5, 6] },
+                { title: "MÓN ĂN KÈM", xF: 0.52, yF: 0.17, wF: 0.43, hF: 0.20, dishIds: [7, 8, 9] },
+                { title: "ĐỒ UỐNG TRUYỀN THỐNG", xF: 0.52, yF: 0.39, wF: 0.43, hF: 0.20, dishIds: [10, 11, 12] }
             ];
 
             categories.forEach(cat => {
+                const hasVisibleDishes = cat.dishIds.some(id => {
+                    const dish = VIET_DISHES.find(d => d.id === id);
+                    return dish && getDishOCRResult(dish, currentSampleNum).status !== 'FAILED';
+                });
+                if (!hasVisibleDishes) return;
+
                 const cx = Math.round(targetW * cat.xF);
                 const cy = Math.round(targetH * cat.yF);
                 const cw = Math.round(targetW * cat.wF);
@@ -2050,7 +2041,7 @@
                 }
             } else if (currentSampleNum === 3) {
                 if (confScore) {
-                    confScore.innerText = "คำเตือน: ข้อความกลืนไปกับแสงสะท้อน (30%)";
+                    confScore.innerText = "คำเตือน: แสงสะท้อนจ้าบดบังข้อความส่วนใหญ่ (ตรวจพบเฉพาะ 4 รายการด้านล่าง 33%)";
                     confScore.className = "text-rose-600 text-xs font-bold";
                 }
             } else {
@@ -2118,7 +2109,6 @@
                 if (nlpBox) nlpBox.classList.remove('hidden');
                 if (btnText) btnText.innerText = "แสดงคำแปลแล้ว (กดเพื่อดูภาษาเวียดนาม)";
                 if (evalTitle) evalTitle.innerText = "แปลภาษาไทยเรียบร้อย (Translation)";
-                play8Bit('blip');
             } else {
                 if (nlpBox) nlpBox.classList.add('hidden');
                 if (btnText) btnText.innerText = "แปลภาษาไทย (Machine Translation)";
@@ -2183,7 +2173,7 @@
 
         function selectDish(dish) {
             chosenDish = dish;
-            play8Bit('blip');
+            // ปิดเสียงตอนกดเลือกรายการอาหาร
             renderARBadgesOverlay();
             renderProofreadDishList();
 
